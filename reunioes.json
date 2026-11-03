@@ -12,14 +12,14 @@
  },
  "20261103-1100-fup-planejamento-controle": {
   "assunto": "Projeto Next - Governança - Follow Up - Planejamento e Controle",
-  "atualizadoEm": "2026-11-03T17:02:51.869Z",
+  "atualizadoEm": "2026-11-03T20:34:25.976Z",
   "data": "2026-11-03",
   "fim": "11:30",
   "inicio": "11:00",
   "local": "6º andar, sala 3",
-  "motivo": "Recusada pela área",
+  "motivo": "Nenhuma pendência na definição de prazos",
   "organizador": false,
-  "status": "cancelada"
+  "status": "cancelada_sem_pendencia"
  },
  "20261103-1330-alinhamento-credito-imobiliario": {
   "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
