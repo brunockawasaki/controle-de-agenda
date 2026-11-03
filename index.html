@@ -73,6 +73,23 @@
   .bar .b-ok { background: var(--ok); } .bar .b-bad { background: var(--bad); } .bar .b-warn { background: var(--warn); }
   .alert { margin: 0; font-size: 0.88rem; color: var(--warn); }
 
+  .cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+  .cal-h { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); text-align: center; padding: 2px 0; font-weight: 600; }
+  .cell { min-height: 78px; min-width: 0; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; cursor: pointer; }
+  .cell:hover { border-color: var(--ink); }
+  .cell.out { background: transparent; opacity: 0.5; }
+  .cell.pend { border-color: var(--warn); }
+  .cell.sel { border-color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); opacity: 1; }
+  .num { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; line-height: 1.3; padding: 0 6px; margin-left: -6px; }
+  .cell.today .num { background: var(--ink); color: var(--ink-fg); border-radius: 10px; }
+  .cnt { font-size: 0.72rem; color: var(--muted); line-height: 1.1; }
+  .dots { display: flex; flex-wrap: wrap; gap: 3px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .d-ok { background: var(--ok); } .d-bad { background: var(--bad); } .d-warn { background: var(--warn); } .d-idle { background: var(--muted); }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.78rem; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .day-title { font-family: var(--font-display); font-size: 1.15rem; margin: 0; scroll-margin-top: 12px; }
+  @media (max-width: 520px) { .cell { min-height: 54px; padding: 4px; } .cnt { display: none; } .num { margin-left: -4px; } }
   .day { display: flex; flex-direction: column; gap: 8px; }
   .day h3 { font-family: var(--font-display); font-size: 0.95rem; margin: 8px 0 0; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
   .meet { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 14px; }
@@ -140,7 +157,7 @@
       <p class="sub">Reuniões da semana: o que aconteceu e o que foi cancelado, com o motivo.</p>
     </div>
     <div class="tabs" role="group" aria-label="Tela">
-      <button class="tab" id="tab-semana" aria-pressed="true">Semana</button>
+      <button class="tab" id="tab-semana" aria-pressed="true">Calendário</button>
       <button class="tab" id="tab-historico" aria-pressed="false">Histórico</button>
     </div>
   </header>
@@ -177,11 +194,18 @@
   function toMin(hhmm) { var p = (hhmm || '0:0').split(':'); return (+p[0]) * 60 + (+p[1]); }
   function nowMin() { var n = new Date(); return n.getHours() * 60 + n.getMinutes(); }
 
-  var weekStart = mondayOf(new Date());
+  var today0 = new Date();
+  var monthStart = new Date(today0.getFullYear(), today0.getMonth(), 1);
+  var selDay = iso(today0);
+  function sameMonth(isoDay) { var d = parse(isoDay); return d.getFullYear() === monthStart.getFullYear() && d.getMonth() === monthStart.getMonth(); }
+  function goMonth(delta) {
+    monthStart = new Date(monthStart.getFullYear(), monthStart.getMonth() + delta, 1);
+    if (!sameMonth(selDay)) selDay = sameMonth(iso(new Date())) ? iso(new Date()) : iso(monthStart);
+  }
+  function openDay(isoDay) { var d = parse(isoDay); monthStart = new Date(d.getFullYear(), d.getMonth(), 1); selDay = isoDay; tela = 'semana'; }
 
   function list() { return Object.keys(docs).map(function (id) { var d = docs[id]; d.id = id; return d; }); }
-  function inWeek(ws) {
-    var a = iso(ws), b = iso(addDays(ws, 6));
+  function between(a, b) {
     return list().filter(function (m) { return m.data >= a && m.data <= b; })
       .sort(function (x, y) { return (x.data + x.inicio).localeCompare(y.data + y.inicio); });
   }
@@ -207,55 +231,78 @@
   }
 
   function renderSemana() {
-    var items = inWeek(weekStart);
+    var first = monthStart;
+    var last = new Date(first.getFullYear(), first.getMonth() + 1, 0);
+    var items = between(iso(first), iso(last));
     var c = counts(items);
-    var end = addDays(weekStart, 6);
-    var html = '';
-    html += '<div class="weekbar"><button class="nav" data-act="prev" aria-label="Semana anterior">&larr; Anterior</button>' +
-      '<h2>' + esc(shortDate(weekStart)) + ' a ' + esc(shortDate(end)) + ' de ' + end.getFullYear() + '</h2>' +
-      '<button class="nav" data-act="hoje">Esta semana</button>' +
-      '<button class="nav" data-act="next" aria-label="Próxima semana">Próxima &rarr;</button></div>';
+    var html = '<div class="weekbar"><button class="nav" data-act="prev" aria-label="Mês anterior">&larr; Anterior</button>' +
+      '<h2>' + esc(MESES[first.getMonth()]) + ' de ' + first.getFullYear() + '</h2>' +
+      '<button class="nav" data-act="hoje">Hoje</button>' +
+      '<button class="nav" data-act="next" aria-label="Próximo mês">Próximo &rarr;</button></div>';
 
-    if (!items.length) {
-      html += '<div class="empty"><b>Nenhuma reunião registrada nesta semana.</b>Peça ao Claude para carregar as reuniões da agenda do Outlook, ou use "Adicionar reunião" abaixo.</div>';
-    } else {
-      var pct = function (n) { return (c.total ? (n / c.total * 100) : 0).toFixed(1) + '%'; };
-      html += '<section class="summary" aria-label="Resumo da semana"><div class="stats">' +
-        '<div class="stat"><b>' + c.total + '</b><span>Reuniões</span></div>' +
-        '<div class="stat ok"><b>' + c.realizada + '</b><span>Realizadas</span></div>' +
-        '<div class="stat bad"><b>' + c.cancelada + '</b><span>Canceladas</span></div>' +
-        '<div class="stat warn"><b>' + c.remarcada + '</b><span>Remarcadas</span></div>' +
-        '<div class="stat"><b>' + c.prevista + '</b><span>Previstas</span></div></div>' +
-        '<div class="bar" role="img" aria-label="Proporção por status"><i class="b-ok" style="width:' + pct(c.realizada) + '"></i><i class="b-bad" style="width:' + pct(c.cancelada) + '"></i><i class="b-warn" style="width:' + pct(c.remarcada) + '"></i></div>' +
-        (c.semRegistro ? '<p class="alert">' + c.semRegistro + (c.semRegistro === 1 ? ' reunião já passou e ainda está como prevista. Marque se aconteceu ou foi cancelada.' : ' reuniões já passaram e ainda estão como previstas. Marque se aconteceram ou foram canceladas.') + '</p>' : '') +
-        '</section>';
+    var pct = function (n) { return (c.total ? (n / c.total * 100) : 0).toFixed(1) + '%'; };
+    html += '<section class="summary" aria-label="Resumo do mês"><div class="stats">' +
+      '<div class="stat"><b>' + c.total + '</b><span>Reuniões no mês</span></div>' +
+      '<div class="stat ok"><b>' + c.realizada + '</b><span>Realizadas</span></div>' +
+      '<div class="stat bad"><b>' + c.cancelada + '</b><span>Canceladas</span></div>' +
+      '<div class="stat warn"><b>' + c.remarcada + '</b><span>Remarcadas</span></div>' +
+      '<div class="stat"><b>' + c.prevista + '</b><span>Previstas</span></div></div>' +
+      '<div class="bar" role="img" aria-label="Proporção por status"><i class="b-ok" style="width:' + pct(c.realizada) + '"></i><i class="b-bad" style="width:' + pct(c.cancelada) + '"></i><i class="b-warn" style="width:' + pct(c.remarcada) + '"></i></div>' +
+      (c.semRegistro ? '<p class="alert">' + c.semRegistro + (c.semRegistro === 1 ? ' reunião já passou e ainda está como prevista.' : ' reuniões já passaram e ainda estão como previstas.') + ' Os dias com borda amarela têm reuniões sem registro.</p>' : '') +
+      '</section>';
 
-      var conf = conflictIds(items);
-      var byDay = {};
-      items.forEach(function (m) { (byDay[m.data] = byDay[m.data] || []).push(m); });
-      Object.keys(byDay).sort().forEach(function (day) {
-        var d = parse(day);
-        html += '<section class="day"><h3>' + esc(DIAS[d.getDay()]) + ', ' + esc(shortDate(d)) + '</h3>';
-        byDay[day].forEach(function (m) { html += meetingHtml(m, !!conf[m.id]); });
-        html += '</section>';
-      });
-
-      var canc = items.filter(function (m) { return m.status === 'cancelada'; });
-      html += '<section class="panel" aria-label="Cancelamentos da semana"><h3>Cancelamentos da semana</h3>';
-      if (!canc.length) html += '<p class="sub" style="margin:0">Nenhuma reunião cancelada nesta semana.</p>';
-      else {
-        html += '<ul class="cancel-list">';
-        canc.forEach(function (m) {
-          var d = parse(m.data);
-          html += '<li><span class="d">' + pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + ' ' + esc(m.inicio) + '</span><span>' + esc(m.assunto) + '</span><span class="r">Motivo: ' + esc(m.motivo) + '</span></li>';
+    var byDay = {};
+    list().forEach(function (m) { (byDay[m.data] = byDay[m.data] || []).push(m); });
+    var todayIso = iso(new Date());
+    var names = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+    html += '<div class="cal" role="group" aria-label="Calendário de ' + esc(MESES[first.getMonth()]) + '">';
+    names.forEach(function (n) { html += '<div class="cal-h">' + n + '</div>'; });
+    var gridEnd = addDays(mondayOf(last), 6);
+    for (var d = mondayOf(first); d <= gridEnd; d = addDays(d, 1)) {
+      var k = iso(d), arr = byDay[k] || [];
+      var cls = 'cell' + (d.getMonth() !== first.getMonth() ? ' out' : '') + (k === todayIso ? ' today' : '') + (k === selDay ? ' sel' : '') + (arr.some(isPastUnregistered) ? ' pend' : '');
+      var label = d.getDate() + ' de ' + MESES[d.getMonth()] + ', ' + (arr.length ? arr.length + (arr.length === 1 ? ' reunião' : ' reuniões') : 'sem reuniões');
+      html += '<button class="' + cls + '" data-day="' + k + '" aria-label="' + esc(label) + '"' + (k === selDay ? ' aria-pressed="true"' : '') + '><span class="num">' + d.getDate() + '</span>';
+      if (arr.length) {
+        html += '<span class="cnt">' + arr.length + (arr.length === 1 ? ' reunião' : ' reuniões') + '</span><span class="dots">';
+        arr.slice().sort(function (x, y) { return x.inicio.localeCompare(y.inicio); }).forEach(function (m) {
+          var dc = m.status === 'realizada' ? 'd-ok' : m.status === 'cancelada' ? 'd-bad' : m.status === 'remarcada' ? 'd-warn' : 'd-idle';
+          html += '<i class="dot ' + dc + '"></i>';
         });
-        html += '</ul>';
+        html += '</span>';
       }
+      html += '</button>';
+    }
+    html += '</div>';
+    html += '<div class="legend"><span><i class="dot d-ok"></i>Realizada</span><span><i class="dot d-bad"></i>Cancelada</span><span><i class="dot d-warn"></i>Remarcada</span><span><i class="dot d-idle"></i>Prevista</span></div>';
+
+    var sd = parse(selDay);
+    var dayItems = (byDay[selDay] || []).slice().sort(function (x, y) { return (x.inicio + x.fim).localeCompare(y.inicio + y.fim); });
+    html += '<h3 class="day-title" id="day-panel">' + esc(DIAS[sd.getDay()]) + ', ' + esc(shortDate(sd)) + '</h3>';
+    if (!dayItems.length) {
+      html += '<p class="sub" style="margin:0">Nenhuma reunião neste dia. Para incluir uma, use "Adicionar reunião" abaixo.</p>';
+    } else {
+      var conf = conflictIds(dayItems);
+      html += '<section class="day" aria-label="Reuniões do dia">';
+      dayItems.forEach(function (m) { html += meetingHtml(m, !!conf[m.id]); });
       html += '</section>';
     }
 
+    var canc = items.filter(function (m) { return m.status === 'cancelada'; });
+    html += '<section class="panel" aria-label="Cancelamentos do mês"><h3>Cancelamentos do mês</h3>';
+    if (!canc.length) html += '<p class="sub" style="margin:0">Nenhuma reunião cancelada neste mês.</p>';
+    else {
+      html += '<ul class="cancel-list">';
+      canc.forEach(function (m) {
+        var dd = parse(m.data);
+        html += '<li><span class="d">' + pad(dd.getDate()) + '/' + pad(dd.getMonth() + 1) + ' ' + esc(m.inicio) + '</span><span>' + esc(m.assunto) + '</span><span class="r">Motivo: ' + esc(m.motivo) + '</span></li>';
+      });
+      html += '</ul>';
+    }
+    html += '</section>';
+
     html += '<details class="add"' + (addOpen ? ' open' : '') + ' id="add-box"><summary>Adicionar reunião</summary><div class="form">' +
-      '<label>Data<input type="date" id="f-data" value="' + iso(weekStart) + '"></label>' +
+      '<label>Data<input type="date" id="f-data" value="' + selDay + '"></label>' +
       '<label>Início<input type="time" id="f-ini" value="09:00"></label>' +
       '<label>Fim<input type="time" id="f-fim" value="09:30"></label>' +
       '<label class="wide">Assunto<input type="text" id="f-assunto" maxlength="160"></label>' +
@@ -342,7 +389,7 @@
   });
   view.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && e.target.matches('.reason input')) { e.preventDefault(); confirmar(e.target.dataset.id); }
-    if (e.key === 'Enter' && e.target.matches('tr[data-week]')) { weekStart = parse(e.target.dataset.week); tela = 'semana'; render(); }
+    if (e.key === 'Enter' && e.target.matches('tr[data-week]')) { openDay(e.target.dataset.week); render(); }
   });
   view.addEventListener('toggle', function (e) { if (e.target.id === 'add-box') addOpen = e.target.open; }, true);
 
@@ -356,15 +403,17 @@
 
   view.addEventListener('click', function (e) {
     var row = e.target.closest('tr[data-week]');
-    if (row) { weekStart = parse(row.dataset.week); tela = 'semana'; render(); return; }
+    if (row) { openDay(row.dataset.week); render(); return; }
+    var cell = e.target.closest('.cell[data-day]');
+    if (cell) { openDay(cell.dataset.day); render(); var t = document.getElementById('day-panel'); if (t && t.scrollIntoView) t.scrollIntoView({ block: 'nearest' }); return; }
     var btn = e.target.closest('[data-act]');
     if (!btn) return;
     var act = btn.dataset.act;
     var card = btn.closest('.meet');
     var id = card && card.dataset.id;
-    if (act === 'prev') { weekStart = addDays(weekStart, -7); render(); }
-    else if (act === 'next') { weekStart = addDays(weekStart, 7); render(); }
-    else if (act === 'hoje') { weekStart = mondayOf(new Date()); render(); }
+    if (act === 'prev') { goMonth(-1); render(); }
+    else if (act === 'next') { goMonth(1); render(); }
+    else if (act === 'hoje') { openDay(iso(new Date())); render(); }
     else if (act === 'status') {
       var st = btn.dataset.st;
       if (st === 'cancelada') { editing[id] = true; delete errors[id]; render(); var i = document.getElementById('mot-' + id); if (i) i.focus(); }
@@ -383,7 +432,7 @@
     if (toMin(fim) <= toMin(ini)) { banner('O horário de fim precisa ser depois do início.'); return; }
     if (!db) { banner('Não consegui acessar o banco de dados desta página.'); return; }
     db.collection('reunioes').add({ data: data, inicio: ini, fim: fim, assunto: assunto, local: local, organizador: false, status: 'prevista', motivo: '', atualizadoEm: new Date().toISOString() })
-      .then(function () { banner(''); addOpen = false; weekStart = mondayOf(parse(data)); })
+      .then(function () { banner(''); addOpen = false; openDay(data); })
       .catch(function (e) { banner('Não foi possível adicionar (' + (e && e.code ? e.code : 'erro') + ').'); });
   }
 
