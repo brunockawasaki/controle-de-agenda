@@ -1,6 +1,7 @@
 """Gera a planilha mensal do Controle de Agenda, uma por mes, sempre sobrescrevendo a anterior.
 
-Uso: python gerar_planilha_mensal.py <pasta com os .json exportados do Artifact>
+Uso: python gerar_planilha_mensal.py <reunioes.json OU pasta com os .json exportados do Artifact>
+(o reunioes.json ja traz os registros do Artifact e do GitHub juntos; e o que a rotina usa)
 A pasta e a que a ferramenta ArtifactData grava (colecao "reunioes"), com um .json por reuniao.
 Saida: Controle Mensal\\Controle de Agenda AAAA-MM - <Mes>.xlsx (uma planilha por mes; o arquivo do mes e substituido).
 Gera SOMENTE a planilha do mes atual (pela data de hoje). Meses futuros nao ganham planilha antes de chegar o dia 1.
@@ -45,10 +46,17 @@ BORDA = Border(left=FINO, right=FINO, top=FINO, bottom=FINO)
 
 def carregar(pasta):
     reunioes = []
-    for f in sorted(glob.glob(os.path.join(pasta, '**', '*.json'), recursive=True)):
-        with io.open(f, encoding='utf-8') as fh:
-            j = json.load(fh)
-        d = j['data'] if isinstance(j.get('data'), dict) else j
+    fontes = []
+    if os.path.isfile(pasta):
+        # um reunioes.json (id -> reuniao), ja com os registros do Artifact e do GitHub juntos
+        with io.open(pasta, encoding='utf-8') as fh:
+            fontes = [d for d in json.load(fh).values() if isinstance(d, dict)]
+    else:
+        for f in sorted(glob.glob(os.path.join(pasta, '**', '*.json'), recursive=True)):
+            with io.open(f, encoding='utf-8') as fh:
+                j = json.load(fh)
+            fontes.append(j['data'] if isinstance(j.get('data'), dict) else j)
+    for d in fontes:
         if not d.get('data') or not d.get('inicio'):
             continue
         d = dict(d)

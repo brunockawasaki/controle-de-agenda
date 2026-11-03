@@ -177,6 +177,7 @@
       <button class="tab" id="tab-semana" aria-pressed="true">Calendário</button>
       <button class="tab" id="tab-historico" aria-pressed="false">Histórico</button>
       <button class="tab sync" id="btn-sync" hidden>Atualizar calendário</button>
+      <button class="tab sync" id="btn-git" hidden>Conectar ao GitHub</button>
     </div>
   </header>
   <div id="banner" class="banner" hidden></div>
@@ -405,9 +406,7 @@
   function save(id, patch) {
     if (!db) { banner('Não consegui acessar o banco de dados desta página. Abra pelo link do Artifact, já logado.'); return Promise.resolve(false); }
     patch.atualizadoEm = new Date().toISOString();
-    return db.doc('reunioes/' + id).update(patch).then(function () { okBanner(); return true; }).catch(function (e) {
-      banner('Não foi possível salvar (' + (e && e.code ? e.code : 'erro') + '). Tente de novo.'); return false;
-    });
+    return db.doc('reunioes/' + id).update(patch).then(function () { okBanner(); return true; }).catch(function (e) { return falhaGravar(e, 'salvar'); });
   }
 
   view.addEventListener('input', function (e) {
@@ -461,10 +460,11 @@
     if (!db) { banner('Não consegui acessar o banco de dados desta página.'); return; }
     db.collection('reunioes').add({ data: data, inicio: ini, fim: fim, assunto: assunto, local: local, organizador: false, status: 'prevista', motivo: '', atualizadoEm: new Date().toISOString() })
       .then(function () { okBanner(); addOpen = false; openDay(data); })
-      .catch(function (e) { banner('Não foi possível adicionar (' + (e && e.code ? e.code : 'erro') + ').'); });
+      .catch(function (e) { falhaGravar(e, 'adicionar'); });
   }
 
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dayOpen) { dayOpen = false; render(); } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { var og = document.getElementById('overlay-git'); if (og) { og.remove(); return; } if (dayOpen) { dayOpen = false; render(); } } });
+  document.getElementById('btn-git').addEventListener('click', abrirToken);
   document.getElementById('btn-sync').addEventListener('click', function () { if (modoLocal) sincronizarLocal(false); else sincronizar(); });
   document.getElementById('tab-semana').addEventListener('click', function () { tela = 'semana'; render(); });
   document.getElementById('tab-historico').addEventListener('click', function () { tela = 'historico'; dayOpen = false; render(); });
@@ -521,6 +521,8 @@
   function setSync(msg, busy) {
     syncMsg = msg || '';
     var b = document.getElementById('btn-sync'), m = document.getElementById('sync-msg');
+    var g = document.getElementById('btn-git');
+    if (g) g.hidden = !(modoLocal && db && db.temToken && !db.temToken());
     if (b) { b.hidden = !(mcp || modoLocal); b.disabled = !!busy; b.textContent = busy ? 'Atualizando...' : 'Atualizar calendário'; }
     if (m) m.textContent = syncMsg || (ultima ? textoUltima() : '');
   }
@@ -534,21 +536,14 @@
     return 'Não consegui atualizar (' + (c || 'erro') + '). Tente de novo.';
   }
 
-  // Na pagina do GitHub nao ha acesso ao Outlook: busca o arquivo reunioes.json, que a rotina publica.
+  // Na pagina do GitHub nao ha acesso ao Outlook: o botao recarrega os dados do GitHub.
   function sincronizarLocal(silencioso) {
     if (!modoLocal || !db || syncing) return;
     syncing = true;
     if (!silencioso) setSync('', true);
-    fetch('reunioes.json?v=' + Date.now(), { cache: 'no-store' }).then(function (r) {
-      if (!r.ok) throw new Error('http ' + r.status);
-      return r.json();
-    }).then(function (obj) {
-      var n = db.merge(obj);
+    db.recarregar().then(function () { syncing = false; setSync('', false); }).catch(function () {
       syncing = false;
-      setSync('', false);
-    }).catch(function () {
-      syncing = false;
-      setSync(silencioso ? '' : 'Não consegui buscar as reuniões publicadas. Tente de novo.', false);
+      setSync(silencioso ? '' : 'Não consegui buscar os dados do GitHub. Tente de novo.', false);
     });
   }
 
@@ -606,43 +601,129 @@
   var NOTA_LOCAL = 'Modo local: os registros ficam salvos só neste navegador, neste aparelho.';
   function okBanner() { banner(''); }
 
-  // Fora do Artifact (por exemplo no GitHub Pages) não há banco compartilhado: guarda no navegador.
-  function localDb() {
-    var KEY = 'controle-de-agenda-v1';
-    var data = {};
-    try { data = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { data = {}; }
-    var seed = window.SEED_REUNIOES || {};
-    Object.keys(seed).forEach(function (id) { if (!data[id]) data[id] = Object.assign({}, seed[id]); });
-    var listeners = [];
-    function persist() { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} }
+  // Pagina do GitHub: os registros ficam no reunioes.json do repositorio, gravado pela API do GitHub.
+  // A pessoa cola UMA vez um token neste navegador. O token nunca vai para o codigo.
+  var GH_REPO = 'brunockawasaki/controle-de-agenda', GH_ARQ = 'reunioes.json', GH_CHAVE = 'controle-de-agenda-gh-token';
+  function ghToken() { try { return localStorage.getItem(GH_CHAVE) || ''; } catch (e) { return ''; } }
+  function ghSalvaToken(t) { try { if (t) localStorage.setItem(GH_CHAVE, t); else localStorage.removeItem(GH_CHAVE); } catch (e) {} }
+  function deB64(b) { var bin = atob(String(b).replace(/\s/g, '')); var by = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) by[i] = bin.charCodeAt(i); return new TextDecoder().decode(by); }
+  function paraB64(t) { var by = new TextEncoder().encode(t); var bin = ''; for (var i = 0; i < by.length; i++) bin += String.fromCharCode(by[i]); return btoa(bin); }
+  function ordena(o) { var r = {}; Object.keys(o).sort().forEach(function (k) { r[k] = o[k]; }); return r; }
+  function erroGh(r) {
+    var e = new Error('http ' + r.status);
+    e.code = r.status === 401 || r.status === 403 || r.status === 404 ? 'token_invalido' : 'http_' + r.status;
+    return e;
+  }
+  function ghFetch(url, opts) {
+    opts = opts || {};
+    opts.headers = Object.assign({ Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + ghToken() }, opts.headers || {});
+    opts.cache = 'no-store';
+    return fetch(url, opts);
+  }
+  function ghLer() {
+    return ghFetch('https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_ARQ + '?ref=main&t=' + Date.now()).then(function (r) {
+      if (!r.ok) throw erroGh(r);
+      return r.json();
+    }).then(function (j) { return { dados: JSON.parse(deB64(j.content)), sha: j.sha }; });
+  }
+  function gitDb() {
+    var data = {}, listeners = [];
     function notify() { listeners.forEach(function (f) { f(); }); }
-    function snap() {
-      return { metadata: { fromCache: false }, docs: Object.keys(data).map(function (id) { var v = data[id]; return { id: id, data: function () { return v; } }; }) };
+    function snap() { return { metadata: { fromCache: false }, docs: Object.keys(data).map(function (id) { var v = data[id]; return { id: id, data: function () { return v; } }; }) }; }
+    function recarregar() {
+      var p = ghToken()
+        ? ghLer().then(function (x) { return x.dados; })
+        : fetch('reunioes.json?v=' + Date.now(), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+      return p.then(function (d) { data = d || {}; notify(); });
+    }
+    function gravar(mutar, msg, jaTentou) {
+      if (!ghToken()) { var e0 = new Error('sem token'); e0.code = 'sem_token'; return Promise.reject(e0); }
+      return ghLer().then(function (x) {
+        var d = x.dados;
+        mutar(d);
+        var corpo = { message: msg, content: paraB64(JSON.stringify(ordena(d), null, 1) + '\n'), sha: x.sha, branch: 'main' };
+        return ghFetch('https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_ARQ, { method: 'PUT', body: JSON.stringify(corpo) }).then(function (r) {
+          if ((r.status === 409 || r.status === 422) && !jaTentou) return gravar(mutar, msg, true);
+          if (!r.ok) throw erroGh(r);
+          data = d;
+          notify();
+        });
+      });
     }
     return {
-      merge: function (obj) {
-        var n = 0;
-        Object.keys(obj || {}).forEach(function (id) { if (!data[id]) { data[id] = Object.assign({}, obj[id]); n++; } });
-        if (n) { persist(); notify(); }
-        return n;
-      },
+      temToken: function () { return !!ghToken(); },
+      recarregar: recarregar,
       doc: function (path) {
         var id = path.split('/')[1];
         return { update: function (patch) {
-          if (!data[id]) return Promise.reject({ code: 'invalid_argument' });
-          data[id] = Object.assign({}, data[id], patch); persist(); notify(); return Promise.resolve();
+          return gravar(function (o) {
+            if (!o[id]) { var e = new Error('nao existe'); e.code = 'invalid_argument'; throw e; }
+            o[id] = Object.assign({}, o[id], patch);
+          }, 'Registra ' + id + ': ' + (patch.status || 'atualiza'));
         } };
       },
       collection: function () {
         return {
           add: function (obj) {
             var id = 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-            data[id] = obj; persist(); notify(); return Promise.resolve();
+            return gravar(function (o) { o[id] = obj; }, 'Adiciona reuniao ' + id);
           },
-          onSnapshot: function (next) { listeners.push(function () { next(snap()); }); next(snap()); return function () {}; }
+          onSnapshot: function (next, err) {
+            listeners.push(function () { next(snap()); });
+            recarregar().catch(function (e) { if (err) err(e); });
+            return function () {};
+          }
         };
       }
     };
+  }
+
+  function abrirToken() {
+    if (document.getElementById('overlay-git')) return;
+    var o = document.createElement('div');
+    o.className = 'overlay';
+    o.id = 'overlay-git';
+    o.innerHTML = '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="git-titulo">' +
+      '<div class="modal-head"><div><h3 class="day-title" id="git-titulo">Conectar ao GitHub</h3><p class="sub" style="margin:2px 0 0">Para registrar as reuniões por esta página.</p></div><button class="x" id="git-fechar">Fechar</button></div>' +
+      '<div class="modal-body"><p style="margin:0">Cole abaixo um token de acesso do GitHub. Ele fica guardado só neste navegador e não vai para o código.</p>' +
+      '<ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px">' +
+      '<li>Abra <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>' +
+      '<li>Em <b>Repository access</b>, escolha <b>Only select repositories</b> e marque <b>controle-de-agenda</b>.</li>' +
+      '<li>Em <b>Repository permissions</b>, ponha <b>Contents</b> em <b>Read and write</b>.</li>' +
+      '<li>Clique em <b>Generate token</b>, copie o código e cole aqui.</li></ol>' +
+      '<div class="form" style="margin:0"><label class="wide">Token<input type="password" id="git-token" autocomplete="off" spellcheck="false"></label>' +
+      '<button class="primary" id="git-salvar">Conectar</button></div>' +
+      '<p class="sub" id="git-msg" style="margin:0;color:var(--bad)" role="alert"></p></div></div>';
+    document.body.appendChild(o);
+    var fechar = function () { var x = document.getElementById('overlay-git'); if (x) x.remove(); };
+    document.getElementById('git-fechar').addEventListener('click', fechar);
+    o.addEventListener('click', function (e) { if (e.target === o) fechar(); });
+    document.getElementById('git-salvar').addEventListener('click', function () {
+      var t = document.getElementById('git-token').value.trim();
+      var msg = document.getElementById('git-msg');
+      if (!t) { msg.textContent = 'Cole o token no campo.'; return; }
+      msg.textContent = '';
+      fetch('https://api.github.com/repos/' + GH_REPO, { headers: { Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + t }, cache: 'no-store' }).then(function (r) {
+        if (!r.ok) { msg.textContent = 'O GitHub não aceitou esse token. Confira se copiou inteiro.'; return null; }
+        return r.json();
+      }).then(function (j) {
+        if (!j) return;
+        if (!j.permissions || !j.permissions.push) { msg.textContent = 'Esse token não tem permissão para gravar neste repositório. Refaça o passo 3.'; return; }
+        ghSalvaToken(t);
+        fechar();
+        banner('');
+        if (db && db.recarregar) db.recarregar().catch(function () {});
+        renderSync();
+      }).catch(function () { msg.textContent = 'Não consegui falar com o GitHub. Tente de novo.'; });
+    });
+    document.getElementById('git-token').focus();
+  }
+  function falhaGravar(e, verbo) {
+    var c = e && e.code;
+    if (c === 'sem_token') { banner('Para registrar, conecte a página ao GitHub.'); abrirToken(); }
+    else if (c === 'token_invalido') { banner('O GitHub não aceitou o token. Conecte de novo.'); ghSalvaToken(''); renderSync(); abrirToken(); }
+    else banner('Não foi possível ' + verbo + ' (' + (c || 'erro') + '). Tente de novo.');
+    return false;
   }
 
   function assinar(d) {
@@ -659,7 +740,7 @@
   }
 
   function iniciar() {
-    if (!window.claude || !window.claude.use) { modoLocal = true; assinar(localDb()); renderSync(); sincronizarLocal(true); return; }
+    if (!window.claude || !window.claude.use) { modoLocal = true; assinar(gitDb()); renderSync(); return; }
     window.claude.use('db').then(function (d) {
       if (!d) { banner('Entre na sua conta para ver e registrar as reuniões.'); return; }
       assinar(d);

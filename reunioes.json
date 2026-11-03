@@ -1,6 +1,7 @@
 {
  "20261103-1000-fup-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "2026-11-03T17:02:54.597Z",
   "data": "2026-11-03",
   "fim": "10:30",
   "inicio": "10:00",
@@ -11,6 +12,7 @@
  },
  "20261103-1100-fup-planejamento-controle": {
   "assunto": "Projeto Next - Governança - Follow Up - Planejamento e Controle",
+  "atualizadoEm": "2026-11-03T17:02:51.869Z",
   "data": "2026-11-03",
   "fim": "11:30",
   "inicio": "11:00",
@@ -21,6 +23,7 @@
  },
  "20261103-1330-alinhamento-credito-imobiliario": {
   "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
+  "atualizadoEm": "2026-11-03T17:02:57.229Z",
   "data": "2026-11-03",
   "fim": "14:00",
   "inicio": "13:30",
@@ -31,16 +34,18 @@
  },
  "20261103-1500-fup-incorporacao-makeit": {
   "assunto": "Projeto Next - Fup - Governança - Incorporação Make It",
+  "atualizadoEm": "2026-11-03T18:09:54.133Z",
   "data": "2026-11-03",
   "fim": "15:30",
   "inicio": "15:00",
   "local": "7º andar, sala 1",
-  "motivo": "",
+  "motivo": "Cancelada a pedido da área",
   "organizador": false,
-  "status": "prevista"
+  "status": "cancelada"
  },
  "20261103-1530-unidades-estoque-reparos": {
   "assunto": "Definição de responsabilidade das unidades de estoque, reparos e manutenção das unidades de locação",
+  "atualizadoEm": "",
   "data": "2026-11-03",
   "fim": "17:00",
   "inicio": "15:30",
@@ -51,6 +56,7 @@
  },
  "20261103-1700-fup-incorporacao-gadens": {
   "assunto": "Projeto Next - FUP - Governança - Incorporação Gadens e Gestão de Projetos de Incorporação",
+  "atualizadoEm": "",
   "data": "2026-11-03",
   "fim": "17:30",
   "inicio": "17:00",
@@ -61,6 +67,7 @@
  },
  "20261104-1000-treinamento-compliance": {
   "assunto": "Treinamento de Compliance - Governança das Políticas",
+  "atualizadoEm": "",
   "data": "2026-11-04",
   "fim": "11:30",
   "inicio": "10:00",
@@ -71,6 +78,7 @@
  },
  "20261104-1100-fup-gmo": {
   "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
   "data": "2026-11-04",
   "fim": "11:30",
   "inicio": "11:00",
@@ -81,6 +89,7 @@
  },
  "20261104-1330-fup-qualidade": {
   "assunto": "Follow Up - Qualidade",
+  "atualizadoEm": "",
   "data": "2026-11-04",
   "fim": "14:00",
   "inicio": "13:30",
@@ -91,6 +100,7 @@
  },
  "20261104-1430-fup-obras": {
   "assunto": "Projeto Next - FUP - Governança - Obras",
+  "atualizadoEm": "",
   "data": "2026-11-04",
   "fim": "15:00",
   "inicio": "14:30",
@@ -101,6 +111,7 @@
  },
  "20261104-1500-fup-novos-negocios": {
   "assunto": "Projeto Next - Governança - Follow Up - Novos Negócios",
+  "atualizadoEm": "",
   "data": "2026-11-04",
   "fim": "15:30",
   "inicio": "15:00",
@@ -111,6 +122,7 @@
  },
  "20261104-1530-tabela-de-preco": {
   "assunto": "Tabela de Preço",
+  "atualizadoEm": "",
   "data": "2026-11-04",
   "fim": "16:30",
   "inicio": "15:30",
@@ -121,6 +133,7 @@
  },
  "20261104-1600-secretaria-de-vendas": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-11-04",
   "fim": "16:30",
   "inicio": "16:00",
@@ -131,6 +144,7 @@
  },
  "20261104-1630-permutas-sistemas": {
   "assunto": "Alinhamento Permutas - Sistemas",
+  "atualizadoEm": "",
   "data": "2026-11-04",
   "fim": "18:00",
   "inicio": "16:30",
@@ -141,6 +155,7 @@
  },
  "20261105-1330-gmo-homologacao-fornecedores": {
   "assunto": "Projeto Next - GMO: Homologação de Fornecedores",
+  "atualizadoEm": "",
   "data": "2026-11-05",
   "fim": "18:00",
   "inicio": "13:30",
@@ -151,6 +166,7 @@
  },
  "20261106-0900-fase2-fluxogramas": {
   "assunto": "Projeto Next - Fase 2: Desenho de Fluxogramas",
+  "atualizadoEm": "",
   "data": "2026-11-06",
   "fim": "18:00",
   "inicio": "09:00",
@@ -161,6 +177,7 @@
  },
  "20261109-1000-fup-projetos-sistemas": {
   "assunto": "Projeto Next - FUP - Governança - Projetos e Sistemas",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "12:00",
   "inicio": "10:00",
@@ -171,6 +188,7 @@
  },
  "20261109-1330-fup-proj-complementares": {
   "assunto": "Projeto Next - Governança - Follow Up - Projetos Complementares e Orçamento",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "14:00",
   "inicio": "13:30",
@@ -181,6 +199,7 @@
  },
  "20261109-1415-gov-resultados-administrativo": {
   "assunto": "Projeto Next - Governança de Resultados - Administrativo",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "14:45",
   "inicio": "14:15",
@@ -191,6 +210,7 @@
  },
  "20261109-1500-fup-financeiro": {
   "assunto": "Projeto Next - FUP - Governança - Financeiro",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "15:30",
   "inicio": "15:00",
@@ -201,6 +221,7 @@
  },
  "20261109-1530-fup-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "16:00",
   "inicio": "15:30",
@@ -211,6 +232,7 @@
  },
  "20261109-1600-comercial-makeit": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "16:30",
   "inicio": "16:00",
@@ -221,6 +243,7 @@
  },
  "20261109-1600-contratos-gadens-construcoes": {
   "assunto": "Contratos Gadens Construções na Obra",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "18:00",
   "inicio": "16:00",
@@ -231,6 +254,7 @@
  },
  "20261109-1630-comercial-gadens": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "17:00",
   "inicio": "16:30",
@@ -241,6 +265,7 @@
  },
  "20261109-1700-fup-suprimentos": {
   "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
   "data": "2026-11-09",
   "fim": "17:30",
   "inicio": "17:00",
@@ -251,6 +276,7 @@
  },
  "20261110-1000-fup-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
   "data": "2026-11-10",
   "fim": "10:30",
   "inicio": "10:00",
@@ -261,6 +287,7 @@
  },
  "20261110-1100-fup-planejamento-controle": {
   "assunto": "Projeto Next - Governança - Follow Up - Planejamento e Controle",
+  "atualizadoEm": "",
   "data": "2026-11-10",
   "fim": "11:30",
   "inicio": "11:00",
@@ -271,6 +298,7 @@
  },
  "20261110-1330-alinhamento-credito-imobiliario": {
   "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
+  "atualizadoEm": "",
   "data": "2026-11-10",
   "fim": "14:00",
   "inicio": "13:30",
@@ -281,6 +309,7 @@
  },
  "20261110-1500-fup-incorporacao-makeit": {
   "assunto": "Projeto Next - Fup - Governança - Incorporação Make It",
+  "atualizadoEm": "",
   "data": "2026-11-10",
   "fim": "15:30",
   "inicio": "15:00",
@@ -291,6 +320,7 @@
  },
  "20261110-1600-alinhamento-spe-rh": {
   "assunto": "Alinhamento SPE - RH",
+  "atualizadoEm": "",
   "data": "2026-11-10",
   "fim": "17:00",
   "inicio": "16:00",
@@ -301,6 +331,7 @@
  },
  "20261110-1700-fup-incorporacao-gadens": {
   "assunto": "Projeto Next - FUP - Governança - Incorporação Gadens e Gestão de Projetos de Incorporação",
+  "atualizadoEm": "",
   "data": "2026-11-10",
   "fim": "17:30",
   "inicio": "17:00",
@@ -311,6 +342,7 @@
  },
  "20261111-0900-reuniao-mensal-processos": {
   "assunto": "Reunião Mensal - Time Processos",
+  "atualizadoEm": "",
   "data": "2026-11-11",
   "fim": "10:00",
   "inicio": "09:00",
@@ -321,6 +353,7 @@
  },
  "20261111-1100-fup-gmo": {
   "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
   "data": "2026-11-11",
   "fim": "11:30",
   "inicio": "11:00",
@@ -331,6 +364,7 @@
  },
  "20261111-1330-fup-qualidade": {
   "assunto": "Follow Up - Qualidade",
+  "atualizadoEm": "",
   "data": "2026-11-11",
   "fim": "14:00",
   "inicio": "13:30",
@@ -341,6 +375,7 @@
  },
  "20261111-1500-fup-novos-negocios": {
   "assunto": "Projeto Next - Governança - Follow Up - Novos Negócios",
+  "atualizadoEm": "",
   "data": "2026-11-11",
   "fim": "15:30",
   "inicio": "15:00",
@@ -351,6 +386,7 @@
  },
  "20261111-1600-secretaria-de-vendas": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-11-11",
   "fim": "16:30",
   "inicio": "16:00",
@@ -361,6 +397,7 @@
  },
  "20261112-1330-revisao-fluxos-incorp-gadens": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
   "data": "2026-11-12",
   "fim": "18:00",
   "inicio": "13:30",
@@ -371,6 +408,7 @@
  },
  "20261113-1330-fase2-fluxogramas": {
   "assunto": "Projeto Next - Fase 2 - Desenho de Fluxogramas",
+  "atualizadoEm": "",
   "data": "2026-11-13",
   "fim": "18:00",
   "inicio": "13:30",
@@ -381,6 +419,7 @@
  },
  "20261116-1330-fup-proj-complementares": {
   "assunto": "Projeto Next - Governança - Follow Up - Projetos Complementares e Orçamento",
+  "atualizadoEm": "",
   "data": "2026-11-16",
   "fim": "14:00",
   "inicio": "13:30",
@@ -391,6 +430,7 @@
  },
  "20261116-1415-gov-resultados-administrativo": {
   "assunto": "Projeto Next - Governança de Resultados - Administrativo",
+  "atualizadoEm": "",
   "data": "2026-11-16",
   "fim": "14:45",
   "inicio": "14:15",
@@ -401,6 +441,7 @@
  },
  "20261116-1530-fup-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
   "data": "2026-11-16",
   "fim": "16:00",
   "inicio": "15:30",
@@ -411,6 +452,7 @@
  },
  "20261116-1600-alinhamento-now-lume-essence": {
   "assunto": "Reunião de Alinhamento - Now - Lume e Essence",
+  "atualizadoEm": "",
   "data": "2026-11-16",
   "fim": "18:00",
   "inicio": "16:00",
@@ -421,6 +463,7 @@
  },
  "20261116-1600-comercial-makeit": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
   "data": "2026-11-16",
   "fim": "16:30",
   "inicio": "16:00",
@@ -431,6 +474,7 @@
  },
  "20261116-1630-comercial-gadens": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
   "data": "2026-11-16",
   "fim": "17:00",
   "inicio": "16:30",
@@ -441,6 +485,7 @@
  },
  "20261116-1700-fup-suprimentos": {
   "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
   "data": "2026-11-16",
   "fim": "17:30",
   "inicio": "17:00",
@@ -451,6 +496,7 @@
  },
  "20261117-1000-fup-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
   "data": "2026-11-17",
   "fim": "10:30",
   "inicio": "10:00",
@@ -461,6 +507,7 @@
  },
  "20261117-1100-fup-planejamento-controle": {
   "assunto": "Projeto Next - Governança - Follow Up - Planejamento e Controle",
+  "atualizadoEm": "",
   "data": "2026-11-17",
   "fim": "11:30",
   "inicio": "11:00",
@@ -471,6 +518,7 @@
  },
  "20261117-1330-alinhamento-credito-imobiliario": {
   "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
+  "atualizadoEm": "",
   "data": "2026-11-17",
   "fim": "14:00",
   "inicio": "13:30",
@@ -481,6 +529,7 @@
  },
  "20261118-0900-tabela-de-preco": {
   "assunto": "Tabela de Preço",
+  "atualizadoEm": "",
   "data": "2026-11-18",
   "fim": "10:00",
   "inicio": "09:00",
@@ -491,6 +540,7 @@
  },
  "20261118-1100-fup-gmo": {
   "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
   "data": "2026-11-18",
   "fim": "11:30",
   "inicio": "11:00",
@@ -501,6 +551,7 @@
  },
  "20261118-1330-fup-qualidade": {
   "assunto": "Follow Up - Qualidade",
+  "atualizadoEm": "",
   "data": "2026-11-18",
   "fim": "14:00",
   "inicio": "13:30",
@@ -511,6 +562,7 @@
  },
  "20261118-1600-secretaria-de-vendas": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-11-18",
   "fim": "16:30",
   "inicio": "16:00",
@@ -521,6 +573,7 @@
  },
  "20261119-1330-revisao-fluxos-incorp-gadens": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
   "data": "2026-11-19",
   "fim": "18:00",
   "inicio": "13:30",
@@ -531,6 +584,7 @@
  },
  "20261123-1530-fup-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
   "data": "2026-11-23",
   "fim": "16:00",
   "inicio": "15:30",
@@ -541,6 +595,7 @@
  },
  "20261123-1600-comercial-makeit": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
   "data": "2026-11-23",
   "fim": "16:30",
   "inicio": "16:00",
@@ -551,6 +606,7 @@
  },
  "20261123-1630-comercial-gadens": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
   "data": "2026-11-23",
   "fim": "17:00",
   "inicio": "16:30",
@@ -561,6 +617,7 @@
  },
  "20261123-1700-fup-suprimentos": {
   "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
   "data": "2026-11-23",
   "fim": "17:30",
   "inicio": "17:00",
@@ -571,6 +628,7 @@
  },
  "20261124-1000-fup-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
   "data": "2026-11-24",
   "fim": "10:30",
   "inicio": "10:00",
@@ -581,6 +639,7 @@
  },
  "20261125-1330-fup-qualidade": {
   "assunto": "Follow Up - Qualidade",
+  "atualizadoEm": "",
   "data": "2026-11-25",
   "fim": "14:00",
   "inicio": "13:30",
@@ -591,6 +650,7 @@
  },
  "20261125-1600-secretaria-de-vendas": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-11-25",
   "fim": "16:30",
   "inicio": "16:00",
@@ -601,6 +661,7 @@
  },
  "20261126-0900-aldo-mattos-consultoria": {
   "assunto": "ALDO MATTOS | Consultoria Planejamento e Engenharia de Custos",
+  "atualizadoEm": "",
   "data": "2026-11-26",
   "fim": "18:00",
   "inicio": "09:00",
@@ -611,6 +672,7 @@
  },
  "20261127-0900-aldo-mattos-consultoria": {
   "assunto": "ALDO MATTOS | Consultoria Planejamento e Engenharia de Custos",
+  "atualizadoEm": "",
   "data": "2026-11-27",
   "fim": "18:00",
   "inicio": "09:00",
@@ -621,6 +683,7 @@
  },
  "20261127-0900-reporte-diretoria": {
   "assunto": "Projeto Next - Governança de Resultados / Reporte para Diretoria",
+  "atualizadoEm": "",
   "data": "2026-11-27",
   "fim": "11:00",
   "inicio": "09:00",
@@ -631,6 +694,7 @@
  },
  "20261130-1530-fup-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
   "data": "2026-11-30",
   "fim": "16:00",
   "inicio": "15:30",
@@ -641,6 +705,7 @@
  },
  "20261130-1600-comercial-makeit": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
   "data": "2026-11-30",
   "fim": "16:30",
   "inicio": "16:00",
@@ -651,6 +716,7 @@
  },
  "20261130-1630-comercial-gadens": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
   "data": "2026-11-30",
   "fim": "17:00",
   "inicio": "16:30",
@@ -661,6 +727,7 @@
  },
  "20261130-1700-fup-suprimentos": {
   "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
   "data": "2026-11-30",
   "fim": "17:30",
   "inicio": "17:00",
@@ -671,6 +738,7 @@
  },
  "20261201-1000-projeto-next-fup-governanca-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
   "data": "2026-12-01",
   "fim": "10:30",
   "inicio": "10:00",
@@ -681,6 +749,7 @@
  },
  "20261202-1600-projeto-next-governanca-secretaria-de-ve": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-12-02",
   "fim": "16:30",
   "inicio": "16:00",
@@ -691,6 +760,7 @@
  },
  "20261203-1330-projeto-next-revisao-de-fluxos-incorpora": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
   "data": "2026-12-03",
   "fim": "18:00",
   "inicio": "13:30",
@@ -701,6 +771,7 @@
  },
  "20261204-0900-projeto-next-fase-2-desenho-de-fluxogram": {
   "assunto": "PROJETO NEXT - FASE 2 - DESENHO DE FLUXOGRAMAS",
+  "atualizadoEm": "",
   "data": "2026-12-04",
   "fim": "18:00",
   "inicio": "09:00",
@@ -711,6 +782,7 @@
  },
  "20261207-1530-projeto-next-fup-governanca-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
   "data": "2026-12-07",
   "fim": "16:00",
   "inicio": "15:30",
@@ -721,6 +793,7 @@
  },
  "20261207-1600-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
   "data": "2026-12-07",
   "fim": "16:30",
   "inicio": "16:00",
@@ -731,6 +804,7 @@
  },
  "20261207-1630-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
   "data": "2026-12-07",
   "fim": "17:00",
   "inicio": "16:30",
@@ -741,6 +815,7 @@
  },
  "20261207-1700-reuniao-de-fup-suprimentos-projeto-next": {
   "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
   "data": "2026-12-07",
   "fim": "17:30",
   "inicio": "17:00",
@@ -751,6 +826,7 @@
  },
  "20261208-1000-projeto-next-fup-governanca-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
   "data": "2026-12-08",
   "fim": "10:30",
   "inicio": "10:00",
@@ -761,6 +837,7 @@
  },
  "20261209-0900-reuniao-mensal-time-processos": {
   "assunto": "Reunião Mensal - Time Processos",
+  "atualizadoEm": "",
   "data": "2026-12-09",
   "fim": "10:00",
   "inicio": "09:00",
@@ -771,6 +848,7 @@
  },
  "20261209-1600-projeto-next-governanca-secretaria-de-ve": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-12-09",
   "fim": "16:30",
   "inicio": "16:00",
@@ -781,6 +859,7 @@
  },
  "20261210-1330-projeto-next-revisao-de-fluxos-incorpora": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
   "data": "2026-12-10",
   "fim": "18:00",
   "inicio": "13:30",
@@ -791,6 +870,7 @@
  },
  "20261211-0900-projeto-next-governanca-de-resultados-re": {
   "assunto": "Projeto Next - Governança de Resultados / Reporte para Diretoria",
+  "atualizadoEm": "",
   "data": "2026-12-11",
   "fim": "11:00",
   "inicio": "09:00",
@@ -801,6 +881,7 @@
  },
  "20261211-1100-projeto-next-fase-2-desenho-de-fluxogram": {
   "assunto": "PROJETO NEXT - FASE 2 - DESENHO DE FLUXOGRAMAS",
+  "atualizadoEm": "",
   "data": "2026-12-11",
   "fim": "18:00",
   "inicio": "11:00",
@@ -811,6 +892,7 @@
  },
  "20261214-1530-projeto-next-fup-governanca-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
   "data": "2026-12-14",
   "fim": "16:00",
   "inicio": "15:30",
@@ -821,6 +903,7 @@
  },
  "20261214-1600-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
   "data": "2026-12-14",
   "fim": "16:30",
   "inicio": "16:00",
@@ -831,6 +914,7 @@
  },
  "20261214-1630-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
   "data": "2026-12-14",
   "fim": "17:00",
   "inicio": "16:30",
@@ -841,6 +925,7 @@
  },
  "20261214-1700-reuniao-de-fup-suprimentos-projeto-next": {
   "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
   "data": "2026-12-14",
   "fim": "17:30",
   "inicio": "17:00",
@@ -851,6 +936,7 @@
  },
  "20261215-1000-projeto-next-fup-governanca-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
   "data": "2026-12-15",
   "fim": "10:30",
   "inicio": "10:00",
@@ -861,6 +947,7 @@
  },
  "20261216-1600-projeto-next-governanca-secretaria-de-ve": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-12-16",
   "fim": "16:30",
   "inicio": "16:00",
@@ -871,6 +958,7 @@
  },
  "20261217-1330-projeto-next-revisao-de-fluxos-incorpora": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
   "data": "2026-12-17",
   "fim": "18:00",
   "inicio": "13:30",
@@ -881,6 +969,7 @@
  },
  "20261218-0900-projeto-next-fase-2-desenho-de-fluxogram": {
   "assunto": "PROJETO NEXT - FASE 2 - DESENHO DE FLUXOGRAMAS",
+  "atualizadoEm": "",
   "data": "2026-12-18",
   "fim": "18:00",
   "inicio": "09:00",
@@ -891,6 +980,7 @@
  },
  "20261221-1530-projeto-next-fup-governanca-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
   "data": "2026-12-21",
   "fim": "16:00",
   "inicio": "15:30",
@@ -901,6 +991,7 @@
  },
  "20261221-1600-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
   "data": "2026-12-21",
   "fim": "16:30",
   "inicio": "16:00",
@@ -911,6 +1002,7 @@
  },
  "20261221-1630-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
   "data": "2026-12-21",
   "fim": "17:00",
   "inicio": "16:30",
@@ -921,6 +1013,7 @@
  },
  "20261221-1700-reuniao-de-fup-suprimentos-projeto-next": {
   "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
   "data": "2026-12-21",
   "fim": "17:30",
   "inicio": "17:00",
@@ -931,6 +1024,7 @@
  },
  "20261222-1000-projeto-next-fup-governanca-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
   "data": "2026-12-22",
   "fim": "10:30",
   "inicio": "10:00",
@@ -941,6 +1035,7 @@
  },
  "20261223-1600-projeto-next-governanca-secretaria-de-ve": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-12-23",
   "fim": "16:30",
   "inicio": "16:00",
@@ -951,6 +1046,7 @@
  },
  "20261228-1530-projeto-next-fup-governanca-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
   "data": "2026-12-28",
   "fim": "16:00",
   "inicio": "15:30",
@@ -961,6 +1057,7 @@
  },
  "20261228-1600-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
   "data": "2026-12-28",
   "fim": "16:30",
   "inicio": "16:00",
@@ -971,6 +1068,7 @@
  },
  "20261228-1630-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
   "data": "2026-12-28",
   "fim": "17:00",
   "inicio": "16:30",
@@ -981,6 +1079,7 @@
  },
  "20261228-1700-reuniao-de-fup-suprimentos-projeto-next": {
   "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
   "data": "2026-12-28",
   "fim": "17:30",
   "inicio": "17:00",
@@ -991,6 +1090,7 @@
  },
  "20261229-1000-projeto-next-fup-governanca-marketing": {
   "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
   "data": "2026-12-29",
   "fim": "10:30",
   "inicio": "10:00",
@@ -1001,6 +1101,7 @@
  },
  "20261230-1600-projeto-next-governanca-secretaria-de-ve": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
   "data": "2026-12-30",
   "fim": "16:30",
   "inicio": "16:00",

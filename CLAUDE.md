@@ -1,6 +1,6 @@
 # Controle de Agenda
 
-Instruções para o Claude neste projeto. Leia antes de agir. Atualizado em 03/11/2026.
+Instruções para o Claude neste projeto. Leia antes de agir. Atualizado em 03/11/2026 (registros pelo GitHub).
 
 O dono do projeto é o Bruno Kawasaki (Processos e Melhoria Contínua, Grupo Gadens). Ele não é desenvolvedor: falar em português simples, frases curtas, sem termo técnico sem explicar.
 
@@ -14,9 +14,9 @@ Página HTML que registra, dia a dia, as reuniões da agenda do Outlook: **reali
 |---|---|
 | Artifact do Claude | Versão principal. Guarda os registros no banco do Artifact (coleção `reunioes`) e lê o Outlook pelo conector Microsoft 365. Só o Bruno abre. |
 | `index.html` | A mesma página como arquivo completo, publicada no GitHub Pages: https://brunockawasaki.github.io/controle-de-agenda/ |
-| `reunioes.json` | Reuniões publicadas para a página do GitHub (só os campos da página). Atualizado pela rotina. |
-| `gerar_reunioes.py` | Gera o `reunioes.json` a partir das reuniões exportadas do Artifact. |
-| `gerar_planilha_mensal.py` | Gera a planilha do mês atual em `Controle Mensal`. |
+| `reunioes.json` | Reuniões e registros (status e motivo) da página do GitHub. **A página lê e grava neste arquivo** pela API do GitHub; a rotina também o atualiza. |
+| `gerar_reunioes.py` | Junta o Artifact e o GitHub no `reunioes.json`: para cada reunião vale o registro com `atualizadoEm` mais recente. Também lista o que o GitHub tem de mais novo para a rotina aplicar no Artifact. |
+| `gerar_planilha_mensal.py` | Gera a planilha do mês atual em `Controle Mensal`, a partir do `reunioes.json` (já com Artifact e GitHub juntos). |
 | `Controle Mensal\` | Planilhas mensais (fora do git). |
 | Rotina agendada | `atualizar-controle-de-agenda`, texto completo na seção "Skills" abaixo. |
 
@@ -24,14 +24,15 @@ Página HTML que registra, dia a dia, as reuniões da agenda do Outlook: **reali
 
 **Como a página funciona**
 - No Artifact, a página usa o banco do Artifact (compartilhado) e o botão lê o Outlook pelo conector Microsoft 365 (precisa da permissão do Bruno na primeira vez).
-- No GitHub Pages não há banco nem acesso ao Outlook. A página roda em **modo local**: os registros ficam só no navegador de quem usa. O botão busca o `reunioes.json` e inclui só as reuniões **novas**, sem sobrescrever o que a pessoa marcou.
-- Os registros do Artifact e os do GitHub são separados. Marcar num não muda no outro.
+- No GitHub Pages não há banco nem acesso ao Outlook. Os registros (realizada, cancelada, motivo) são **gravados no `reunioes.json` do repositório pela API do GitHub** (um commit por registro). Para gravar, a pessoa cola **uma vez** um token do GitHub neste navegador (botão "Conectar ao GitHub"). Sem token, a página só mostra os dados. O botão "Atualizar calendário" recarrega os dados do GitHub.
+- **O token nunca vai para o código nem para o repositório.** Fica no `localStorage` do navegador. Motivos: o repositório é público, o GitHub revoga sozinho tokens encontrados em repositório público, e quem visse o código poderia mexer em tudo. O token deve ser do tipo fine-grained, só para o repositório `controle-de-agenda`, com **Contents: Read and write**. Nunca usar o token do `gh` do Bruno (dá acesso a todos os repositórios dele).
+- Artifact e GitHub têm cada um o seu registro. A rotina junta os dois a cada rodada: vale o registro com `atualizadoEm` mais recente, e o Artifact também recebe o que foi marcado pelo GitHub. Entre uma rodada e outra, um lado não vê o que foi marcado no outro.
 - Horários: o Outlook devolve em UTC; converter para Brasília (UTC-3).
 - Cancelar exige motivo preenchido. Sem motivo, a página não grava.
 
 **Regras da agenda**
 - Reunião nova do Outlook entra como **Prevista**. O Claude nunca marca realizada, cancelada ou remarcada por conta própria; quem marca é o Bruno.
-- Nunca alterar, sobrescrever nem apagar o que o Bruno já registrou.
+- Nunca alterar, sobrescrever nem apagar o que o Bruno já registrou. A única exceção: a rotina aplica no Artifact o registro **mais novo** vindo do GitHub.
 - Reunião cancelada no Outlook é ignorada na carga (não entra). Reunião cancelada no Outlook que já estava na página continua lá, e o Bruno marca o cancelamento e o motivo.
 - Não gravar participantes, links do Teams, IDs nem senhas de reunião, nem no banco nem no repositório.
 - Chave para não duplicar reunião: data + início + assunto normalizado (minúsculas, sem acentos, só letras e números).
@@ -40,14 +41,14 @@ Página HTML que registra, dia a dia, as reuniões da agenda do Outlook: **reali
 - A rotina roda **todos os dias às 09h, 13h e 18h** (horário local) e **só com o app do Claude aberto** neste computador.
 - Planilha mensal: sempre em `Controle Mensal`, **uma por mês**, atualizada no mesmo arquivo. **Nunca duplicar nem criar versão nova.**
 - Só se gera a planilha do **mês atual**. A de um mês novo só nasce quando esse mês chegar (dia 1). Meses futuros não ganham planilha antes.
-- A planilha é gerada a partir do Artifact. Não editar à mão: a próxima atualização sobrescreve.
+- A planilha é gerada a partir do `reunioes.json` (Artifact e GitHub juntos). Não editar à mão: a próxima atualização sobrescreve.
 - A planilha reflete o momento da última atualização. O que o Bruno marcar depois só entra na próxima rodada ou quando ele pedir.
 - O botão da página **não** atualiza a planilha: a página não pode gravar arquivos no computador. A planilha é atualizada pela rotina ou quando o Bruno pede.
 
 **GitHub**
 - O repositório é **público** (necessário para o GitHub Pages no plano gratuito). Tudo que for para lá fica visível a qualquer pessoa. Os assuntos das reuniões aparecem no `reunioes.json`.
 - Subir ao GitHub: o Bruno pediu "suba" a cada mudança neste projeto. Mexer só nos arquivos certos, nunca `git add .`.
-- A rotina só faz `git add reunioes.json`. Nunca usar `--force`.
+- A rotina só faz `git add reunioes.json`, antes dá `git pull --rebase` (a página grava no mesmo arquivo). Nunca usar `--force`.
 
 **Teste**
 - Em 03/11/2026 a rotina rodou inteira com sucesso: incluiu 35 reuniões novas no Artifact, atualizou o `reunioes.json` e fez o push sozinha.
@@ -80,16 +81,19 @@ PARTE 1 - ARTIFACT
 4. Ignore eventos com isCancelled true.
 5. Para cada evento cuja chave (data|inicio|assunto normalizado) NAO exista, e cujo id do Outlook NAO esteja em nenhum outlookId, crie um documento novo com ArtifactData (action batch, ate 50 por lote, op set, sem if_version): id do documento = AAAAMMDD-HHMM-<assunto em minusculas sem acentos, com letras/numeros e hifens, no maximo 40 caracteres>; se o id ja existir, acrescente -2, -3, etc. Campos: data, inicio, fim, assunto (como esta no Outlook, sem espacos extras), local, organizador (isOrganizer), status "prevista", motivo "" e outlookId (o id do evento).
    Local: "7 Pavimento SALA 1" vira "7º andar, sala 1"; "Reuniões do Microsoft Teams" vira "Teams"; se houver varios locais separados por ponto e virgula, junte com " e "; local vazio fica "".
-6. NUNCA altere, sobrescreva nem apague documentos que ja existem. Eles guardam o que o usuario registrou (realizada, cancelada, remarcada e o motivo).
+6. NUNCA altere, sobrescreva nem apague documentos que ja existem. Eles guardam o que o usuario registrou (realizada, cancelada, remarcada e o motivo). A unica excecao e o passo 12 da Parte 2 (registros mais novos vindos do GitHub).
 7. Nunca grave no banco: lista de participantes, links do Teams, ID ou senha de reuniao, corpo/descricao do evento.
 8. Grave (set) o documento `config/sync` (colecao `config`, doc_id `sync`) com: em (data e hora atual em ISO), novas (quantidade de documentos criados) e origem "rotina". Se ele ja existir, leia antes e passe a version como if_version.
 
-PARTE 2 - EXPORTAR, PLANILHA MENSAL E GITHUB (so depois da Parte 1 ter dado certo)
-9. Exporte todos os documentos da colecao `reunioes` do Artifact para arquivos: ArtifactData, acao list, colecao `reunioes`, query.limit 1000, out_dir = <pasta temporaria do usuario>\agenda-export (use o caminho completo, nao o formato abreviado com ~). Se a ferramenta recusar essa pasta, tente outra pasta dentro da pasta temporaria do usuario. Se nenhuma servir, pule a Parte 2 e diga isso no resumo.
-10. PLANILHA MENSAL: rode python "<pasta do repositorio>\gerar_planilha_mensal.py" "<out_dir usado>". Ele grava, em "<pasta do repositorio>\Controle Mensal", uma planilha por mes (Controle de Agenda AAAA-MM - Mes.xlsx), SEMPRE sobrescrevendo a planilha do mes, sem criar copias ou versoes. O script gera SOMENTE a planilha do MES ATUAL (pela data de hoje): a planilha de um mes novo so nasce quando esse mes chegar (dia 1) e planilhas de meses anteriores ou futuros NAO devem ser criadas nem alteradas. Se existir planilha de mes futuro, nao a crie; avise no resumo. Nunca crie planilhas por outro caminho e nunca salve copia em outra pasta. Se o Excel estiver com o arquivo aberto e o script avisar, diga isso no resumo. Essa planilha NAO vai para o GitHub (a pasta Controle Mensal e ignorada pelo git).
-11. Rode: python "<pasta do repositorio>\gerar_reunioes.py" "<out_dir usado>". Ele grava reunioes.json na pasta do repositorio (so os campos da pagina, sem outlookId).
-12. Na pasta do repositorio, rode `git status --porcelain reunioes.json`. Se NAO houver mudanca, nao faca commit. Se houver: `git add reunioes.json` (SOMENTE esse arquivo; nunca `git add .` nem `git add -A`), `git commit -m "Atualiza reunioes (rotina)"` com a linha final "Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>" na mensagem, e `git push`. Nunca use --force, nunca altere outros arquivos e nunca mude outro repositorio.
-13. Se o push for recusado ou falhar, nao tente contornar: diga o que aconteceu no resumo.
+PARTE 2 - GITHUB, PLANILHA MENSAL E ARTIFACT (so depois da Parte 1 ter dado certo)
+A pagina do GitHub tambem grava registros (realizada, cancelada, motivo) no reunioes.json do repositorio. Por isso o reunioes.json e o Artifact precisam ser juntados: para cada reuniao vale o registro com "atualizadoEm" mais recente.
+9. Na pasta do repositorio rode `git pull --rebase` para trazer o que a pagina gravou. Se falhar, pare a Parte 2 e diga isso no resumo (nao use --force).
+10. Exporte todos os documentos da colecao `reunioes` do Artifact para arquivos: ArtifactData, acao list, colecao `reunioes`, query.limit 1000, out_dir = <pasta temporaria do usuario>\agenda-export (use o caminho completo, nao o formato abreviado com ~). Se a ferramenta recusar essa pasta, tente outra pasta dentro de <pasta temporaria do usuario>. Se nenhuma servir, pule a Parte 2 e diga isso no resumo.
+11. Rode: python "<pasta do repositorio>\gerar_reunioes.py" "<out_dir usado>" "<pasta temporaria do usuario>\para_artifact.json". Ele junta Artifact e GitHub em reunioes.json (so os campos da pagina, sem outlookId) e grava em para_artifact.json o que o GitHub tem de mais novo que o Artifact.
+12. APLICAR NO ARTIFACT o que veio do GitHub (unica excecao a regra 6 da Parte 1). Leia para_artifact.json. Para cada id: se _acao for "atualizar", leia o documento no Artifact e faca ArtifactData update (com if_version) so de status, motivo e atualizadoEm; se _acao for "criar", faca ArtifactData set do documento novo com data, inicio, fim, assunto, local, organizador, status, motivo e atualizadoEm. Nao mexa em nenhum outro documento. Se o arquivo estiver vazio ({}), nao ha nada a fazer.
+13. PLANILHA MENSAL: rode python "<pasta do repositorio>\gerar_planilha_mensal.py" "<pasta do repositorio>\reunioes.json". Ele grava, em "<pasta do repositorio>\Controle Mensal", uma planilha por mes (Controle de Agenda AAAA-MM - Mes.xlsx), SEMPRE sobrescrevendo a planilha do mes, sem criar copias ou versoes. O script gera SOMENTE a planilha do MES ATUAL (pela data de hoje): a planilha de um mes novo so nasce quando esse mes chegar (dia 1) e planilhas de meses anteriores ou futuros NAO devem ser criadas nem alteradas. Se existir planilha de mes futuro, nao a crie; avise no resumo. Nunca crie planilhas por outro caminho e nunca salve copia em outra pasta. Se o Excel estiver com o arquivo aberto e o script avisar, diga isso no resumo. Essa planilha NAO vai para o GitHub (a pasta Controle Mensal e ignorada pelo git).
+14. Na pasta do repositorio, rode `git status --porcelain reunioes.json`. Se NAO houver mudanca, nao faca commit. Se houver: `git add reunioes.json` (SOMENTE esse arquivo; nunca `git add .` nem `git add -A`), `git commit -m "Atualiza reunioes (rotina)"` com a linha final "Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>" na mensagem, e `git push`. Nunca use --force, nunca altere outros arquivos e nunca mude outro repositorio.
+15. Se o push for recusado (a pagina pode ter gravado no meio tempo), rode `git pull --rebase` e tente `git push` mais UMA vez. Se der conflito, rode `git rebase --abort`, nao tente contornar e diga o que aconteceu no resumo.
 
 REGRAS GERAIS
 - Nao envie e-mail nem mensagem a ninguem e nao altere nada no Outlook. Esta tarefa so le a agenda, grava no Artifact e atualiza o reunioes.json do repositorio.
@@ -111,5 +115,7 @@ No Artifact, a página lê o Outlook (Microsoft 365) e inclui as reuniões novas
 - A rotina só roda com o app do Claude aberto. Se estiver fechado na hora, roda quando o app abrir.
 - Reunião marcada depois da última rodada só aparece na próxima rodada, ou na hora no Artifact pelo botão.
 - Reunião que mudou de horário no Outlook entra como reunião nova; a antiga continua na página e o Bruno marca como Remarcada.
-- A página do GitHub só atualiza depois da rotina e de uns 10 minutos de espera do GitHub.
+- A página do GitHub lê o arquivo pela API quando há token (sem espera). Sem token, lê o arquivo publicado, que o GitHub demora uns 10 minutos para mostrar.
+- Se o Bruno marcar o mesmo registro no Artifact e no GitHub entre duas rodadas, vale o que tiver `atualizadoEm` mais recente.
+- Os registros gravados pelo GitHub e a lista de reuniões públicos aparecem para qualquer pessoa com o link do repositório.
 - O botão do Artifact (leitura do Outlook pela própria página) não foi testado de ponta a ponta. A rotina agendada, que faz o mesmo trabalho, foi testada e funcionou.
