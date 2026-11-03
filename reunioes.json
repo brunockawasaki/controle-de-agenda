@@ -340,6 +340,17 @@
   "organizador": false,
   "status": "prevista"
  },
+ "20261110-1730-fluxo-de-locacao": {
+  "assunto": "Fluxo de Locação",
+  "atualizadoEm": "",
+  "data": "2026-11-10",
+  "fim": "18:30",
+  "inicio": "17:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261111-0900-reuniao-mensal-processos": {
   "assunto": "Reunião Mensal - Time Processos",
   "atualizadoEm": "",
