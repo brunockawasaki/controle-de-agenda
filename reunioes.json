@@ -1,0 +1,662 @@
+{
+ "20261103-1000-fup-marketing": {
+  "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "data": "2026-11-03",
+  "fim": "10:30",
+  "inicio": "10:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "realizada"
+ },
+ "20261103-1100-fup-planejamento-controle": {
+  "assunto": "Projeto Next - Governança - Follow Up - Planejamento e Controle",
+  "data": "2026-11-03",
+  "fim": "11:30",
+  "inicio": "11:00",
+  "local": "6º andar, sala 3",
+  "motivo": "Recusada pela área",
+  "organizador": false,
+  "status": "cancelada"
+ },
+ "20261103-1330-alinhamento-credito-imobiliario": {
+  "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
+  "data": "2026-11-03",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "realizada"
+ },
+ "20261103-1500-fup-incorporacao-makeit": {
+  "assunto": "Projeto Next - Fup - Governança - Incorporação Make It",
+  "data": "2026-11-03",
+  "fim": "15:30",
+  "inicio": "15:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261103-1530-unidades-estoque-reparos": {
+  "assunto": "Definição de responsabilidade das unidades de estoque, reparos e manutenção das unidades de locação",
+  "data": "2026-11-03",
+  "fim": "17:00",
+  "inicio": "15:30",
+  "local": "Teams e 9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261103-1700-fup-incorporacao-gadens": {
+  "assunto": "Projeto Next - FUP - Governança - Incorporação Gadens e Gestão de Projetos de Incorporação",
+  "data": "2026-11-03",
+  "fim": "17:30",
+  "inicio": "17:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261104-1000-treinamento-compliance": {
+  "assunto": "Treinamento de Compliance - Governança das Políticas",
+  "data": "2026-11-04",
+  "fim": "11:30",
+  "inicio": "10:00",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261104-1100-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "data": "2026-11-04",
+  "fim": "11:30",
+  "inicio": "11:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261104-1330-fup-qualidade": {
+  "assunto": "Follow Up - Qualidade",
+  "data": "2026-11-04",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261104-1430-fup-obras": {
+  "assunto": "Projeto Next - FUP - Governança - Obras",
+  "data": "2026-11-04",
+  "fim": "15:00",
+  "inicio": "14:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261104-1500-fup-novos-negocios": {
+  "assunto": "Projeto Next - Governança - Follow Up - Novos Negócios",
+  "data": "2026-11-04",
+  "fim": "15:30",
+  "inicio": "15:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261104-1530-tabela-de-preco": {
+  "assunto": "Tabela de Preço",
+  "data": "2026-11-04",
+  "fim": "16:30",
+  "inicio": "15:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261104-1600-secretaria-de-vendas": {
+  "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "data": "2026-11-04",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261104-1630-permutas-sistemas": {
+  "assunto": "Alinhamento Permutas - Sistemas",
+  "data": "2026-11-04",
+  "fim": "18:00",
+  "inicio": "16:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261105-1330-gmo-homologacao-fornecedores": {
+  "assunto": "Projeto Next - GMO: Homologação de Fornecedores",
+  "data": "2026-11-05",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261106-0900-fase2-fluxogramas": {
+  "assunto": "Projeto Next - Fase 2: Desenho de Fluxogramas",
+  "data": "2026-11-06",
+  "fim": "18:00",
+  "inicio": "09:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261109-1000-fup-projetos-sistemas": {
+  "assunto": "Projeto Next - FUP - Governança - Projetos e Sistemas",
+  "data": "2026-11-09",
+  "fim": "12:00",
+  "inicio": "10:00",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261109-1330-fup-proj-complementares": {
+  "assunto": "Projeto Next - Governança - Follow Up - Projetos Complementares e Orçamento",
+  "data": "2026-11-09",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261109-1415-gov-resultados-administrativo": {
+  "assunto": "Projeto Next - Governança de Resultados - Administrativo",
+  "data": "2026-11-09",
+  "fim": "14:45",
+  "inicio": "14:15",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261109-1500-fup-financeiro": {
+  "assunto": "Projeto Next - FUP - Governança - Financeiro",
+  "data": "2026-11-09",
+  "fim": "15:30",
+  "inicio": "15:00",
+  "local": "",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261109-1530-fup-juridico": {
+  "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "data": "2026-11-09",
+  "fim": "16:00",
+  "inicio": "15:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261109-1600-comercial-makeit": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "data": "2026-11-09",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261109-1600-contratos-gadens-construcoes": {
+  "assunto": "Contratos Gadens Construções na Obra",
+  "data": "2026-11-09",
+  "fim": "18:00",
+  "inicio": "16:00",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261109-1630-comercial-gadens": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "data": "2026-11-09",
+  "fim": "17:00",
+  "inicio": "16:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261109-1700-fup-suprimentos": {
+  "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "data": "2026-11-09",
+  "fim": "17:30",
+  "inicio": "17:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261110-1000-fup-marketing": {
+  "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "data": "2026-11-10",
+  "fim": "10:30",
+  "inicio": "10:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261110-1100-fup-planejamento-controle": {
+  "assunto": "Projeto Next - Governança - Follow Up - Planejamento e Controle",
+  "data": "2026-11-10",
+  "fim": "11:30",
+  "inicio": "11:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261110-1330-alinhamento-credito-imobiliario": {
+  "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
+  "data": "2026-11-10",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261110-1500-fup-incorporacao-makeit": {
+  "assunto": "Projeto Next - Fup - Governança - Incorporação Make It",
+  "data": "2026-11-10",
+  "fim": "15:30",
+  "inicio": "15:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261110-1600-alinhamento-spe-rh": {
+  "assunto": "Alinhamento SPE - RH",
+  "data": "2026-11-10",
+  "fim": "17:00",
+  "inicio": "16:00",
+  "local": "7º andar, sala 2",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261110-1700-fup-incorporacao-gadens": {
+  "assunto": "Projeto Next - FUP - Governança - Incorporação Gadens e Gestão de Projetos de Incorporação",
+  "data": "2026-11-10",
+  "fim": "17:30",
+  "inicio": "17:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261111-0900-reuniao-mensal-processos": {
+  "assunto": "Reunião Mensal - Time Processos",
+  "data": "2026-11-11",
+  "fim": "10:00",
+  "inicio": "09:00",
+  "local": "",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261111-1100-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "data": "2026-11-11",
+  "fim": "11:30",
+  "inicio": "11:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261111-1330-fup-qualidade": {
+  "assunto": "Follow Up - Qualidade",
+  "data": "2026-11-11",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261111-1500-fup-novos-negocios": {
+  "assunto": "Projeto Next - Governança - Follow Up - Novos Negócios",
+  "data": "2026-11-11",
+  "fim": "15:30",
+  "inicio": "15:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261111-1600-secretaria-de-vendas": {
+  "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "data": "2026-11-11",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261112-1330-revisao-fluxos-incorp-gadens": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "data": "2026-11-12",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261113-1330-fase2-fluxogramas": {
+  "assunto": "Projeto Next - Fase 2 - Desenho de Fluxogramas",
+  "data": "2026-11-13",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261116-1330-fup-proj-complementares": {
+  "assunto": "Projeto Next - Governança - Follow Up - Projetos Complementares e Orçamento",
+  "data": "2026-11-16",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261116-1415-gov-resultados-administrativo": {
+  "assunto": "Projeto Next - Governança de Resultados - Administrativo",
+  "data": "2026-11-16",
+  "fim": "14:45",
+  "inicio": "14:15",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261116-1530-fup-juridico": {
+  "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "data": "2026-11-16",
+  "fim": "16:00",
+  "inicio": "15:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261116-1600-alinhamento-now-lume-essence": {
+  "assunto": "Reunião de Alinhamento - Now - Lume e Essence",
+  "data": "2026-11-16",
+  "fim": "18:00",
+  "inicio": "16:00",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261116-1600-comercial-makeit": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "data": "2026-11-16",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261116-1630-comercial-gadens": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "data": "2026-11-16",
+  "fim": "17:00",
+  "inicio": "16:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261116-1700-fup-suprimentos": {
+  "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "data": "2026-11-16",
+  "fim": "17:30",
+  "inicio": "17:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261117-1000-fup-marketing": {
+  "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "data": "2026-11-17",
+  "fim": "10:30",
+  "inicio": "10:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261117-1100-fup-planejamento-controle": {
+  "assunto": "Projeto Next - Governança - Follow Up - Planejamento e Controle",
+  "data": "2026-11-17",
+  "fim": "11:30",
+  "inicio": "11:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261117-1330-alinhamento-credito-imobiliario": {
+  "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
+  "data": "2026-11-17",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261118-1100-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "data": "2026-11-18",
+  "fim": "11:30",
+  "inicio": "11:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261118-1330-fup-qualidade": {
+  "assunto": "Follow Up - Qualidade",
+  "data": "2026-11-18",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261118-1600-secretaria-de-vendas": {
+  "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "data": "2026-11-18",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261119-1330-revisao-fluxos-incorp-gadens": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "data": "2026-11-19",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261123-1530-fup-juridico": {
+  "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "data": "2026-11-23",
+  "fim": "16:00",
+  "inicio": "15:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261123-1600-comercial-makeit": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "data": "2026-11-23",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261123-1630-comercial-gadens": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "data": "2026-11-23",
+  "fim": "17:00",
+  "inicio": "16:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261123-1700-fup-suprimentos": {
+  "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "data": "2026-11-23",
+  "fim": "17:30",
+  "inicio": "17:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261124-1000-fup-marketing": {
+  "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "data": "2026-11-24",
+  "fim": "10:30",
+  "inicio": "10:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261125-1330-fup-qualidade": {
+  "assunto": "Follow Up - Qualidade",
+  "data": "2026-11-25",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261125-1600-secretaria-de-vendas": {
+  "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "data": "2026-11-25",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261126-0900-aldo-mattos-consultoria": {
+  "assunto": "ALDO MATTOS | Consultoria Planejamento e Engenharia de Custos",
+  "data": "2026-11-26",
+  "fim": "18:00",
+  "inicio": "09:00",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261127-0900-aldo-mattos-consultoria": {
+  "assunto": "ALDO MATTOS | Consultoria Planejamento e Engenharia de Custos",
+  "data": "2026-11-27",
+  "fim": "18:00",
+  "inicio": "09:00",
+  "local": "Essence",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261127-0900-reporte-diretoria": {
+  "assunto": "Projeto Next - Governança de Resultados / Reporte para Diretoria",
+  "data": "2026-11-27",
+  "fim": "11:00",
+  "inicio": "09:00",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20261130-1530-fup-juridico": {
+  "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "data": "2026-11-30",
+  "fim": "16:00",
+  "inicio": "15:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261130-1600-comercial-makeit": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "data": "2026-11-30",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261130-1630-comercial-gadens": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "data": "2026-11-30",
+  "fim": "17:00",
+  "inicio": "16:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261130-1700-fup-suprimentos": {
+  "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "data": "2026-11-30",
+  "fim": "17:30",
+  "inicio": "17:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ }
+}
