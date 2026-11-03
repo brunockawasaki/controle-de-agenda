@@ -403,10 +403,20 @@
 
   function banner(msg) { var b = document.getElementById('banner'); b.hidden = !msg; b.textContent = msg || ''; }
 
+  var emVoo = {};
   function save(id, patch) {
     if (!db) { banner('Não consegui acessar o banco de dados desta página. Abra pelo link do Artifact, já logado.'); return Promise.resolve(false); }
+    if (emVoo[id]) return Promise.resolve(false);
+    emVoo[id] = true;
     patch.atualizadoEm = new Date().toISOString();
-    return db.doc('reunioes/' + id).update(patch).then(function () { okBanner(); return true; }).catch(function (e) { return falhaGravar(e, 'salvar'); });
+    var antes = docs[id];
+    // Na pagina do GitHub a gravacao leva 1 a 2 segundos: mostra o resultado na hora e volta atras se falhar.
+    if (modoLocal && antes) { docs[id] = Object.assign({}, antes, patch); render(); }
+    return db.doc('reunioes/' + id).update(patch).then(function () { delete emVoo[id]; okBanner(); return true; }).catch(function (e) {
+      delete emVoo[id];
+      if (modoLocal && antes) { docs[id] = antes; render(); }
+      return falhaGravar(e, 'salvar');
+    });
   }
 
   view.addEventListener('input', function (e) {
@@ -421,8 +431,10 @@
   function confirmar(id) {
     var txt = (drafts[id] != null ? drafts[id] : (docs[id] && docs[id].motivo) || '').trim();
     if (!txt) { errors[id] = 'Escreva o motivo para registrar o cancelamento.'; render(); var i = document.getElementById('mot-' + id); if (i) i.focus(); return; }
-    save(id, { status: 'cancelada', motivo: txt }).then(function (ok) {
-      if (ok) { delete editing[id]; delete drafts[id]; delete errors[id]; render(); }
+    var gravando = save(id, { status: 'cancelada', motivo: txt });
+    delete editing[id]; delete drafts[id]; delete errors[id]; render();
+    gravando.then(function (ok) {
+      if (!ok) { editing[id] = true; drafts[id] = txt; render(); }
     });
   }
 
