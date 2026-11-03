@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}[hidden]{display:none!important}img{max-width:100%}</style>
 <title>Controle de Agenda</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -395,7 +401,7 @@
   function save(id, patch) {
     if (!db) { banner('Não consegui acessar o banco de dados desta página. Abra pelo link do Artifact, já logado.'); return Promise.resolve(false); }
     patch.atualizadoEm = new Date().toISOString();
-    return db.doc('reunioes/' + id).update(patch).then(function () { banner(''); return true; }).catch(function (e) {
+    return db.doc('reunioes/' + id).update(patch).then(function () { okBanner(); return true; }).catch(function (e) {
       banner('Não foi possível salvar (' + (e && e.code ? e.code : 'erro') + '). Tente de novo.'); return false;
     });
   }
@@ -450,7 +456,7 @@
     if (toMin(fim) <= toMin(ini)) { banner('O horário de fim precisa ser depois do início.'); return; }
     if (!db) { banner('Não consegui acessar o banco de dados desta página.'); return; }
     db.collection('reunioes').add({ data: data, inicio: ini, fim: fim, assunto: assunto, local: local, organizador: false, status: 'prevista', motivo: '', atualizadoEm: new Date().toISOString() })
-      .then(function () { banner(''); addOpen = false; openDay(data); })
+      .then(function () { okBanner(); addOpen = false; openDay(data); })
       .catch(function (e) { banner('Não foi possível adicionar (' + (e && e.code ? e.code : 'erro') + ').'); });
   }
 
@@ -461,19 +467,58 @@
   render();
 
   var timer = null;
+  var modoLocal = false;
+  var NOTA_LOCAL = 'Modo local: os registros ficam salvos só neste navegador, neste aparelho.';
+  function okBanner() { banner(modoLocal ? NOTA_LOCAL : ''); }
+
+  // Fora do Artifact (por exemplo no GitHub Pages) não há banco compartilhado: guarda no navegador.
+  function localDb() {
+    var KEY = 'controle-de-agenda-v1';
+    var data = {};
+    try { data = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { data = {}; }
+    var listeners = [];
+    function persist() { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} }
+    function notify() { listeners.forEach(function (f) { f(); }); }
+    function snap() {
+      return { metadata: { fromCache: false }, docs: Object.keys(data).map(function (id) { var v = data[id]; return { id: id, data: function () { return v; } }; }) };
+    }
+    return {
+      doc: function (path) {
+        var id = path.split('/')[1];
+        return { update: function (patch) {
+          if (!data[id]) return Promise.reject({ code: 'invalid_argument' });
+          data[id] = Object.assign({}, data[id], patch); persist(); notify(); return Promise.resolve();
+        } };
+      },
+      collection: function () {
+        return {
+          add: function (obj) {
+            var id = 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+            data[id] = obj; persist(); notify(); return Promise.resolve();
+          },
+          onSnapshot: function (next) { listeners.push(function () { next(snap()); }); next(snap()); return function () {}; }
+        };
+      }
+    };
+  }
+
+  function assinar(d) {
+    db = d;
+    timer = setTimeout(function () { banner('Ainda não consegui carregar os dados. Eles podem estar desatualizados.'); }, 10000);
+    db.collection('reunioes').onSnapshot(function (snap) {
+      if (!snap.metadata.fromCache) { clearTimeout(timer); okBanner(); }
+      var next = {};
+      snap.docs.forEach(function (s) { next[s.id] = Object.assign({}, s.data()); });
+      docs = next;
+      render();
+    }, function (err) { clearTimeout(timer); banner('Erro ao carregar os dados (' + (err && err.code ? err.code : 'erro') + ').'); });
+  }
+
   function iniciar() {
-    if (!window.claude || !window.claude.use) { banner('Esta página precisa ser aberta como Artifact para guardar os registros.'); return; }
+    if (!window.claude || !window.claude.use) { modoLocal = true; assinar(localDb()); return; }
     window.claude.use('db').then(function (d) {
       if (!d) { banner('Entre na sua conta para ver e registrar as reuniões.'); return; }
-      db = d;
-      timer = setTimeout(function () { banner('Ainda não consegui carregar os dados. Eles podem estar desatualizados.'); }, 10000);
-      db.collection('reunioes').onSnapshot(function (snap) {
-        if (!snap.metadata.fromCache) { clearTimeout(timer); banner(''); }
-        var next = {};
-        snap.docs.forEach(function (s) { next[s.id] = Object.assign({}, s.data()); });
-        docs = next;
-        render();
-      }, function (err) { clearTimeout(timer); banner('Erro ao carregar os dados (' + (err && err.code ? err.code : 'erro') + ').'); });
+      assinar(d);
     });
   }
   iniciar();
