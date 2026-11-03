@@ -402,7 +402,7 @@
       db.collection('reunioes').onSnapshot(function (snap) {
         if (!snap.metadata.fromCache) { clearTimeout(timer); banner(''); }
         var next = {};
-        snap.docs.forEach(function (s) { next[s.id] = s.data(); });
+        snap.docs.forEach(function (s) { next[s.id] = Object.assign({}, s.data()); });
         docs = next;
         render();
       }, function (err) { clearTimeout(timer); banner('Erro ao carregar os dados (' + (err && err.code ? err.code : 'erro') + ').'); });
