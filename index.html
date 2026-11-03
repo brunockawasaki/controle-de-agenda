@@ -538,14 +538,14 @@
   function sincronizarLocal(silencioso) {
     if (!modoLocal || !db || syncing) return;
     syncing = true;
-    if (!silencioso) setSync('Buscando as reuniões publicadas...', true);
+    if (!silencioso) setSync('', true);
     fetch('reunioes.json?v=' + Date.now(), { cache: 'no-store' }).then(function (r) {
       if (!r.ok) throw new Error('http ' + r.status);
       return r.json();
     }).then(function (obj) {
       var n = db.merge(obj);
       syncing = false;
-      setSync(n ? n + (n === 1 ? ' reunião nova incluída.' : ' reuniões novas incluídas.') : (silencioso ? '' : 'O calendário já está em dia. Nenhuma reunião nova.'), false);
+      setSync('', false);
     }).catch(function () {
       syncing = false;
       setSync(silencioso ? '' : 'Não consegui buscar as reuniões publicadas. Tente de novo.', false);
@@ -555,7 +555,7 @@
   function sincronizar() {
     if (!mcp || !db || syncing) return;
     syncing = true;
-    setSync('Lendo a agenda do Outlook...', true);
+    setSync('', true);
     var ini = new Date(); ini.setHours(0, 0, 0, 0);
     var fim = new Date(ini.getTime() + SYNC_DIAS * 86400000);
     var eventos = [], offset = 0, paginas = 0;
@@ -597,16 +597,14 @@
       }).then(function () { return { qtd: novos.length, total: eventos.length }; });
     }).then(function (r) {
       syncing = false;
-      setSync(r.total
-        ? (r.qtd ? r.qtd + (r.qtd === 1 ? ' reunião nova incluída.' : ' reuniões novas incluídas.') : 'O calendário já está em dia. Nenhuma reunião nova.')
-        : 'O Outlook não devolveu reuniões para os próximos ' + SYNC_DIAS + ' dias.', false);
+      setSync(r.total ? '' : 'O Outlook não devolveu reuniões para os próximos ' + SYNC_DIAS + ' dias.', false);
     }).catch(function (e) { syncing = false; setSync(erroSync(e), false); });
   }
 
   var timer = null;
   var modoLocal = false;
   var NOTA_LOCAL = 'Modo local: os registros ficam salvos só neste navegador, neste aparelho.';
-  function okBanner() { banner(modoLocal ? NOTA_LOCAL : ''); }
+  function okBanner() { banner(''); }
 
   // Fora do Artifact (por exemplo no GitHub Pages) não há banco compartilhado: guarda no navegador.
   function localDb() {
