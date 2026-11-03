@@ -24,8 +24,8 @@ SAIDA = os.path.join(PASTA, 'Controle Mensal')
 
 MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 DIAS = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
-STATUS = ['prevista', 'realizada', 'cancelada', 'remarcada']
-ROTULO = {'prevista': 'Prevista', 'realizada': 'Realizada', 'cancelada': 'Cancelada', 'remarcada': 'Remarcada'}
+STATUS = ['prevista', 'realizada', 'cancelada', 'cancelada_sem_pendencia', 'remarcada']
+ROTULO = {'prevista': 'Prevista', 'realizada': 'Realizada', 'cancelada': 'Cancelada', 'cancelada_sem_pendencia': 'Cancelada sem Pendência', 'remarcada': 'Remarcada'}
 
 FONTE = 'Arial'
 F = Font(name=FONTE, size=10)
@@ -36,6 +36,7 @@ CAB = PatternFill('solid', start_color='2B2F36')
 FUNDO = {
     'realizada': PatternFill('solid', start_color='E2F1E8'),
     'cancelada': PatternFill('solid', start_color='F9E3E1'),
+    'cancelada_sem_pendencia': PatternFill('solid', start_color='DDE9F4'),
     'remarcada': PatternFill('solid', start_color='F8ECD2'),
     'prevista': None,
 }
@@ -96,10 +97,10 @@ def montar(ano, mes, itens, agora):
     ws['A1'] = 'Controle de Agenda - %s de %d' % (nome_mes, ano)
     ws['A1'].font = FT
     tot = conta(itens)
-    ws['A2'] = 'Reuniões no mês: %d  |  Realizadas: %d  |  Canceladas: %d  |  Remarcadas: %d  |  Previstas: %d' % (
-        len(itens), tot['realizada'], tot['cancelada'], tot['remarcada'], tot['prevista'])
+    ws['A2'] = 'Reuniões no mês: %d  |  Realizadas: %d  |  Canceladas: %d  |  Canceladas sem Pendência: %d  |  Remarcadas: %d  |  Previstas: %d' % (
+        len(itens), tot['realizada'], tot['cancelada'], tot['cancelada_sem_pendencia'], tot['remarcada'], tot['prevista'])
     ws['A2'].font = F
-    cabecalho(ws, 4, ['Data', 'Dia da semana', 'Reuniões', 'Realizadas', 'Canceladas', 'Remarcadas', 'Previstas'])
+    cabecalho(ws, 4, ['Data', 'Dia da semana', 'Reuniões', 'Realizadas', 'Canceladas', 'Canceladas sem Pendência', 'Remarcadas', 'Previstas'])
     por_dia = {}
     for m in itens:
         por_dia.setdefault(m['data'], []).append(m)
@@ -108,7 +109,7 @@ def montar(ano, mes, itens, agora):
         d = date(ano, mes, dia)
         arr = por_dia.get(d.isoformat(), [])
         c = conta(arr)
-        vals = [d, DIAS[d.weekday()], len(arr), c['realizada'], c['cancelada'], c['remarcada'], c['prevista']]
+        vals = [d, DIAS[d.weekday()], len(arr), c['realizada'], c['cancelada'], c['cancelada_sem_pendencia'], c['remarcada'], c['prevista']]
         for col, v in enumerate(vals, 1):
             cel = ws.cell(row=linha, column=col, value=v)
             cel.font, cel.border = F, BORDA
@@ -118,16 +119,18 @@ def montar(ano, mes, itens, agora):
         ws.cell(row=linha, column=1).number_format = 'dd/mm/yyyy'
         if c['cancelada']:
             ws.cell(row=linha, column=5).fill = FUNDO['cancelada']
+        if c['cancelada_sem_pendencia']:
+            ws.cell(row=linha, column=6).fill = FUNDO['cancelada_sem_pendencia']
         if c['realizada']:
             ws.cell(row=linha, column=4).fill = FUNDO['realizada']
         linha += 1
     ws.cell(row=linha, column=1, value='Total do mês').font = FB
-    for col, v in enumerate([len(itens), tot['realizada'], tot['cancelada'], tot['remarcada'], tot['prevista']], 3):
+    for col, v in enumerate([len(itens), tot['realizada'], tot['cancelada'], tot['cancelada_sem_pendencia'], tot['remarcada'], tot['prevista']], 3):
         cel = ws.cell(row=linha, column=col, value=v)
         cel.font, cel.alignment = FB, Alignment(horizontal='center')
-    for col in range(1, 8):
+    for col in range(1, 9):
         ws.cell(row=linha, column=col).border = Border(top=Side(style='medium', color='2B2F36'))
-    larguras(ws, [14, 16, 12, 12, 12, 12, 12])
+    larguras(ws, [14, 16, 12, 12, 12, 16, 12, 12])
     ws.freeze_panes = 'A5'
 
     # --- Reunioes
@@ -145,26 +148,26 @@ def montar(ano, mes, itens, agora):
         fundo = FUNDO[m['status']]
         if fundo:
             wr.cell(row=i, column=8).fill = fundo
-    larguras(wr, [12, 14, 8, 8, 58, 24, 14, 12, 40])
+    larguras(wr, [12, 14, 8, 8, 58, 24, 14, 24, 40])
     wr.freeze_panes = 'A2'
     if itens:
         wr.auto_filter.ref = 'A1:I%d' % (len(itens) + 1)
 
     # --- Cancelamentos
     wc = wb.create_sheet('Cancelamentos')
-    cabecalho(wc, 1, ['Data', 'Início', 'Assunto', 'Motivo do cancelamento'])
-    canc = [m for m in itens if m['status'] == 'cancelada']
+    cabecalho(wc, 1, ['Data', 'Início', 'Assunto', 'Situação', 'Motivo do cancelamento'])
+    canc = [m for m in itens if m['status'] in ('cancelada', 'cancelada_sem_pendencia')]
     for i, m in enumerate(canc, 2):
         d = datetime.strptime(m['data'], '%Y-%m-%d').date()
-        vals = [d, m['inicio'], m.get('assunto', ''), m.get('motivo', '') or 'não informado']
+        vals = [d, m['inicio'], m.get('assunto', ''), ROTULO[m['status']], m.get('motivo', '') or 'não informado']
         for col, v in enumerate(vals, 1):
             cel = wc.cell(row=i, column=col, value=v)
             cel.font, cel.border = F, BORDA
-            cel.alignment = Alignment(vertical='top', wrap_text=col in (3, 4), horizontal='center' if col < 3 else 'left')
+            cel.alignment = Alignment(vertical='top', wrap_text=col in (3, 5), horizontal='center' if col < 3 else 'left')
         wc.cell(row=i, column=1).number_format = 'dd/mm/yyyy'
     if not canc:
         wc.cell(row=2, column=1, value='Nenhuma reunião cancelada neste mês.').font = F
-    larguras(wc, [12, 8, 58, 50])
+    larguras(wc, [12, 8, 58, 24, 50])
     wc.freeze_panes = 'A2'
 
     # --- Leia-me

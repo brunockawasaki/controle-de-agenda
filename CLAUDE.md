@@ -33,6 +33,7 @@ Página HTML que registra, dia a dia, as reuniões da agenda do Outlook: **reali
 **Regras da agenda**
 - Reunião nova do Outlook entra como **Prevista**. O Claude nunca marca realizada, cancelada ou remarcada por conta própria; quem marca é o Bruno.
 - Nunca alterar, sobrescrever nem apagar o que o Bruno já registrou. A única exceção: a rotina aplica no Artifact o registro **mais novo** vindo do GitHub.
+- Status da reunião: `prevista`, `realizada`, `cancelada`, `cancelada_sem_pendencia` (botão "Cancelada sem Pendência", chamado de "Sem Pendências" no calendário) e `remarcada`. "Sem Pendências" é a reunião cancelada por não ter atividades para acompanhamento, por ter prazos mapeados e vigentes ou por todas as atividades estarem concluídas. Exige motivo, como a Cancelada, e tem contador próprio no resumo, no histórico e na planilha.
 - Reunião cancelada no Outlook é ignorada na carga (não entra). Reunião cancelada no Outlook que já estava na página continua lá, e o Bruno marca o cancelamento e o motivo.
 - Não gravar participantes, links do Teams, IDs nem senhas de reunião, nem no banco nem no repositório.
 - Chave para não duplicar reunião: data + início + assunto normalizado (minúsculas, sem acentos, só letras e números).

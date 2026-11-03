@@ -22,6 +22,8 @@
     --ok-bg: #e2f1e8;
     --bad: #b3261e;
     --bad-bg: #f9e3e1;
+    --sp: #1f5f8b;
+    --sp-bg: #dde9f4;
     --warn: #9a6200;
     --warn-bg: #f8ecd2;
     --idle-bg: #eceae6;
@@ -33,7 +35,7 @@
     :root:not([data-theme="light"]) {
       --bg: #17191c; --surface: #202327; --fg: #ebe9e5; --muted: #9a9ea5; --line: #33373d;
       --ink: #d9dbe0; --ink-fg: #17191c;
-      --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220;
+      --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146;
       --warn: #e5b45a; --warn-bg: #3d3014; --idle-bg: #2a2d32;
       color-scheme: dark;
     }
@@ -41,7 +43,7 @@
   :root[data-theme="dark"] {
     --bg: #17191c; --surface: #202327; --fg: #ebe9e5; --muted: #9a9ea5; --line: #33373d;
     --ink: #d9dbe0; --ink-fg: #17191c;
-    --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220;
+    --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146;
     --warn: #e5b45a; --warn-bg: #3d3014; --idle-bg: #2a2d32;
     color-scheme: dark;
   }
@@ -75,10 +77,10 @@
   .stat { display: flex; flex-direction: column; }
   .stat b { font-family: var(--font-display); font-size: 1.7rem; line-height: 1; font-variant-numeric: tabular-nums; }
   .stat span { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-  .stat.ok b { color: var(--ok); } .stat.bad b { color: var(--bad); } .stat.warn b { color: var(--warn); }
+  .stat.ok b { color: var(--ok); } .stat.bad b { color: var(--bad); } .stat.warn b { color: var(--warn); } .stat.sp b { color: var(--sp); }
   .bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--idle-bg); }
   .bar i { display: block; height: 100%; }
-  .bar .b-ok { background: var(--ok); } .bar .b-bad { background: var(--bad); } .bar .b-warn { background: var(--warn); }
+  .bar .b-ok { background: var(--ok); } .bar .b-bad { background: var(--bad); } .bar .b-warn { background: var(--warn); } .bar .b-sp { background: var(--sp); }
   .alert { margin: 0; font-size: 0.88rem; color: var(--warn); }
 
   .cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
@@ -93,7 +95,7 @@
   .cnt { font-size: 0.72rem; color: var(--muted); line-height: 1.1; }
   .dots { display: flex; flex-wrap: wrap; gap: 3px; }
   .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-  .d-ok { background: var(--ok); } .d-bad { background: var(--bad); } .d-warn { background: var(--warn); } .d-idle { background: var(--muted); }
+  .d-ok { background: var(--ok); } .d-bad { background: var(--bad); } .d-warn { background: var(--warn); } .d-idle { background: var(--muted); } .d-sp { background: var(--sp); }
   .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.78rem; color: var(--muted); }
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
   .day-title { font-family: var(--font-display); font-size: 1.15rem; margin: 0; scroll-margin-top: 12px; }
@@ -120,6 +122,7 @@
   .st:hover { border-color: var(--ink); }
   .st[aria-pressed="true"].s-realizada { background: var(--ok-bg); color: var(--ok); border-color: var(--ok); font-weight: 600; }
   .st[aria-pressed="true"].s-cancelada { background: var(--bad-bg); color: var(--bad); border-color: var(--bad); font-weight: 600; }
+  .st[aria-pressed="true"].s-cancelada_sem_pendencia { background: var(--sp-bg); color: var(--sp); border-color: var(--sp); font-weight: 600; }
   .st[aria-pressed="true"].s-remarcada { background: var(--warn-bg); color: var(--warn); border-color: var(--warn); font-weight: 600; }
   .st[aria-pressed="true"].s-prevista { background: var(--idle-bg); border-color: var(--muted); font-weight: 600; }
   .reason { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 4px; }
@@ -190,6 +193,7 @@
     { id: 'prevista', label: 'Prevista' },
     { id: 'realizada', label: 'Realizada' },
     { id: 'cancelada', label: 'Cancelada' },
+    { id: 'cancelada_sem_pendencia', label: 'Cancelada sem Pendência' },
     { id: 'remarcada', label: 'Remarcada' }
   ];
   var DIAS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
@@ -235,8 +239,9 @@
     if (m.data < today) return true;
     return m.data === today && toMin(m.fim) < nowMin();
   }
+  function isCanc(m) { return m.status === 'cancelada' || m.status === 'cancelada_sem_pendencia'; }
   function counts(items) {
-    var c = { total: items.length, realizada: 0, cancelada: 0, remarcada: 0, prevista: 0, semRegistro: 0 };
+    var c = { total: items.length, realizada: 0, cancelada: 0, cancelada_sem_pendencia: 0, remarcada: 0, prevista: 0, semRegistro: 0 };
     items.forEach(function (m) { c[m.status] = (c[m.status] || 0) + 1; if (isPastUnregistered(m)) c.semRegistro++; });
     return c;
   }
@@ -265,9 +270,10 @@
       '<div class="stat"><b>' + c.total + '</b><span>Reuniões no mês</span></div>' +
       '<div class="stat ok"><b>' + c.realizada + '</b><span>Realizadas</span></div>' +
       '<div class="stat bad"><b>' + c.cancelada + '</b><span>Canceladas</span></div>' +
+      '<div class="stat sp"><b>' + c.cancelada_sem_pendencia + '</b><span>Canceladas sem Pendência</span></div>' +
       '<div class="stat warn"><b>' + c.remarcada + '</b><span>Remarcadas</span></div>' +
       '<div class="stat"><b>' + c.prevista + '</b><span>Previstas</span></div></div>' +
-      '<div class="bar" role="img" aria-label="Proporção por status"><i class="b-ok" style="width:' + pct(c.realizada) + '"></i><i class="b-bad" style="width:' + pct(c.cancelada) + '"></i><i class="b-warn" style="width:' + pct(c.remarcada) + '"></i></div>' +
+      '<div class="bar" role="img" aria-label="Proporção por status"><i class="b-ok" style="width:' + pct(c.realizada) + '"></i><i class="b-bad" style="width:' + pct(c.cancelada) + '"></i><i class="b-sp" style="width:' + pct(c.cancelada_sem_pendencia) + '"></i><i class="b-warn" style="width:' + pct(c.remarcada) + '"></i></div>' +
       (c.semRegistro ? '<p class="alert">' + c.semRegistro + (c.semRegistro === 1 ? ' reunião já passou e ainda está como prevista.' : ' reuniões já passaram e ainda estão como previstas.') + ' Os dias com borda amarela têm reuniões sem registro.</p>' : '') +
       '</section>';
 
@@ -286,7 +292,7 @@
       if (arr.length) {
         html += '<span class="cnt">' + arr.length + (arr.length === 1 ? ' reunião' : ' reuniões') + '</span><span class="dots">';
         arr.slice().sort(function (x, y) { return x.inicio.localeCompare(y.inicio); }).forEach(function (m) {
-          var dc = m.status === 'realizada' ? 'd-ok' : m.status === 'cancelada' ? 'd-bad' : m.status === 'remarcada' ? 'd-warn' : 'd-idle';
+          var dc = m.status === 'realizada' ? 'd-ok' : m.status === 'cancelada' ? 'd-bad' : m.status === 'cancelada_sem_pendencia' ? 'd-sp' : m.status === 'remarcada' ? 'd-warn' : 'd-idle';
           html += '<i class="dot ' + dc + '"></i>';
         });
         html += '</span>';
@@ -294,7 +300,7 @@
       html += '</button>';
     }
     html += '</div>';
-    html += '<div class="legend"><span><i class="dot d-ok"></i>Realizada</span><span><i class="dot d-bad"></i>Cancelada</span><span><i class="dot d-warn"></i>Remarcada</span><span><i class="dot d-idle"></i>Prevista</span></div>';
+    html += '<div class="legend"><span><i class="dot d-ok"></i>Realizada</span><span><i class="dot d-bad"></i>Cancelada</span><span><i class="dot d-sp"></i>Sem Pendências</span><span><i class="dot d-warn"></i>Remarcada</span><span><i class="dot d-idle"></i>Prevista</span></div>';
 
     var sd = parse(selDay);
     var dayItems = (byDay[selDay] || []).slice().sort(function (x, y) { return (x.inicio + x.fim).localeCompare(y.inicio + y.fim); });
@@ -310,14 +316,14 @@
       modalHtml += '</div></div></div>';
     }
 
-    var canc = items.filter(function (m) { return m.status === 'cancelada'; });
+    var canc = items.filter(isCanc);
     html += '<section class="panel" aria-label="Cancelamentos do mês"><h3>Cancelamentos do mês</h3>';
     if (!canc.length) html += '<p class="sub" style="margin:0">Nenhuma reunião cancelada neste mês.</p>';
     else {
       html += '<ul class="cancel-list">';
       canc.forEach(function (m) {
         var dd = parse(m.data);
-        html += '<li><span class="d">' + pad(dd.getDate()) + '/' + pad(dd.getMonth() + 1) + ' ' + esc(m.inicio) + '</span><span>' + esc(m.assunto) + '</span><span class="r">Motivo: ' + esc(m.motivo) + '</span></li>';
+        html += '<li><span class="d">' + pad(dd.getDate()) + '/' + pad(dd.getMonth() + 1) + ' ' + esc(m.inicio) + '</span><span>' + esc(m.assunto) + (m.status === 'cancelada_sem_pendencia' ? ' (sem pendência)' : '') + '</span><span class="r">Motivo: ' + esc(m.motivo) + '</span></li>';
       });
       html += '</ul>';
     }
@@ -344,16 +350,16 @@
     h += '</div></div>';
     h += '<div class="status" role="group" aria-label="Status da reunião">';
     STATUS.forEach(function (s) {
-      var pressed = (editing[m.id] ? s.id === 'cancelada' : m.status === s.id);
+      var pressed = (editing[m.id] ? s.id === editing[m.id] : m.status === s.id);
       h += '<button class="st s-' + s.id + '" data-act="status" data-st="' + s.id + '" aria-pressed="' + pressed + '">' + s.label + '</button>';
     });
     h += '</div>';
     if (editing[m.id]) {
       var v = drafts[m.id] != null ? drafts[m.id] : (m.motivo || '');
-      h += '<div class="reason"><input type="text" class="' + (errors[m.id] ? 'err' : '') + '" id="mot-' + esc(m.id) + '" data-id="' + esc(m.id) + '" maxlength="300" placeholder="Motivo do cancelamento (obrigatório)" value="' + esc(v) + '" aria-label="Motivo do cancelamento">' +
+      h += '<div class="reason"><input type="text" class="' + (errors[m.id] ? 'err' : '') + '" id="mot-' + esc(m.id) + '" data-id="' + esc(m.id) + '" maxlength="300" placeholder="' + esc(editing[m.id] === 'cancelada_sem_pendencia' ? 'Motivo (ex.: sem atividades para acompanhamento, prazos mapeados e vigentes ou atividades concluídas)' : 'Motivo do cancelamento (obrigatório)') + '" value="' + esc(v) + '" aria-label="Motivo do cancelamento">' +
         '<button class="go" data-act="confirmar">Confirmar cancelamento</button><button class="link" data-act="fechar">Voltar</button>' +
         (errors[m.id] ? '<div class="msg" role="alert">' + esc(errors[m.id]) + '</div>' : '') + '</div>';
-    } else if (m.status === 'cancelada') {
+    } else if (isCanc(m)) {
       h += '<div class="shown-reason"><span><b>Motivo:</b> ' + esc(m.motivo || 'não informado') + '</span><button class="link" data-act="editar">Editar</button></div>';
     }
     h += '</article>';
@@ -365,20 +371,20 @@
     list().forEach(function (m) { var k = iso(mondayOf(parse(m.data))); (weeks[k] = weeks[k] || []).push(m); });
     var keys = Object.keys(weeks).sort().reverse();
     if (!keys.length) return '<div class="empty"><b>O histórico ainda está vazio.</b>As semanas aparecem aqui depois que as primeiras reuniões forem carregadas.</div>';
-    var h = '<section class="panel"><h3>Semanas registradas</h3><div class="table-scroll"><table><thead><tr><th>Semana</th><th>Reuniões</th><th>Realizadas</th><th>Canceladas</th><th>Remarcadas</th><th>Previstas</th></tr></thead><tbody>';
+    var h = '<section class="panel"><h3>Semanas registradas</h3><div class="table-scroll"><table><thead><tr><th>Semana</th><th>Reuniões</th><th>Realizadas</th><th>Canceladas</th><th>Canc. sem pendência</th><th>Remarcadas</th><th>Previstas</th></tr></thead><tbody>';
     keys.forEach(function (k) {
       var ws = parse(k), c = counts(weeks[k]);
-      h += '<tr data-week="' + k + '" tabindex="0"><td>' + esc(shortDate(ws)) + ' a ' + esc(shortDate(addDays(ws, 6))) + '</td><td>' + c.total + '</td><td>' + c.realizada + '</td><td>' + c.cancelada + '</td><td>' + c.remarcada + '</td><td>' + c.prevista + '</td></tr>';
+      h += '<tr data-week="' + k + '" tabindex="0"><td>' + esc(shortDate(ws)) + ' a ' + esc(shortDate(addDays(ws, 6))) + '</td><td>' + c.total + '</td><td>' + c.realizada + '</td><td>' + c.cancelada + '</td><td>' + c.cancelada_sem_pendencia + '</td><td>' + c.remarcada + '</td><td>' + c.prevista + '</td></tr>';
     });
     h += '</tbody></table></div></section>';
-    var canc = list().filter(function (m) { return m.status === 'cancelada'; }).sort(function (a, b) { return (b.data + b.inicio).localeCompare(a.data + a.inicio); });
+    var canc = list().filter(isCanc).sort(function (a, b) { return (b.data + b.inicio).localeCompare(a.data + a.inicio); });
     h += '<section class="panel"><h3>Todos os cancelamentos</h3>';
     if (!canc.length) h += '<p class="sub" style="margin:0">Nenhuma reunião cancelada até agora.</p>';
     else {
       h += '<ul class="cancel-list">';
       canc.forEach(function (m) {
         var d = parse(m.data);
-        h += '<li><span class="d">' + pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + '</span><span>' + esc(m.assunto) + '</span><span class="r">Motivo: ' + esc(m.motivo) + '</span></li>';
+        h += '<li><span class="d">' + pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + '</span><span>' + esc(m.assunto) + (m.status === 'cancelada_sem_pendencia' ? ' (sem pendência)' : '') + '</span><span class="r">Motivo: ' + esc(m.motivo) + '</span></li>';
       });
       h += '</ul>';
     }
@@ -431,10 +437,11 @@
   function confirmar(id) {
     var txt = (drafts[id] != null ? drafts[id] : (docs[id] && docs[id].motivo) || '').trim();
     if (!txt) { errors[id] = 'Escreva o motivo para registrar o cancelamento.'; render(); var i = document.getElementById('mot-' + id); if (i) i.focus(); return; }
-    var gravando = save(id, { status: 'cancelada', motivo: txt });
+    var st = (typeof editing[id] === 'string') ? editing[id] : 'cancelada';
+    var gravando = save(id, { status: st, motivo: txt });
     delete editing[id]; delete drafts[id]; delete errors[id]; render();
     gravando.then(function (ok) {
-      if (!ok) { editing[id] = true; drafts[id] = txt; render(); }
+      if (!ok) { editing[id] = st; drafts[id] = txt; render(); }
     });
   }
 
@@ -454,12 +461,12 @@
     else if (act === 'hoje') { openDay(iso(new Date())); render(); }
     else if (act === 'status') {
       var st = btn.dataset.st;
-      if (st === 'cancelada') { editing[id] = true; delete errors[id]; render(); var i = document.getElementById('mot-' + id); if (i) i.focus(); }
+      if (st === 'cancelada' || st === 'cancelada_sem_pendencia') { editing[id] = st; delete errors[id]; render(); var i = document.getElementById('mot-' + id); if (i) i.focus(); }
       else { delete editing[id]; delete errors[id]; delete drafts[id]; save(id, { status: st, motivo: '' }); }
     }
     else if (act === 'confirmar') { confirmar(id); }
     else if (act === 'fechar') { delete editing[id]; delete errors[id]; delete drafts[id]; render(); }
-    else if (act === 'editar') { editing[id] = true; drafts[id] = docs[id].motivo || ''; render(); var j = document.getElementById('mot-' + id); if (j) j.focus(); }
+    else if (act === 'editar') { editing[id] = docs[id].status; drafts[id] = docs[id].motivo || ''; render(); var j = document.getElementById('mot-' + id); if (j) j.focus(); }
     else if (act === 'add') { adicionar(); }
     else if (act === 'fechar-dia') { dayOpen = false; render(); }
   });
