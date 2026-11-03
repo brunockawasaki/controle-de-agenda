@@ -59,7 +59,9 @@
   header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; }
   h1 { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.1; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
   .sub { color: var(--muted); font-size: 0.85rem; margin: 4px 0 0; }
-  .tabs { display: flex; gap: 4px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tab.sync { background: var(--surface); }
+  .tab.sync:disabled { opacity: 0.6; cursor: progress; }
   .tab { border: 1px solid var(--line); background: transparent; padding: 6px 14px; border-radius: 6px; cursor: pointer; }
   .tab[aria-pressed="true"] { background: var(--ink); color: var(--ink-fg); border-color: var(--ink); }
 
@@ -169,10 +171,12 @@
     <div>
       <h1>Controle de Agenda</h1>
       <p class="sub">Reuniões da semana: o que aconteceu e o que foi cancelado, com o motivo.</p>
+      <p class="sub" id="sync-msg" role="status"></p>
     </div>
     <div class="tabs" role="group" aria-label="Tela">
       <button class="tab" id="tab-semana" aria-pressed="true">Calendário</button>
       <button class="tab" id="tab-historico" aria-pressed="false">Histórico</button>
+      <button class="tab sync" id="btn-sync" hidden>Atualizar calendário</button>
     </div>
   </header>
   <div id="banner" class="banner" hidden></div>
@@ -1123,10 +1127,125 @@
   }
 
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dayOpen) { dayOpen = false; render(); } });
+  document.getElementById('btn-sync').addEventListener('click', sincronizar);
   document.getElementById('tab-semana').addEventListener('click', function () { tela = 'semana'; render(); });
   document.getElementById('tab-historico').addEventListener('click', function () { tela = 'historico'; dayOpen = false; render(); });
 
   render();
+
+  var mcp = null, syncing = false, ultima = null, syncMsg = '';
+  var SYNC_DIAS = 60;
+  function norm(t) { return String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ''); }
+  function slug(t) { return String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40); }
+
+  // Data e hora no fuso de Brasilia. O Outlook pode devolver o horario em UTC.
+  function partes(quando) {
+    var dt = String(quando.dateTime || '').replace(/\.\d+$/, '');
+    if (!quando.timeZone || quando.timeZone === 'UTC') {
+      var f = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(dt + 'Z'));
+      var o = {};
+      f.forEach(function (x) { o[x.type] = x.value; });
+      return { dia: o.year + '-' + o.month + '-' + o.day, hora: o.hour + ':' + o.minute };
+    }
+    return { dia: dt.slice(0, 10), hora: dt.slice(11, 16) };
+  }
+  function ajustaLocal(loc) {
+    if (!loc) return '';
+    return String(loc).split(';').map(function (x) {
+      x = x.trim();
+      if (/^Reuniões do Microsoft Teams$/i.test(x) || /^Microsoft Teams/i.test(x)) return 'Teams';
+      var m = x.match(/^(\d+)\s*Pavimento\s*SALA\s*(\d+)$/i);
+      return m ? m[1] + 'º andar, sala ' + m[2] : x;
+    }).filter(Boolean).join(' e ');
+  }
+  function collect(v, out) {
+    if (Array.isArray(v)) { v.forEach(function (x) { collect(x, out); }); return; }
+    if (v && typeof v === 'object') {
+      if (v.subject !== undefined && v.start) { out.events.push(v); return; }
+      if (v.nextOffset !== undefined) out.next = v.nextOffset;
+      Object.keys(v).forEach(function (k) { if (v[k] && typeof v[k] === 'object') collect(v[k], out); });
+    }
+  }
+  function extract(res) {
+    var out = { events: [], next: null };
+    if (res && res.structuredContent) collect(res.structuredContent, out);
+    if (!out.events.length && res && res.content) res.content.forEach(function (b) { if (b && b.type === 'text') { try { collect(JSON.parse(b.text), out); } catch (e) {} } });
+    if (!out.events.length && res && res.payload) collect(res.payload, out);
+    return out;
+  }
+
+  function textoUltima() {
+    try {
+      var d = new Date(ultima.em);
+      return 'Última atualização: ' + d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + (ultima.novas != null ? ' (' + ultima.novas + ' novas)' : '');
+    } catch (e) { return ''; }
+  }
+  function setSync(msg, busy) {
+    syncMsg = msg || '';
+    var b = document.getElementById('btn-sync'), m = document.getElementById('sync-msg');
+    if (b) { b.hidden = !mcp; b.disabled = !!busy; b.textContent = busy ? 'Atualizando...' : 'Atualizar calendário'; }
+    if (m) m.textContent = syncMsg || (ultima ? textoUltima() : '');
+  }
+  function renderSync() { setSync(syncMsg, syncing); }
+  function erroSync(e) {
+    var c = e && e.code;
+    if (c === 'needs_reauth') return 'Reconecte o Microsoft 365 em Configurações > Conectores do Claude e tente de novo.';
+    if (c === 'server_not_connected' || c === 'selection_required') return 'Conecte o Microsoft 365 em Configurações > Conectores do Claude e tente de novo.';
+    if (c === 'approval_required' || c === 'not_in_manifest' || c === 'consent_required') return 'Falta permissão para a página ler o Outlook. Clique em Atualizar calendário e permita.';
+    if (c === 'blocked_by_policy') return 'A sua organização bloqueou esse acesso ao Outlook.';
+    return 'Não consegui atualizar (' + (c || 'erro') + '). Tente de novo.';
+  }
+
+  function sincronizar() {
+    if (!mcp || !db || syncing) return;
+    syncing = true;
+    setSync('Lendo a agenda do Outlook...', true);
+    var ini = new Date(); ini.setHours(0, 0, 0, 0);
+    var fim = new Date(ini.getTime() + SYNC_DIAS * 86400000);
+    var eventos = [], offset = 0, paginas = 0;
+    function pagina() {
+      return mcp.callTool('Microsoft 365', 'outlook_calendar_search', { query: '*', afterDateTime: ini.toISOString(), beforeDateTime: fim.toISOString(), order: 'oldest', limit: 25, offset: offset }, { cache: false }).then(function (res) {
+        var r = extract(res);
+        eventos = eventos.concat(r.events);
+        paginas++;
+        if (r.next != null && r.events.length && paginas < 12) { offset = r.next; return pagina(); }
+      });
+    }
+    pagina().then(function () {
+      var existentes = {}, ids = {};
+      Object.keys(docs).forEach(function (id) {
+        var m = docs[id];
+        ids[id] = true;
+        existentes[m.data + '|' + m.inicio + '|' + norm(m.assunto)] = true;
+        if (m.outlookId) existentes['o|' + m.outlookId] = true;
+      });
+      var novos = [];
+      eventos.forEach(function (ev) {
+        if (ev.isCancelled) return;
+        var a = partes(ev.start || {}), b = partes(ev.end || {});
+        var assunto = String(ev.subject || '').replace(/\s+/g, ' ').trim() || '(sem assunto)';
+        var inicio = ev.isAllDay ? '00:00' : a.hora;
+        var fimH = ev.isAllDay ? '23:59' : (b.dia !== a.dia ? '23:59' : b.hora);
+        var k = a.dia + '|' + inicio + '|' + norm(assunto);
+        if (existentes[k] || (ev.id && existentes['o|' + ev.id])) return;
+        existentes[k] = true;
+        var base = a.dia.replace(/-/g, '') + '-' + inicio.replace(':', '') + '-' + (slug(assunto) || 'reuniao'), id = base, n = 2;
+        while (ids[id]) { id = base + '-' + n; n++; }
+        ids[id] = true;
+        novos.push({ id: id, dados: { data: a.dia, inicio: inicio, fim: fimH, assunto: assunto, local: ajustaLocal(ev.location), organizador: !!ev.isOrganizer, status: 'prevista', motivo: '', outlookId: ev.id || '' } });
+      });
+      var cadeia = Promise.resolve();
+      novos.forEach(function (n) { cadeia = cadeia.then(function () { return db.doc('reunioes/' + n.id).set(n.dados); }); });
+      return cadeia.then(function () {
+        return db.doc('config/sync').set({ em: new Date().toISOString(), novas: novos.length, origem: 'botao' }).catch(function () {});
+      }).then(function () { return { qtd: novos.length, total: eventos.length }; });
+    }).then(function (r) {
+      syncing = false;
+      setSync(r.total
+        ? (r.qtd ? r.qtd + (r.qtd === 1 ? ' reunião nova incluída.' : ' reuniões novas incluídas.') : 'O calendário já está em dia. Nenhuma reunião nova.')
+        : 'O Outlook não devolveu reuniões para os próximos ' + SYNC_DIAS + ' dias.', false);
+    }).catch(function (e) { syncing = false; setSync(erroSync(e), false); });
+  }
 
   var timer = null;
   var modoLocal = false;
@@ -1168,6 +1287,7 @@
 
   function assinar(d) {
     db = d;
+    if (!modoLocal) d.doc('config/sync').onSnapshot(function (sn) { ultima = sn.exists ? sn.data() : null; renderSync(); }, function () {});
     timer = setTimeout(function () { banner('Ainda não consegui carregar os dados. Eles podem estar desatualizados.'); }, 10000);
     db.collection('reunioes').onSnapshot(function (snap) {
       if (!snap.metadata.fromCache) { clearTimeout(timer); okBanner(); }
@@ -1183,6 +1303,7 @@
     window.claude.use('db').then(function (d) {
       if (!d) { banner('Entre na sua conta para ver e registrar as reuniões.'); return; }
       assinar(d);
+      window.claude.use('mcp').then(function (m) { mcp = m; renderSync(); }).catch(function () {});
     });
   }
   iniciar();
