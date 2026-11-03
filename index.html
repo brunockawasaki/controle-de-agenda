@@ -1,0 +1,413 @@
+<title>Controle de Agenda</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: coluna única estreita, semana em blocos por dia; o status de cada reunião é um seletor na própria linha. */
+  :root {
+    --bg: #f5f4f2;
+    --surface: #ffffff;
+    --fg: #1f2124;
+    --muted: #6a6e74;
+    --line: #dedcd8;
+    --ink: #2b2f36;
+    --ink-fg: #ffffff;
+    --ok: #1f7a4d;
+    --ok-bg: #e2f1e8;
+    --bad: #b3261e;
+    --bad-bg: #f9e3e1;
+    --warn: #9a6200;
+    --warn-bg: #f8ecd2;
+    --idle-bg: #eceae6;
+    --font-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+    --font-body: "IBM Plex Sans", Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17191c; --surface: #202327; --fg: #ebe9e5; --muted: #9a9ea5; --line: #33373d;
+      --ink: #d9dbe0; --ink-fg: #17191c;
+      --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220;
+      --warn: #e5b45a; --warn-bg: #3d3014; --idle-bg: #2a2d32;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17191c; --surface: #202327; --fg: #ebe9e5; --muted: #9a9ea5; --line: #33373d;
+    --ink: #d9dbe0; --ink-fg: #17191c;
+    --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220;
+    --warn: #e5b45a; --warn-bg: #3d3014; --idle-bg: #2a2d32;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.45;
+    padding-block: 24px 64px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .wrap { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+  button, input, select { font: inherit; color: inherit; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; }
+  h1 { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.1; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+  .sub { color: var(--muted); font-size: 0.85rem; margin: 4px 0 0; }
+  .tabs { display: flex; gap: 4px; }
+  .tab { border: 1px solid var(--line); background: transparent; padding: 6px 14px; border-radius: 6px; cursor: pointer; }
+  .tab[aria-pressed="true"] { background: var(--ink); color: var(--ink-fg); border-color: var(--ink); }
+
+  .weekbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .weekbar h2 { font-family: var(--font-display); font-size: 1.25rem; margin: 0; flex: 1 1 220px; text-wrap: balance; }
+  .nav { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  .nav:hover { border-color: var(--ink); }
+
+  .summary { display: flex; flex-direction: column; gap: 10px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; }
+  .stat { display: flex; flex-direction: column; }
+  .stat b { font-family: var(--font-display); font-size: 1.7rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat.ok b { color: var(--ok); } .stat.bad b { color: var(--bad); } .stat.warn b { color: var(--warn); }
+  .bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--idle-bg); }
+  .bar i { display: block; height: 100%; }
+  .bar .b-ok { background: var(--ok); } .bar .b-bad { background: var(--bad); } .bar .b-warn { background: var(--warn); }
+  .alert { margin: 0; font-size: 0.88rem; color: var(--warn); }
+
+  .day { display: flex; flex-direction: column; gap: 8px; }
+  .day h3 { font-family: var(--font-display); font-size: 0.95rem; margin: 8px 0 0; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+  .meet { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 14px; }
+  .time { font-family: var(--font-mono); font-size: 0.85rem; padding-top: 2px; font-variant-numeric: tabular-nums; }
+  .what { min-width: 0; }
+  .what strong { font-weight: 600; overflow-wrap: anywhere; }
+  .meta { color: var(--muted); font-size: 0.82rem; display: flex; flex-wrap: wrap; gap: 2px 12px; margin-top: 2px; }
+  .chip { font-size: 0.72rem; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: var(--warn-bg); color: var(--warn); }
+  .chip.bad { background: var(--bad-bg); color: var(--bad); }
+  .status { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .st { border: 1px solid var(--line); background: transparent; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+  .st:hover { border-color: var(--ink); }
+  .st[aria-pressed="true"].s-realizada { background: var(--ok-bg); color: var(--ok); border-color: var(--ok); font-weight: 600; }
+  .st[aria-pressed="true"].s-cancelada { background: var(--bad-bg); color: var(--bad); border-color: var(--bad); font-weight: 600; }
+  .st[aria-pressed="true"].s-remarcada { background: var(--warn-bg); color: var(--warn); border-color: var(--warn); font-weight: 600; }
+  .st[aria-pressed="true"].s-prevista { background: var(--idle-bg); border-color: var(--muted); font-weight: 600; }
+  .reason { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 4px; }
+  .reason input { flex: 1 1 260px; min-width: 0; padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); }
+  .reason input.err { border-color: var(--bad); }
+  .reason .msg { color: var(--bad); font-size: 0.82rem; flex-basis: 100%; }
+  .go { border: 0; background: var(--bad); color: #fff; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+  .link { border: 0; background: none; color: var(--muted); text-decoration: underline; cursor: pointer; padding: 4px; }
+  .shown-reason { grid-column: 1 / -1; background: var(--bad-bg); color: var(--fg); border-radius: 6px; padding: 8px 12px; font-size: 0.9rem; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .shown-reason span { overflow-wrap: anywhere; }
+  .shown-reason b { color: var(--bad); }
+
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .panel h3 { margin: 0; font-family: var(--font-display); font-size: 1.05rem; }
+  .cancel-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .cancel-list li { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 2px 12px; font-size: 0.9rem; }
+  .cancel-list .d { color: var(--muted); font-family: var(--font-mono); font-size: 0.82rem; }
+  .cancel-list .r { color: var(--muted); grid-column: 2; overflow-wrap: anywhere; }
+
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: var(--idle-bg); }
+
+  details.add { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; }
+  details.add summary { cursor: pointer; font-weight: 600; }
+  .form { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 12px; }
+  .form label { display: flex; flex-direction: column; gap: 3px; font-size: 0.8rem; color: var(--muted); min-width: 0; }
+  .form input { padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); min-width: 0; }
+  .form .wide { grid-column: 1 / -1; }
+  .primary { border: 0; background: var(--ink); color: var(--ink-fg); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; justify-self: start; }
+
+  .empty { text-align: left; padding: 28px 0; color: var(--muted); max-width: 52ch; }
+  .empty b { color: var(--fg); display: block; margin-bottom: 4px; font-family: var(--font-display); font-size: 1.1rem; }
+  .banner { padding: 10px 14px; border-radius: 8px; background: var(--warn-bg); color: var(--warn); font-size: 0.9rem; }
+  @media (max-width: 520px) {
+    .meet { grid-template-columns: minmax(0, 1fr); }
+    .cancel-list li { grid-template-columns: minmax(0, 1fr); }
+    .cancel-list .r { grid-column: 1; }
+  }
+  @media (prefers-reduced-motion: no-preference) { .bar i { transition: width .25s ease; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Controle de Agenda</h1>
+      <p class="sub">Reuniões da semana: o que aconteceu e o que foi cancelado, com o motivo.</p>
+    </div>
+    <div class="tabs" role="group" aria-label="Tela">
+      <button class="tab" id="tab-semana" aria-pressed="true">Semana</button>
+      <button class="tab" id="tab-historico" aria-pressed="false">Histórico</button>
+    </div>
+  </header>
+  <div id="banner" class="banner" hidden></div>
+  <main id="view"></main>
+</div>
+
+<script>
+(function () {
+  var STATUS = [
+    { id: 'prevista', label: 'Prevista' },
+    { id: 'realizada', label: 'Realizada' },
+    { id: 'cancelada', label: 'Cancelada' },
+    { id: 'remarcada', label: 'Remarcada' }
+  ];
+  var DIAS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  var MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+
+  var db = null;
+  var docs = {};          // id -> dados
+  var tela = 'semana';
+  var drafts = {};        // id -> texto do motivo em edição
+  var errors = {};        // id -> mensagem
+  var editing = {};       // id -> true quando o campo de motivo está aberto
+  var addOpen = false;
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function parse(iso) { var p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function iso(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function mondayOf(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); var wd = (x.getDay() + 6) % 7; x.setDate(x.getDate() - wd); return x; }
+  function addDays(d, n) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() + n); return x; }
+  function shortDate(d) { return d.getDate() + ' de ' + MESES[d.getMonth()]; }
+  function toMin(hhmm) { var p = (hhmm || '0:0').split(':'); return (+p[0]) * 60 + (+p[1]); }
+  function nowMin() { var n = new Date(); return n.getHours() * 60 + n.getMinutes(); }
+
+  var weekStart = mondayOf(new Date());
+
+  function list() { return Object.keys(docs).map(function (id) { var d = docs[id]; d.id = id; return d; }); }
+  function inWeek(ws) {
+    var a = iso(ws), b = iso(addDays(ws, 6));
+    return list().filter(function (m) { return m.data >= a && m.data <= b; })
+      .sort(function (x, y) { return (x.data + x.inicio).localeCompare(y.data + y.inicio); });
+  }
+  function isPastUnregistered(m) {
+    if (m.status !== 'prevista') return false;
+    var today = iso(new Date());
+    if (m.data < today) return true;
+    return m.data === today && toMin(m.fim) < nowMin();
+  }
+  function counts(items) {
+    var c = { total: items.length, realizada: 0, cancelada: 0, remarcada: 0, prevista: 0, semRegistro: 0 };
+    items.forEach(function (m) { c[m.status] = (c[m.status] || 0) + 1; if (isPastUnregistered(m)) c.semRegistro++; });
+    return c;
+  }
+  function conflictIds(items) {
+    var out = {};
+    var active = items.filter(function (m) { return m.status === 'prevista' || m.status === 'realizada'; });
+    for (var i = 0; i < active.length; i++) for (var j = i + 1; j < active.length; j++) {
+      var a = active[i], b = active[j];
+      if (a.data === b.data && toMin(a.inicio) < toMin(b.fim) && toMin(b.inicio) < toMin(a.fim)) { out[a.id] = true; out[b.id] = true; }
+    }
+    return out;
+  }
+
+  function renderSemana() {
+    var items = inWeek(weekStart);
+    var c = counts(items);
+    var end = addDays(weekStart, 6);
+    var html = '';
+    html += '<div class="weekbar"><button class="nav" data-act="prev" aria-label="Semana anterior">&larr; Anterior</button>' +
+      '<h2>' + esc(shortDate(weekStart)) + ' a ' + esc(shortDate(end)) + ' de ' + end.getFullYear() + '</h2>' +
+      '<button class="nav" data-act="hoje">Esta semana</button>' +
+      '<button class="nav" data-act="next" aria-label="Próxima semana">Próxima &rarr;</button></div>';
+
+    if (!items.length) {
+      html += '<div class="empty"><b>Nenhuma reunião registrada nesta semana.</b>Peça ao Claude para carregar as reuniões da agenda do Outlook, ou use "Adicionar reunião" abaixo.</div>';
+    } else {
+      var pct = function (n) { return (c.total ? (n / c.total * 100) : 0).toFixed(1) + '%'; };
+      html += '<section class="summary" aria-label="Resumo da semana"><div class="stats">' +
+        '<div class="stat"><b>' + c.total + '</b><span>Reuniões</span></div>' +
+        '<div class="stat ok"><b>' + c.realizada + '</b><span>Realizadas</span></div>' +
+        '<div class="stat bad"><b>' + c.cancelada + '</b><span>Canceladas</span></div>' +
+        '<div class="stat warn"><b>' + c.remarcada + '</b><span>Remarcadas</span></div>' +
+        '<div class="stat"><b>' + c.prevista + '</b><span>Previstas</span></div></div>' +
+        '<div class="bar" role="img" aria-label="Proporção por status"><i class="b-ok" style="width:' + pct(c.realizada) + '"></i><i class="b-bad" style="width:' + pct(c.cancelada) + '"></i><i class="b-warn" style="width:' + pct(c.remarcada) + '"></i></div>' +
+        (c.semRegistro ? '<p class="alert">' + c.semRegistro + (c.semRegistro === 1 ? ' reunião já passou e ainda está como prevista. Marque se aconteceu ou foi cancelada.' : ' reuniões já passaram e ainda estão como previstas. Marque se aconteceram ou foram canceladas.') + '</p>' : '') +
+        '</section>';
+
+      var conf = conflictIds(items);
+      var byDay = {};
+      items.forEach(function (m) { (byDay[m.data] = byDay[m.data] || []).push(m); });
+      Object.keys(byDay).sort().forEach(function (day) {
+        var d = parse(day);
+        html += '<section class="day"><h3>' + esc(DIAS[d.getDay()]) + ', ' + esc(shortDate(d)) + '</h3>';
+        byDay[day].forEach(function (m) { html += meetingHtml(m, !!conf[m.id]); });
+        html += '</section>';
+      });
+
+      var canc = items.filter(function (m) { return m.status === 'cancelada'; });
+      html += '<section class="panel" aria-label="Cancelamentos da semana"><h3>Cancelamentos da semana</h3>';
+      if (!canc.length) html += '<p class="sub" style="margin:0">Nenhuma reunião cancelada nesta semana.</p>';
+      else {
+        html += '<ul class="cancel-list">';
+        canc.forEach(function (m) {
+          var d = parse(m.data);
+          html += '<li><span class="d">' + pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + ' ' + esc(m.inicio) + '</span><span>' + esc(m.assunto) + '</span><span class="r">Motivo: ' + esc(m.motivo) + '</span></li>';
+        });
+        html += '</ul>';
+      }
+      html += '</section>';
+    }
+
+    html += '<details class="add"' + (addOpen ? ' open' : '') + ' id="add-box"><summary>Adicionar reunião</summary><div class="form">' +
+      '<label>Data<input type="date" id="f-data" value="' + iso(weekStart) + '"></label>' +
+      '<label>Início<input type="time" id="f-ini" value="09:00"></label>' +
+      '<label>Fim<input type="time" id="f-fim" value="09:30"></label>' +
+      '<label class="wide">Assunto<input type="text" id="f-assunto" maxlength="160"></label>' +
+      '<label class="wide">Local<input type="text" id="f-local" maxlength="120" placeholder="Sala ou Teams"></label>' +
+      '<button class="primary" data-act="add">Adicionar</button></div></details>';
+    return html;
+  }
+
+  function meetingHtml(m, conflict) {
+    var h = '<article class="meet" data-id="' + esc(m.id) + '">';
+    h += '<div class="time">' + esc(m.inicio) + '–' + esc(m.fim) + '</div>';
+    h += '<div class="what"><strong>' + esc(m.assunto) + '</strong><div class="meta">';
+    if (m.local) h += '<span>' + esc(m.local) + '</span>';
+    if (m.organizador) h += '<span>Você organiza</span>';
+    if (conflict) h += '<span class="chip">Conflito de horário</span>';
+    if (isPastUnregistered(m)) h += '<span class="chip">Falta registrar</span>';
+    h += '</div></div>';
+    h += '<div class="status" role="group" aria-label="Status da reunião">';
+    STATUS.forEach(function (s) {
+      var pressed = (editing[m.id] ? s.id === 'cancelada' : m.status === s.id);
+      h += '<button class="st s-' + s.id + '" data-act="status" data-st="' + s.id + '" aria-pressed="' + pressed + '">' + s.label + '</button>';
+    });
+    h += '</div>';
+    if (editing[m.id]) {
+      var v = drafts[m.id] != null ? drafts[m.id] : (m.motivo || '');
+      h += '<div class="reason"><input type="text" class="' + (errors[m.id] ? 'err' : '') + '" id="mot-' + esc(m.id) + '" data-id="' + esc(m.id) + '" maxlength="300" placeholder="Motivo do cancelamento (obrigatório)" value="' + esc(v) + '" aria-label="Motivo do cancelamento">' +
+        '<button class="go" data-act="confirmar">Confirmar cancelamento</button><button class="link" data-act="fechar">Voltar</button>' +
+        (errors[m.id] ? '<div class="msg" role="alert">' + esc(errors[m.id]) + '</div>' : '') + '</div>';
+    } else if (m.status === 'cancelada') {
+      h += '<div class="shown-reason"><span><b>Motivo:</b> ' + esc(m.motivo || 'não informado') + '</span><button class="link" data-act="editar">Editar</button></div>';
+    }
+    h += '</article>';
+    return h;
+  }
+
+  function renderHistorico() {
+    var weeks = {};
+    list().forEach(function (m) { var k = iso(mondayOf(parse(m.data))); (weeks[k] = weeks[k] || []).push(m); });
+    var keys = Object.keys(weeks).sort().reverse();
+    if (!keys.length) return '<div class="empty"><b>O histórico ainda está vazio.</b>As semanas aparecem aqui depois que as primeiras reuniões forem carregadas.</div>';
+    var h = '<section class="panel"><h3>Semanas registradas</h3><div class="table-scroll"><table><thead><tr><th>Semana</th><th>Reuniões</th><th>Realizadas</th><th>Canceladas</th><th>Remarcadas</th><th>Previstas</th></tr></thead><tbody>';
+    keys.forEach(function (k) {
+      var ws = parse(k), c = counts(weeks[k]);
+      h += '<tr data-week="' + k + '" tabindex="0"><td>' + esc(shortDate(ws)) + ' a ' + esc(shortDate(addDays(ws, 6))) + '</td><td>' + c.total + '</td><td>' + c.realizada + '</td><td>' + c.cancelada + '</td><td>' + c.remarcada + '</td><td>' + c.prevista + '</td></tr>';
+    });
+    h += '</tbody></table></div></section>';
+    var canc = list().filter(function (m) { return m.status === 'cancelada'; }).sort(function (a, b) { return (b.data + b.inicio).localeCompare(a.data + a.inicio); });
+    h += '<section class="panel"><h3>Todos os cancelamentos</h3>';
+    if (!canc.length) h += '<p class="sub" style="margin:0">Nenhuma reunião cancelada até agora.</p>';
+    else {
+      h += '<ul class="cancel-list">';
+      canc.forEach(function (m) {
+        var d = parse(m.data);
+        h += '<li><span class="d">' + pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + '</span><span>' + esc(m.assunto) + '</span><span class="r">Motivo: ' + esc(m.motivo) + '</span></li>';
+      });
+      h += '</ul>';
+    }
+    return h + '</section>';
+  }
+
+  var view = document.getElementById('view');
+  function render() {
+    var keep = document.activeElement && document.activeElement.id;
+    var pos = null;
+    if (keep && document.activeElement.selectionStart != null) pos = document.activeElement.selectionStart;
+    view.innerHTML = tela === 'semana' ? renderSemana() : renderHistorico();
+    document.getElementById('tab-semana').setAttribute('aria-pressed', tela === 'semana');
+    document.getElementById('tab-historico').setAttribute('aria-pressed', tela === 'historico');
+    if (keep) { var el = document.getElementById(keep); if (el) { el.focus(); if (pos != null && el.setSelectionRange) try { el.setSelectionRange(pos, pos); } catch (e) {} } }
+  }
+
+  function banner(msg) { var b = document.getElementById('banner'); b.hidden = !msg; b.textContent = msg || ''; }
+
+  function save(id, patch) {
+    if (!db) { banner('Não consegui acessar o banco de dados desta página. Abra pelo link do Artifact, já logado.'); return Promise.resolve(false); }
+    patch.atualizadoEm = new Date().toISOString();
+    return db.doc('reunioes/' + id).update(patch).then(function () { banner(''); return true; }).catch(function (e) {
+      banner('Não foi possível salvar (' + (e && e.code ? e.code : 'erro') + '). Tente de novo.'); return false;
+    });
+  }
+
+  view.addEventListener('input', function (e) {
+    if (e.target.matches('.reason input')) { drafts[e.target.dataset.id] = e.target.value; }
+  });
+  view.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.matches('.reason input')) { e.preventDefault(); confirmar(e.target.dataset.id); }
+    if (e.key === 'Enter' && e.target.matches('tr[data-week]')) { weekStart = parse(e.target.dataset.week); tela = 'semana'; render(); }
+  });
+  view.addEventListener('toggle', function (e) { if (e.target.id === 'add-box') addOpen = e.target.open; }, true);
+
+  function confirmar(id) {
+    var txt = (drafts[id] != null ? drafts[id] : (docs[id] && docs[id].motivo) || '').trim();
+    if (!txt) { errors[id] = 'Escreva o motivo para registrar o cancelamento.'; render(); var i = document.getElementById('mot-' + id); if (i) i.focus(); return; }
+    save(id, { status: 'cancelada', motivo: txt }).then(function (ok) {
+      if (ok) { delete editing[id]; delete drafts[id]; delete errors[id]; render(); }
+    });
+  }
+
+  view.addEventListener('click', function (e) {
+    var row = e.target.closest('tr[data-week]');
+    if (row) { weekStart = parse(row.dataset.week); tela = 'semana'; render(); return; }
+    var btn = e.target.closest('[data-act]');
+    if (!btn) return;
+    var act = btn.dataset.act;
+    var card = btn.closest('.meet');
+    var id = card && card.dataset.id;
+    if (act === 'prev') { weekStart = addDays(weekStart, -7); render(); }
+    else if (act === 'next') { weekStart = addDays(weekStart, 7); render(); }
+    else if (act === 'hoje') { weekStart = mondayOf(new Date()); render(); }
+    else if (act === 'status') {
+      var st = btn.dataset.st;
+      if (st === 'cancelada') { editing[id] = true; delete errors[id]; render(); var i = document.getElementById('mot-' + id); if (i) i.focus(); }
+      else { delete editing[id]; delete errors[id]; delete drafts[id]; save(id, { status: st, motivo: '' }); }
+    }
+    else if (act === 'confirmar') { confirmar(id); }
+    else if (act === 'fechar') { delete editing[id]; delete errors[id]; delete drafts[id]; render(); }
+    else if (act === 'editar') { editing[id] = true; drafts[id] = docs[id].motivo || ''; render(); var j = document.getElementById('mot-' + id); if (j) j.focus(); }
+    else if (act === 'add') { adicionar(); }
+  });
+
+  function adicionar() {
+    var data = document.getElementById('f-data').value, ini = document.getElementById('f-ini').value, fim = document.getElementById('f-fim').value;
+    var assunto = document.getElementById('f-assunto').value.trim(), local = document.getElementById('f-local').value.trim();
+    if (!data || !ini || !fim || !assunto) { banner('Preencha data, início, fim e assunto.'); return; }
+    if (toMin(fim) <= toMin(ini)) { banner('O horário de fim precisa ser depois do início.'); return; }
+    if (!db) { banner('Não consegui acessar o banco de dados desta página.'); return; }
+    db.collection('reunioes').add({ data: data, inicio: ini, fim: fim, assunto: assunto, local: local, organizador: false, status: 'prevista', motivo: '', atualizadoEm: new Date().toISOString() })
+      .then(function () { banner(''); addOpen = false; weekStart = mondayOf(parse(data)); })
+      .catch(function (e) { banner('Não foi possível adicionar (' + (e && e.code ? e.code : 'erro') + ').'); });
+  }
+
+  document.getElementById('tab-semana').addEventListener('click', function () { tela = 'semana'; render(); });
+  document.getElementById('tab-historico').addEventListener('click', function () { tela = 'historico'; render(); });
+
+  render();
+
+  var timer = null;
+  function iniciar() {
+    if (!window.claude || !window.claude.use) { banner('Esta página precisa ser aberta como Artifact para guardar os registros.'); return; }
+    window.claude.use('db').then(function (d) {
+      if (!d) { banner('Entre na sua conta para ver e registrar as reuniões.'); return; }
+      db = d;
+      timer = setTimeout(function () { banner('Ainda não consegui carregar os dados. Eles podem estar desatualizados.'); }, 10000);
+      db.collection('reunioes').onSnapshot(function (snap) {
+        if (!snap.metadata.fromCache) { clearTimeout(timer); banner(''); }
+        var next = {};
+        snap.docs.forEach(function (s) { next[s.id] = s.data(); });
+        docs = next;
+        render();
+      }, function (err) { clearTimeout(timer); banner('Erro ao carregar os dados (' + (err && err.code ? err.code : 'erro') + ').'); });
+    });
+  }
+  iniciar();
+})();
+</script>
