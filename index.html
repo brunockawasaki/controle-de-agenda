@@ -24,6 +24,9 @@
     --bad-bg: #f9e3e1;
     --sp: #1f5f8b;
     --sp-bg: #dde9f4;
+    --hol: #1b5e8f;
+    --hol-bg: #d6ecfb;
+    --hol-line: #9fcdea;
     --warn: #9a6200;
     --warn-bg: #f8ecd2;
     --idle-bg: #eceae6;
@@ -35,7 +38,7 @@
     :root:not([data-theme="light"]) {
       --bg: #17191c; --surface: #202327; --fg: #ebe9e5; --muted: #9a9ea5; --line: #33373d;
       --ink: #d9dbe0; --ink-fg: #17191c;
-      --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146;
+      --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146; --hol: #8fc7ee; --hol-bg: #183548; --hol-line: #2d5d7c;
       --warn: #e5b45a; --warn-bg: #3d3014; --idle-bg: #2a2d32;
       color-scheme: dark;
     }
@@ -43,7 +46,7 @@
   :root[data-theme="dark"] {
     --bg: #17191c; --surface: #202327; --fg: #ebe9e5; --muted: #9a9ea5; --line: #33373d;
     --ink: #d9dbe0; --ink-fg: #17191c;
-    --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146;
+    --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146; --hol: #8fc7ee; --hol-bg: #183548; --hol-line: #2d5d7c;
     --warn: #e5b45a; --warn-bg: #3d3014; --idle-bg: #2a2d32;
     color-scheme: dark;
   }
@@ -88,6 +91,9 @@
   .cell { min-height: 78px; min-width: 0; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; cursor: pointer; }
   .cell:hover { border-color: var(--ink); }
   .cell.out { background: transparent; opacity: 0.5; }
+  .cell.hol { background: var(--hol-bg); border-color: var(--hol-line); }
+  .hol-nome { font-size: 0.68rem; line-height: 1.15; font-weight: 600; color: var(--hol); }
+  .d-hol { background: var(--hol-bg); box-shadow: inset 0 0 0 1px var(--hol-line); }
   .cell.pend { border-color: var(--warn); }
   .cell.sel { border-color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); opacity: 1; }
   .num { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; line-height: 1.3; padding: 0 6px; margin-left: -6px; }
@@ -99,7 +105,7 @@
   .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.78rem; color: var(--muted); }
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
   .day-title { font-family: var(--font-display); font-size: 1.15rem; margin: 0; scroll-margin-top: 12px; }
-  @media (max-width: 520px) { .cell { min-height: 54px; padding: 4px; } .cnt { display: none; } .num { margin-left: -4px; } }
+  @media (max-width: 520px) { .cell { min-height: 54px; padding: 4px; } .cnt, .hol-nome { display: none; } .num { margin-left: -4px; } }
   .overlay { position: fixed; inset: 0; z-index: 20; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center;
     padding-top: max(16px, env(safe-area-inset-top, 0px)); padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
@@ -239,6 +245,31 @@
     if (m.data < today) return true;
     return m.data === today && toMin(m.fim) < nowMin();
   }
+  // Feriados nacionais (de lei federal). Carnaval e Corpus Christi nao entram: sao ponto facultativo.
+  var feriadosAno = {};
+  function pascoa(ano) {
+    var a = ano % 19, b = Math.floor(ano / 100), c = ano % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+    var h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+    var mes = Math.floor((h + l - 7 * m + 114) / 31), dia = ((h + l - 7 * m + 114) % 31) + 1;
+    return new Date(ano, mes - 1, dia);
+  }
+  function feriadosDe(ano) {
+    if (feriadosAno[ano]) return feriadosAno[ano];
+    var f = {};
+    f[ano + '-01-01'] = 'Confraterniza\u00e7\u00e3o Universal';
+    f[iso(addDays(pascoa(ano), -2))] = 'Sexta-feira Santa';
+    f[ano + '-04-21'] = 'Tiradentes';
+    f[ano + '-05-01'] = 'Dia do Trabalho';
+    f[ano + '-09-07'] = 'Independ\u00eancia do Brasil';
+    f[ano + '-10-12'] = 'Nossa Senhora Aparecida';
+    f[ano + '-11-02'] = 'Finados';
+    f[ano + '-11-15'] = 'Proclama\u00e7\u00e3o da Rep\u00fablica';
+    f[ano + '-11-20'] = 'Dia da Consci\u00eancia Negra';
+    f[ano + '-12-25'] = 'Natal';
+    feriadosAno[ano] = f;
+    return f;
+  }
+  function feriado(isoDia) { return feriadosDe(+isoDia.slice(0, 4))[isoDia] || ''; }
   function isCanc(m) { return m.status === 'cancelada' || m.status === 'cancelada_sem_pendencia'; }
   function counts(items) {
     var c = { total: items.length, realizada: 0, cancelada: 0, cancelada_sem_pendencia: 0, remarcada: 0, prevista: 0, semRegistro: 0 };
@@ -286,9 +317,10 @@
     var gridEnd = addDays(mondayOf(last), 6);
     for (var d = mondayOf(first); d <= gridEnd; d = addDays(d, 1)) {
       var k = iso(d), arr = byDay[k] || [];
-      var cls = 'cell' + (d.getMonth() !== first.getMonth() ? ' out' : '') + (k === todayIso ? ' today' : '') + (k === selDay ? ' sel' : '') + (arr.some(isPastUnregistered) ? ' pend' : '');
+      var fer = feriado(k);
+      var cls = 'cell' + (d.getMonth() !== first.getMonth() ? ' out' : '') + (k === todayIso ? ' today' : '') + (k === selDay ? ' sel' : '') + (arr.some(isPastUnregistered) ? ' pend' : '') + (fer ? ' hol' : '');
       var label = d.getDate() + ' de ' + MESES[d.getMonth()] + ', ' + (arr.length ? arr.length + (arr.length === 1 ? ' reunião' : ' reuniões') : 'sem reuniões');
-      html += '<button class="' + cls + '" data-day="' + k + '" aria-label="' + esc(label) + '"' + (k === selDay ? ' aria-pressed="true"' : '') + '><span class="num">' + d.getDate() + '</span>';
+      html += '<button class="' + cls + '" data-day="' + k + '" aria-label="' + esc(label + (fer ? ', feriado nacional: ' + fer : '')) + '"' + (k === selDay ? ' aria-pressed="true"' : '') + '><span class="num">' + d.getDate() + '</span>' + (fer ? '<span class="hol-nome">' + esc(fer) + '</span>' : '');
       if (arr.length) {
         html += '<span class="cnt">' + arr.length + (arr.length === 1 ? ' reunião' : ' reuniões') + '</span><span class="dots">';
         arr.slice().sort(function (x, y) { return x.inicio.localeCompare(y.inicio); }).forEach(function (m) {
@@ -300,7 +332,7 @@
       html += '</button>';
     }
     html += '</div>';
-    html += '<div class="legend"><span><i class="dot d-ok"></i>Realizada</span><span><i class="dot d-bad"></i>Cancelada</span><span><i class="dot d-sp"></i>Sem Pendências</span><span><i class="dot d-warn"></i>Remarcada</span><span><i class="dot d-idle"></i>Prevista</span></div>';
+    html += '<div class="legend"><span><i class="dot d-ok"></i>Realizada</span><span><i class="dot d-bad"></i>Cancelada</span><span><i class="dot d-sp"></i>Sem Pendências</span><span><i class="dot d-warn"></i>Remarcada</span><span><i class="dot d-idle"></i>Prevista</span><span><i class="dot d-hol"></i>Feriado nacional</span></div>';
 
     var sd = parse(selDay);
     var dayItems = (byDay[selDay] || []).slice().sort(function (x, y) { return (x.inicio + x.fim).localeCompare(y.inicio + y.fim); });
@@ -309,7 +341,7 @@
       var conf = conflictIds(dayItems);
       modalHtml = '<div class="overlay" id="overlay"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="day-panel">' +
         '<div class="modal-head"><div><h3 class="day-title" id="day-panel">' + esc(DIAS[sd.getDay()]) + ', ' + esc(shortDate(sd)) + '</h3>' +
-        '<p class="sub" style="margin:2px 0 0">' + (dayItems.length ? dayItems.length + (dayItems.length === 1 ? ' reuni\u00e3o' : ' reuni\u00f5es') : 'Sem reuni\u00f5es') + '</p></div>' +
+        '<p class="sub" style="margin:2px 0 0">' + (dayItems.length ? dayItems.length + (dayItems.length === 1 ? ' reuni\u00e3o' : ' reuni\u00f5es') : 'Sem reuni\u00f5es') + (feriado(selDay) ? ' \u00b7 Feriado nacional: ' + feriado(selDay) : '') + '</p></div>' +
         '<button class="x" id="btn-fechar-dia" data-act="fechar-dia">Fechar</button></div><div class="modal-body">';
       if (!dayItems.length) modalHtml += '<p class="sub" style="margin:0">Nenhuma reuni\u00e3o neste dia. Para incluir uma, feche esta janela e use "Adicionar reuni\u00e3o".</p>';
       dayItems.forEach(function (m) { modalHtml += meetingHtml(m, !!conf[m.id]); });

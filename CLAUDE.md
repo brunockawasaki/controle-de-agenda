@@ -29,6 +29,7 @@ Página HTML que registra, dia a dia, as reuniões da agenda do Outlook: **reali
 - Artifact e GitHub têm cada um o seu registro. A rotina junta os dois a cada rodada: vale o registro com `atualizadoEm` mais recente, e o Artifact também recebe o que foi marcado pelo GitHub. Entre uma rodada e outra, um lado não vê o que foi marcado no outro.
 - Horários: o Outlook devolve em UTC; converter para Brasília (UTC-3).
 - Cancelar exige motivo preenchido. Sem motivo, a página não grava.
+- Calendário: os **feriados nacionais** aparecem em azul claro, com o nome do feriado e "Feriado nacional" na legenda (decisão do Bruno em 04/11/2026). Só os de lei federal: Confraternização Universal, Sexta-feira Santa, Tiradentes, Dia do Trabalho, Independência, Nossa Senhora Aparecida, Finados, Proclamação da República, Dia da Consciência Negra e Natal. **Carnaval e Corpus Christi ficam de fora** (ponto facultativo). Feriado estadual ou municipal não entra. A lista é calculada no código (a Sexta-feira Santa vem da Páscoa).
 
 **Regras da agenda**
 - Reunião nova do Outlook entra como **Prevista**. O Claude nunca marca realizada, cancelada ou remarcada por conta própria; quem marca é o Bruno.
