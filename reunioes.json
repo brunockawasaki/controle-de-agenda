@@ -109,6 +109,17 @@
   "organizador": false,
   "status": "cancelada_sem_pendencia"
  },
+ "20261104-1430-sem-assunto": {
+  "assunto": "(sem assunto)",
+  "atualizadoEm": "",
+  "data": "2026-11-04",
+  "fim": "15:00",
+  "inicio": "14:30",
+  "local": "",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261104-1500-fup-novos-negocios": {
   "assunto": "Projeto Next - Governança - Follow Up - Novos Negócios",
   "atualizadoEm": "2026-11-04T19:01:46.129Z",
@@ -303,6 +314,17 @@
   "fim": "14:00",
   "inicio": "13:30",
   "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261110-1400-ajuste-de-fluxo-nn-fl-gg-nng-003-due-dil": {
+  "assunto": "Ajuste de Fluxo NN - FL.GG.NNG.003 - Due Diligence Make It NN",
+  "atualizadoEm": "",
+  "data": "2026-11-10",
+  "fim": "15:00",
+  "inicio": "14:00",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
