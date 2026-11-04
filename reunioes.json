@@ -100,14 +100,14 @@
  },
  "20261104-1430-fup-obras": {
   "assunto": "Projeto Next - FUP - Governança - Obras",
-  "atualizadoEm": "",
+  "atualizadoEm": "2026-11-04T17:22:14.474Z",
   "data": "2026-11-04",
   "fim": "15:00",
   "inicio": "14:30",
   "local": "7º andar, sala 1",
-  "motivo": "",
+  "motivo": "Sem pendências de prazo da área responsável",
   "organizador": false,
-  "status": "prevista"
+  "status": "cancelada_sem_pendencia"
  },
  "20261104-1500-fup-novos-negocios": {
   "assunto": "Projeto Next - Governança - Follow Up - Novos Negócios",
