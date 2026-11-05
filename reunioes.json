@@ -1164,5 +1164,49 @@
   "motivo": "",
   "organizador": true,
   "status": "prevista"
+ },
+ "20270104-1530-projeto-next-fup-governanca-juridico": {
+  "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
+  "data": "2027-01-04",
+  "fim": "16:00",
+  "inicio": "15:30",
+  "local": "",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270104-1600-projeto-next-governanca-de-resultados-co": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
+  "data": "2027-01-04",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270104-1630-projeto-next-governanca-de-resultados-co": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
+  "data": "2027-01-04",
+  "fim": "17:00",
+  "inicio": "16:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270104-1700-reuniao-de-fup-suprimentos-projeto-next": {
+  "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
+  "data": "2027-01-04",
+  "fim": "17:30",
+  "inicio": "17:00",
+  "local": "",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
  }
 }
