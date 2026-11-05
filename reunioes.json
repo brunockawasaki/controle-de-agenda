@@ -408,14 +408,14 @@
  },
  "20261111-0900-reuniao-mensal-processos": {
   "assunto": "Reunião Mensal - Time Processos",
-  "atualizadoEm": "",
+  "atualizadoEm": "2026-11-05T19:39:39.396Z",
   "data": "2026-11-11",
   "fim": "10:00",
   "inicio": "09:00",
   "local": "",
-  "motivo": "",
+  "motivo": "Reunião cancelada pela Diretoria",
   "organizador": false,
-  "status": "prevista"
+  "status": "cancelada"
  },
  "20261111-1100-fup-gmo": {
   "assunto": "Projeto Next - FUP - GMO",
