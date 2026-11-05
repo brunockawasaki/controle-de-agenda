@@ -191,7 +191,6 @@
       <button class="tab" id="tab-semana" aria-pressed="true">Calendário</button>
       <button class="tab" id="tab-historico" aria-pressed="false">Histórico</button>
       <button class="tab sync" id="btn-sync" hidden>Atualizar calendário</button>
-      <button class="tab sync" id="btn-git" hidden>Conectar ao GitHub</button>
     </div>
   </header>
   <div id="banner" class="banner" hidden></div>
@@ -520,7 +519,6 @@
   }
 
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { var og = document.getElementById('overlay-git'); if (og) { og.remove(); return; } if (dayOpen) { dayOpen = false; render(); } } });
-  document.getElementById('btn-git').addEventListener('click', abrirToken);
   document.getElementById('btn-sync').addEventListener('click', function () { if (modoLocal) sincronizarLocal(false); else sincronizar(); });
   document.getElementById('tab-semana').addEventListener('click', function () { tela = 'semana'; render(); });
   document.getElementById('tab-historico').addEventListener('click', function () { tela = 'historico'; dayOpen = false; render(); });
@@ -577,8 +575,6 @@
   function setSync(msg, busy) {
     syncMsg = msg || '';
     var b = document.getElementById('btn-sync'), m = document.getElementById('sync-msg');
-    var g = document.getElementById('btn-git');
-    if (g) g.hidden = !(modoLocal && db && db.temToken && !db.temToken());
     if (b) { b.hidden = !(mcp || modoLocal); b.disabled = !!busy; b.textContent = busy ? 'Atualizando...' : 'Atualizar calendário'; }
     if (m) m.textContent = syncMsg || (ultima ? textoUltima() : '');
   }
