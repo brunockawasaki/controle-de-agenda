@@ -66,6 +66,8 @@ def main():
                     para_artifact[i] = dict(g, _acao='atualizar')
             else:
                 final[i] = a
+            # O nome da reuniao vem sempre do Artifact, que o atualiza a partir do Outlook.
+            final[i] = dict(final[i], assunto=a['assunto'])
 
     with io.open(DESTINO, 'w', encoding='utf-8', newline='') as fh:
         fh.write(json.dumps(final, ensure_ascii=False, indent=1, sort_keys=True) + '\n')

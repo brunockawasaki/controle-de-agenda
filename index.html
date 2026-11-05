@@ -614,12 +614,13 @@
       });
     }
     pagina().then(function () {
-      var existentes = {}, ids = {};
+      var existentes = {}, ids = {}, porOutlook = {}, porChave = {}, ajustes = [];
       Object.keys(docs).forEach(function (id) {
         var m = docs[id];
         ids[id] = true;
         existentes[m.data + '|' + m.inicio + '|' + norm(m.assunto)] = true;
-        if (m.outlookId) existentes['o|' + m.outlookId] = true;
+        if (m.outlookId) { existentes['o|' + m.outlookId] = true; porOutlook[m.outlookId] = id; }
+        else porChave[m.data + '|' + m.inicio + '|' + norm(m.assunto)] = id;
       });
       var novos = [];
       eventos.forEach(function (ev) {
@@ -629,7 +630,11 @@
         var inicio = ev.isAllDay ? '00:00' : a.hora;
         var fimH = ev.isAllDay ? '23:59' : (b.dia !== a.dia ? '23:59' : b.hora);
         var k = a.dia + '|' + inicio + '|' + norm(assunto);
-        if (existentes[k] || (ev.id && existentes['o|' + ev.id])) return;
+        // O nome vem sempre do Outlook: se mudou la, atualiza aqui (so o assunto; o registro da reuniao nao muda).
+        var did = ev.id && porOutlook[ev.id];
+        if (did) { if (docs[did].assunto !== assunto) ajustes.push({ id: did, patch: { assunto: assunto } }); return; }
+        if (porChave[k] && ev.id) { ajustes.push({ id: porChave[k], patch: { outlookId: ev.id } }); delete porChave[k]; return; }
+        if (existentes[k]) return;
         existentes[k] = true;
         var base = a.dia.replace(/-/g, '') + '-' + inicio.replace(':', '') + '-' + (slug(assunto) || 'reuniao'), id = base, n = 2;
         while (ids[id]) { id = base + '-' + n; n++; }
@@ -637,6 +642,7 @@
         novos.push({ id: id, dados: { data: a.dia, inicio: inicio, fim: fimH, assunto: assunto, local: ajustaLocal(ev.location), organizador: !!ev.isOrganizer, status: 'prevista', motivo: '', outlookId: ev.id || '' } });
       });
       var cadeia = Promise.resolve();
+      ajustes.forEach(function (j) { cadeia = cadeia.then(function () { return db.doc('reunioes/' + j.id).update(j.patch); }); });
       novos.forEach(function (n) { cadeia = cadeia.then(function () { return db.doc('reunioes/' + n.id).set(n.dados); }); });
       return cadeia.then(function () {
         return db.doc('config/sync').set({ em: new Date().toISOString(), novas: novos.length, origem: 'botao' }).catch(function () {});
