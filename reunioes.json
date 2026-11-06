@@ -1219,5 +1219,16 @@
   "motivo": "",
   "organizador": true,
   "status": "prevista"
+ },
+ "20270105-1000-projeto-next-fup-governanca-marketing": {
+  "assunto": "Projeto Next - FUP - Governança - Marketing",
+  "atualizadoEm": "",
+  "data": "2027-01-05",
+  "fim": "10:30",
+  "inicio": "10:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
  }
 }
