@@ -483,6 +483,17 @@
   "organizador": true,
   "status": "prevista"
  },
+ "20261116-0900-reuniao-mensal-time-controladoria": {
+  "assunto": "Reunião mensal - Time controladoria",
+  "atualizadoEm": "",
+  "data": "2026-11-16",
+  "fim": "10:00",
+  "inicio": "09:00",
+  "local": "8º andar, sala 2",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
  "20261116-1330-fup-proj-complementares": {
   "assunto": "Projeto Next - Governança - Follow Up - Projetos Complementares e Orçamento",
   "atualizadoEm": "",
