@@ -258,7 +258,7 @@
   "data": "2026-11-09",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "realizada"
@@ -266,24 +266,13 @@
  "20261109-1600-comercial-makeit": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
   "atualizadoEm": "2026-11-09T19:21:58.148Z",
-  "data": "2026-11-09",
-  "fim": "16:30",
-  "inicio": "16:00",
-  "local": "6º andar, sala 3",
+  "data": "2026-11-10",
+  "fim": "13:30",
+  "inicio": "13:00",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "remarcada"
- },
- "20261109-1600-contratos-gadens-construcoes": {
-  "assunto": "Contratos Gadens Construções na Obra",
-  "atualizadoEm": "",
-  "data": "2026-11-09",
-  "fim": "18:00",
-  "inicio": "16:00",
-  "local": "9º andar, sala 1",
-  "motivo": "",
-  "organizador": false,
-  "status": "prevista"
  },
  "20261109-1630-comercial-gadens": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
@@ -302,7 +291,7 @@
   "data": "2026-11-09",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -478,7 +467,7 @@
   "data": "2026-11-11",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -555,7 +544,7 @@
   "data": "2026-11-16",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -599,7 +588,7 @@
   "data": "2026-11-16",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -687,7 +676,7 @@
   "data": "2026-11-18",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -731,7 +720,7 @@
   "data": "2026-11-23",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -764,7 +753,7 @@
   "data": "2026-11-23",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -797,7 +786,7 @@
   "data": "2026-11-25",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -863,7 +852,7 @@
   "data": "2026-11-30",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -896,7 +885,7 @@
   "data": "2026-11-30",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -918,7 +907,7 @@
   "data": "2026-12-02",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -973,7 +962,7 @@
   "data": "2026-12-07",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1006,7 +995,7 @@
   "data": "2026-12-07",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1028,7 +1017,7 @@
   "data": "2026-12-09",
   "fim": "10:00",
   "inicio": "09:00",
-  "local": "",
+  "local": "8º andar, sala 2",
   "motivo": "",
   "organizador": false,
   "status": "prevista"
@@ -1039,7 +1028,7 @@
   "data": "2026-12-09",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1105,7 +1094,7 @@
   "data": "2026-12-14",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1138,7 +1127,7 @@
   "data": "2026-12-14",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1160,7 +1149,7 @@
   "data": "2026-12-16",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1215,7 +1204,7 @@
   "data": "2026-12-21",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1248,7 +1237,7 @@
   "data": "2026-12-21",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1270,7 +1259,7 @@
   "data": "2026-12-23",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1303,7 +1292,7 @@
   "data": "2026-12-28",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1336,7 +1325,7 @@
   "data": "2026-12-28",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1358,7 +1347,7 @@
   "data": "2026-12-30",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1391,7 +1380,7 @@
   "data": "2027-01-04",
   "fim": "16:00",
   "inicio": "15:30",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1424,7 +1413,7 @@
   "data": "2027-01-04",
   "fim": "17:30",
   "inicio": "17:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1446,7 +1435,7 @@
   "data": "2027-01-06",
   "fim": "16:30",
   "inicio": "16:00",
-  "local": "",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
