@@ -541,8 +541,16 @@
     }
     return { dia: dt.slice(0, 10), hora: dt.slice(11, 16) };
   }
-  function ajustaLocal(loc) {
-    if (!loc) return '';
+  function salaDosParticipantes(lista) {
+    var out = '';
+    (lista || []).forEach(function (e) {
+      var m = !out && String(e).match(/^(\d+)_?Pavimento_?SALA_?(\d+)@/i);
+      if (m) out = m[1] + '\u00ba andar, sala ' + m[2];
+    });
+    return out;
+  }
+  function ajustaLocal(loc, participantes) {
+    if (!loc) return salaDosParticipantes(participantes);
     return String(loc).split(';').map(function (x) {
       x = x.trim();
       if (/^Reuniões do Microsoft Teams$/i.test(x) || /^Microsoft Teams/i.test(x)) return 'Teams';
@@ -636,7 +644,7 @@
         var did = ev.id && porOutlook[ev.id];
         if (did) {
           // Nome, dia, horario e local seguem o Outlook; status e motivo (o registro do Bruno) nao mudam.
-          var d0 = docs[did], pt = {}, loc = ajustaLocal(ev.location);
+          var d0 = docs[did], pt = {}, loc = ajustaLocal(ev.location, ev.attendees);
           if (d0.assunto !== assunto) pt.assunto = assunto;
           if (d0.data !== a.dia) pt.data = a.dia;
           if (d0.inicio !== inicio) pt.inicio = inicio;
@@ -651,7 +659,7 @@
         var base = a.dia.replace(/-/g, '') + '-' + inicio.replace(':', '') + '-' + (slug(assunto) || 'reuniao'), id = base, n = 2;
         while (ids[id]) { id = base + '-' + n; n++; }
         ids[id] = true;
-        novos.push({ id: id, dados: { data: a.dia, inicio: inicio, fim: fimH, assunto: assunto, local: ajustaLocal(ev.location), organizador: !!ev.isOrganizer, status: 'prevista', motivo: '', outlookId: ev.id || '' } });
+        novos.push({ id: id, dados: { data: a.dia, inicio: inicio, fim: fimH, assunto: assunto, local: ajustaLocal(ev.location, ev.attendees), organizador: !!ev.isOrganizer, status: 'prevista', motivo: '', outlookId: ev.id || '' } });
       });
       // Reuniao ainda "prevista" que sumiu do Outlook (movida, apagada ou recusada) sai da lista. As ja registradas ficam.
       var hoje = iso(new Date()), limite = iso(fim);

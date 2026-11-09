@@ -25,7 +25,16 @@ def limpa(d):
 
 def le_artifact(pasta):
     saida = {}
-    for f in sorted(glob.glob(os.path.join(pasta, '**', '*.json'), recursive=True)):
+    arquivos = sorted(glob.glob(os.path.join(pasta, '**', '*.json'), recursive=True))
+    # A exportacao do Artifact nao apaga o arquivo de uma reuniao que foi apagada. Arquivo bem mais velho que o
+    # mais novo da pasta (mais de 15 minutos) e resto de uma exportacao anterior: nao conta.
+    if arquivos:
+        corte = max(os.path.getmtime(f) for f in arquivos) - 900
+        velhos = [f for f in arquivos if os.path.getmtime(f) < corte]
+        if velhos:
+            print(len(velhos), 'arquivo(s) velho(s) da exportacao ignorado(s)')
+        arquivos = [f for f in arquivos if os.path.getmtime(f) >= corte]
+    for f in arquivos:
         with io.open(f, encoding='utf-8') as fh:
             j = json.load(fh)
         d = j['data'] if isinstance(j.get('data'), dict) else j
