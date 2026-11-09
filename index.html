@@ -605,17 +605,17 @@
     setSync('', true);
     var ini = new Date(); ini.setHours(0, 0, 0, 0);
     var fim = new Date(ini.getTime() + SYNC_DIAS * 86400000);
-    var eventos = [], offset = 0, paginas = 0;
+    var eventos = [], offset = 0, paginas = 0, completo = true;
     function pagina() {
       return mcp.callTool('Microsoft 365', 'outlook_calendar_search', { query: '*', afterDateTime: ini.toISOString(), beforeDateTime: fim.toISOString(), order: 'oldest', limit: 25, offset: offset }, { cache: false }).then(function (res) {
         var r = extract(res);
         eventos = eventos.concat(r.events);
         paginas++;
-        if (r.next != null && r.events.length && paginas < 12) { offset = r.next; return pagina(); }
+        if (r.next != null && r.events.length) { if (paginas < 12) { offset = r.next; return pagina(); } completo = false; }
       });
     }
     pagina().then(function () {
-      var existentes = {}, ids = {}, porOutlook = {}, porChave = {}, ajustes = [];
+      var existentes = {}, ids = {}, porOutlook = {}, porChave = {}, ajustes = [], vistos = {}, casou = {}, apagar = [];
       Object.keys(docs).forEach(function (id) {
         var m = docs[id];
         ids[id] = true;
@@ -625,6 +625,7 @@
       });
       var novos = [];
       eventos.forEach(function (ev) {
+        if (ev.id) vistos[ev.id] = true;
         if (ev.isCancelled) return;
         var a = partes(ev.start || {}), b = partes(ev.end || {});
         var assunto = String(ev.subject || '').replace(/\s+/g, ' ').trim() || '(sem assunto)';
@@ -633,8 +634,18 @@
         var k = a.dia + '|' + inicio + '|' + norm(assunto);
         // O nome vem sempre do Outlook: se mudou la, atualiza aqui (so o assunto; o registro da reuniao nao muda).
         var did = ev.id && porOutlook[ev.id];
-        if (did) { if (docs[did].assunto !== assunto) ajustes.push({ id: did, patch: { assunto: assunto } }); return; }
-        if (porChave[k] && ev.id) { ajustes.push({ id: porChave[k], patch: { outlookId: ev.id } }); delete porChave[k]; return; }
+        if (did) {
+          // Nome, dia, horario e local seguem o Outlook; status e motivo (o registro do Bruno) nao mudam.
+          var d0 = docs[did], pt = {}, loc = ajustaLocal(ev.location);
+          if (d0.assunto !== assunto) pt.assunto = assunto;
+          if (d0.data !== a.dia) pt.data = a.dia;
+          if (d0.inicio !== inicio) pt.inicio = inicio;
+          if (d0.fim !== fimH) pt.fim = fimH;
+          if ((d0.local || '') !== loc) pt.local = loc;
+          if (Object.keys(pt).length) ajustes.push({ id: did, patch: pt });
+          return;
+        }
+        if (porChave[k] && ev.id) { casou[porChave[k]] = true; ajustes.push({ id: porChave[k], patch: { outlookId: ev.id } }); delete porChave[k]; return; }
         if (existentes[k]) return;
         existentes[k] = true;
         var base = a.dia.replace(/-/g, '') + '-' + inicio.replace(':', '') + '-' + (slug(assunto) || 'reuniao'), id = base, n = 2;
@@ -642,7 +653,17 @@
         ids[id] = true;
         novos.push({ id: id, dados: { data: a.dia, inicio: inicio, fim: fimH, assunto: assunto, local: ajustaLocal(ev.location), organizador: !!ev.isOrganizer, status: 'prevista', motivo: '', outlookId: ev.id || '' } });
       });
+      // Reuniao ainda "prevista" que sumiu do Outlook (movida, apagada ou recusada) sai da lista. As ja registradas ficam.
+      var hoje = iso(new Date()), limite = iso(fim);
+      if (completo && eventos.length) {
+        Object.keys(docs).forEach(function (id) {
+          var m = docs[id];
+          if (!/^\d{8}-/.test(id) || m.status !== 'prevista' || m.data < hoje || m.data > limite) return;
+          if (!(m.outlookId ? vistos[m.outlookId] : casou[id])) apagar.push(id);
+        });
+      }
       var cadeia = Promise.resolve();
+      apagar.forEach(function (id) { cadeia = cadeia.then(function () { return db.doc('reunioes/' + id).delete(); }); });
       ajustes.forEach(function (j) { cadeia = cadeia.then(function () { return db.doc('reunioes/' + j.id).update(j.patch); }); });
       novos.forEach(function (n) { cadeia = cadeia.then(function () { return db.doc('reunioes/' + n.id).set(n.dados); }); });
       return cadeia.then(function () {

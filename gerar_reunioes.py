@@ -12,6 +12,7 @@ import glob
 import io
 import json
 import os
+import re
 import sys
 
 CAMPOS = ('data', 'inicio', 'fim', 'assunto', 'local', 'organizador', 'status', 'motivo', 'atualizadoEm')
@@ -56,6 +57,11 @@ def main():
         if a and not g:
             final[i] = a
         elif g and not a:
+            # Reuniao que a rotina criou (id comeca com a data) e que sumiu do Artifact foi apagada de proposito
+            # (saiu do Outlook). Se ainda esta como prevista, nao volta. As criadas pela pagina (ids "m...") e as ja
+            # registradas continuam e sao criadas no Artifact.
+            if re.match(r'^\d{8}-', i) and (g.get('status') or 'prevista') == 'prevista':
+                continue
             final[i] = g
             para_artifact[i] = dict(g, _acao='criar')
         else:
@@ -66,8 +72,8 @@ def main():
                     para_artifact[i] = dict(g, _acao='atualizar')
             else:
                 final[i] = a
-            # O nome da reuniao vem sempre do Artifact, que o atualiza a partir do Outlook.
-            final[i] = dict(final[i], assunto=a['assunto'])
+            # Nome, dia, horario e local da reuniao vem sempre do Artifact, que os atualiza a partir do Outlook.
+            final[i] = dict(final[i], **{k: a[k] for k in ('data', 'inicio', 'fim', 'local', 'assunto')})
 
     with io.open(DESTINO, 'w', encoding='utf-8', newline='') as fh:
         fh.write(json.dumps(final, ensure_ascii=False, indent=1, sort_keys=True) + '\n')
