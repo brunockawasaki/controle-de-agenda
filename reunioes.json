@@ -408,14 +408,14 @@
  },
  "20261110-1730-fluxo-de-locacao": {
   "assunto": "Fluxo de Locação",
-  "atualizadoEm": "2026-11-10T20:36:26.402Z",
+  "atualizadoEm": "2026-11-11T13:50:22.866Z",
   "data": "2026-11-10",
   "fim": "18:30",
   "inicio": "17:30",
   "local": "7º andar, sala 1",
-  "motivo": "",
+  "motivo": "Cancelada por ausência da área",
   "organizador": true,
-  "status": "remarcada"
+  "status": "cancelada"
  },
  "20261111-0900-fluxo-de-locacao": {
   "assunto": "Fluxo de Locação",
