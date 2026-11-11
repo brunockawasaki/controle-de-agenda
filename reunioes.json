@@ -452,14 +452,14 @@
  },
  "20261111-1330-fup-qualidade": {
   "assunto": "Follow Up - Qualidade",
-  "atualizadoEm": "",
+  "atualizadoEm": "2026-11-11T17:44:06.432Z",
   "data": "2026-11-11",
   "fim": "14:00",
   "inicio": "13:30",
   "local": "Teams",
-  "motivo": "",
+  "motivo": "Cancelada a pedido da área",
   "organizador": true,
-  "status": "prevista"
+  "status": "cancelada_sem_pendencia"
  },
  "20261111-1400-teste-de-sistemas-permuta-entregaveis-3o-e": {
   "assunto": "Teste de Sistemas - Permuta - Entregáveis 3º encontro",
