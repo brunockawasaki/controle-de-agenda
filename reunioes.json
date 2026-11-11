@@ -417,6 +417,17 @@
   "organizador": true,
   "status": "remarcada"
  },
+ "20261111-0900-fluxo-de-locacao": {
+  "assunto": "Fluxo de Locação",
+  "atualizadoEm": "",
+  "data": "2026-11-11",
+  "fim": "10:00",
+  "inicio": "09:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261111-0900-reuniao-mensal-processos": {
   "assunto": "Reunião Mensal - Time Processos",
   "atualizadoEm": "2026-11-05T19:39:39.396Z",
