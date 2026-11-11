@@ -627,9 +627,8 @@
       Object.keys(docs).forEach(function (id) {
         var m = docs[id];
         ids[id] = true;
-        existentes[m.data + '|' + m.inicio + '|' + norm(m.assunto)] = true;
         if (m.outlookId) { existentes['o|' + m.outlookId] = true; porOutlook[m.outlookId] = id; }
-        else porChave[m.data + '|' + m.inicio + '|' + norm(m.assunto)] = id;
+        else { var kk = m.data + '|' + m.inicio + '|' + norm(m.assunto); existentes[kk] = true; porChave[kk] = id; }
       });
       var novos = [];
       eventos.forEach(function (ev) {
@@ -655,7 +654,7 @@
         }
         if (porChave[k] && ev.id) { casou[porChave[k]] = true; ajustes.push({ id: porChave[k], patch: { outlookId: ev.id } }); delete porChave[k]; return; }
         if (existentes[k]) return;
-        existentes[k] = true;
+        if (ev.id) existentes['o|' + ev.id] = true; else existentes[k] = true;
         var base = a.dia.replace(/-/g, '') + '-' + inicio.replace(':', '') + '-' + (slug(assunto) || 'reuniao'), id = base, n = 2;
         while (ids[id]) { id = base + '-' + n; n++; }
         ids[id] = true;
