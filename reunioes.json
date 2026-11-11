@@ -467,7 +467,7 @@
   "data": "2026-11-11",
   "fim": "15:00",
   "inicio": "14:00",
-  "local": "Teams",
+  "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "realizada"
@@ -493,17 +493,6 @@
   "motivo": "",
   "organizador": true,
   "status": "realizada"
- },
- "20261111-1600-secretaria-de-vendas": {
-  "assunto": "Projeto Next - Governança - Secretaria de Vendas",
-  "atualizadoEm": "",
-  "data": "2026-11-11",
-  "fim": "16:30",
-  "inicio": "16:00",
-  "local": "7º andar, sala 1",
-  "motivo": "",
-  "organizador": true,
-  "status": "prevista"
  },
  "20261111-1630-finalizar-fluxo-comercial": {
   "assunto": "Finalizar fluxo comercial",
@@ -534,6 +523,17 @@
   "fim": "18:00",
   "inicio": "13:30",
   "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261113-0930-follow-up-qualidade": {
+  "assunto": "Follow Up - Qualidade",
+  "atualizadoEm": "",
+  "data": "2026-11-13",
+  "fim": "10:00",
+  "inicio": "09:30",
+  "local": "Teams e 6º andar, sala 5",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -679,6 +679,17 @@
   "local": "Teams",
   "motivo": "",
   "organizador": true,
+  "status": "prevista"
+ },
+ "20261117-1330-makeit-fluxo-controle-de-consumo": {
+  "assunto": "[MAKEIT] Fluxo Controle de Consumo",
+  "atualizadoEm": "",
+  "data": "2026-11-17",
+  "fim": "15:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
   "status": "prevista"
  },
  "20261118-0900-dia-azul-palestra-juntos-pela-conscienti": {
