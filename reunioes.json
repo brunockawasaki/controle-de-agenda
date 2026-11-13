@@ -769,6 +769,17 @@
   "organizador": true,
   "status": "prevista"
  },
+ "20261123-1430-voce-e-nosso-convidado-encontro-de-planeja": {
+  "assunto": "Você é nosso convidado | Encontro de Planejamento Estratégico",
+  "atualizadoEm": "",
+  "data": "2026-11-23",
+  "fim": "17:00",
+  "inicio": "14:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
  "20261123-1530-fup-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
   "atualizadoEm": "",
@@ -822,6 +833,17 @@
   "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
+  "status": "prevista"
+ },
+ "20261125-0930-bencao-de-natal-um-momento-de-gratidao": {
+  "assunto": "Bênção de Natal | Um momento de gratidão",
+  "atualizadoEm": "",
+  "data": "2026-11-25",
+  "fim": "10:30",
+  "inicio": "09:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
   "status": "prevista"
  },
  "20261125-1330-fup-qualidade": {
