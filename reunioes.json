@@ -2165,5 +2165,49 @@
   "motivo": "",
   "organizador": true,
   "status": "prevista"
+ },
+ "20270113-0900-reuniao-mensal-time-processos": {
+  "assunto": "Reunião Mensal - Time Processos",
+  "atualizadoEm": "",
+  "data": "2027-01-13",
+  "fim": "10:00",
+  "inicio": "09:00",
+  "local": "8º andar, sala 2",
+  "motivo": "",
+  "organizador": false,
+  "status": "prevista"
+ },
+ "20270113-1430-projeto-next-governanca-engenharia-de-ob": {
+  "assunto": "Projeto Next - Governança - Engenharia de Obras",
+  "atualizadoEm": "",
+  "data": "2027-01-13",
+  "fim": "15:00",
+  "inicio": "14:30",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270113-1500-projeto-next-governanca": {
+  "assunto": "Projeto Next - Governança -",
+  "atualizadoEm": "",
+  "data": "2027-01-13",
+  "fim": "15:30",
+  "inicio": "15:00",
+  "local": "7º andar, sala 2",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270113-1600-projeto-next-governanca-secretaria-de-ve": {
+  "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+  "atualizadoEm": "",
+  "data": "2027-01-13",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
  }
 }
