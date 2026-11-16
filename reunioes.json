@@ -695,9 +695,9 @@
  "20261117-1330-makeit-fluxo-controle-de-consumo": {
   "assunto": "[MAKEIT] Fluxo Controle de Consumo",
   "atualizadoEm": "",
-  "data": "2026-11-17",
-  "fim": "15:00",
-  "inicio": "13:30",
+  "data": "2026-11-18",
+  "fim": "16:30",
+  "inicio": "15:00",
   "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": false,
@@ -800,6 +800,17 @@
   "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
+  "status": "prevista"
+ },
+ "20261119-0930-alinhar-responsabilidade-comercial-ou-no": {
+  "assunto": "Alinhar responsabilidade Comercial ou Novos Negócios sobre o bloqueio das unidades permutadas fora do terreno negociado",
+  "atualizadoEm": "",
+  "data": "2026-11-19",
+  "fim": "10:00",
+  "inicio": "09:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
   "status": "prevista"
  },
  "20261119-1330-revisao-fluxos-incorp-gadens": {
