@@ -694,14 +694,14 @@
  },
  "20261117-1330-alinhamento-credito-imobiliario": {
   "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
-  "atualizadoEm": "",
+  "atualizadoEm": "2026-11-17T16:28:26.626Z",
   "data": "2026-11-17",
   "fim": "14:00",
   "inicio": "13:30",
   "local": "Teams",
-  "motivo": "",
+  "motivo": "Agenda cancelada sem pendências",
   "organizador": true,
-  "status": "prevista"
+  "status": "cancelada_sem_pendencia"
  },
  "20261117-1330-makeit-fluxo-controle-de-consumo": {
   "assunto": "[MAKEIT] Fluxo Controle de Consumo",
