@@ -2220,5 +2220,17 @@
   "motivo": "",
   "organizador": true,
   "status": "prevista"
+ },
+ "aus-20261116": {
+  "data": "2026-11-16",
+  "inicio": "00:00",
+  "fim": "23:59",
+  "assunto": "Ausência",
+  "local": "",
+  "organizador": false,
+  "status": "ausente",
+  "motivo": "Atestado médico",
+  "atualizadoEm": "2026-11-17T13:04:29.377Z",
+  "id": "aus-20261116"
  }
 }
