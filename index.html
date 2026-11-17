@@ -32,6 +32,9 @@
     --hol: #1b5e8f;
     --hol-bg: #d6ecfb;
     --hol-line: #9fcdea;
+    --aus: #5b3f8c;
+    --aus-bg: #e9e1f4;
+    --aus-line: #c4b0e0;
     --warn: #9a6200;
     --warn-bg: #f8ecd2;
     --idle-bg: #eceae6;
@@ -43,7 +46,7 @@
     :root:not([data-theme="light"]) {
       --bg: #17191c; --surface: #202327; --fg: #ebe9e5; --muted: #9a9ea5; --line: #33373d;
       --ink: #d9dbe0; --ink-fg: #17191c;
-      --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146; --hol: #8fc7ee; --hol-bg: #183548; --hol-line: #2d5d7c;
+      --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146; --hol: #8fc7ee; --hol-bg: #183548; --hol-line: #2d5d7c; --aus: #c3a8ec; --aus-bg: #2d2340; --aus-line: #5a4580;
       --warn: #e5b45a; --warn-bg: #3d3014; --idle-bg: #2a2d32;
       color-scheme: dark;
     }
@@ -51,7 +54,7 @@
   :root[data-theme="dark"] {
     --bg: #17191c; --surface: #202327; --fg: #ebe9e5; --muted: #9a9ea5; --line: #33373d;
     --ink: #d9dbe0; --ink-fg: #17191c;
-    --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146; --hol: #8fc7ee; --hol-bg: #183548; --hol-line: #2d5d7c;
+    --ok: #62c58f; --ok-bg: #1d3a2b; --bad: #f08a82; --bad-bg: #402220; --sp: #7cb4e4; --sp-bg: #1b3146; --hol: #8fc7ee; --hol-bg: #183548; --hol-line: #2d5d7c; --aus: #c3a8ec; --aus-bg: #2d2340; --aus-line: #5a4580;
     --warn: #e5b45a; --warn-bg: #3d3014; --idle-bg: #2a2d32;
     color-scheme: dark;
   }
@@ -99,6 +102,14 @@
   .cell.hol { background: var(--hol-bg); border-color: var(--hol-line); }
   .hol-nome { font-size: 0.68rem; line-height: 1.15; font-weight: 600; color: var(--hol); }
   .d-hol { background: var(--hol-bg); box-shadow: inset 0 0 0 1px var(--hol-line); }
+  .cell.aus { background: var(--aus-bg); border-color: var(--aus-line); }
+  .aus-nome { font-size: 0.68rem; line-height: 1.15; font-weight: 600; color: var(--aus); }
+  .d-aus { background: var(--aus-bg); box-shadow: inset 0 0 0 1px var(--aus-line); }
+  .stat.aus b { color: var(--aus); }
+  .aus-box { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: var(--aus-bg); color: var(--aus); border: 1px solid var(--aus-line); }
+  .aus-box.off { background: transparent; color: var(--fg); border-style: dashed; border-color: var(--line); }
+  .aus-box select { font: inherit; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); }
+  .chip.aus-chip { background: var(--aus-bg); color: var(--aus); }
   .cell.pend { border-color: var(--warn); }
   .cell.sel { border-color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); opacity: 1; }
   .num { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; line-height: 1.3; padding: 0 6px; margin-left: -6px; }
@@ -110,7 +121,7 @@
   .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.78rem; color: var(--muted); }
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
   .day-title { font-family: var(--font-display); font-size: 1.15rem; margin: 0; scroll-margin-top: 12px; }
-  @media (max-width: 520px) { .cell { min-height: 54px; padding: 4px; } .cnt, .hol-nome { display: none; } .num { margin-left: -4px; } }
+  @media (max-width: 520px) { .cell { min-height: 54px; padding: 4px; } .cnt, .hol-nome, .aus-nome { display: none; } .num { margin-left: -4px; } }
   .overlay { position: fixed; inset: 0; z-index: 20; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center;
     padding-top: max(16px, env(safe-area-inset-top, 0px)); padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
@@ -240,11 +251,11 @@
 
   function list() { return Object.keys(docs).map(function (id) { var d = docs[id]; d.id = id; return d; }); }
   function between(a, b) {
-    return list().filter(function (m) { return m.data >= a && m.data <= b; })
+    return ativos().filter(function (m) { return m.data >= a && m.data <= b; })
       .sort(function (x, y) { return (x.data + x.inicio).localeCompare(y.data + y.inicio); });
   }
   function isPastUnregistered(m) {
-    if (m.status !== 'prevista') return false;
+    if (m.status !== 'prevista' || ausenciaDe(m.data)) return false;
     var today = iso(new Date());
     if (m.data < today) return true;
     return m.data === today && toMin(m.fim) < nowMin();
@@ -274,6 +285,10 @@
     return f;
   }
   function feriado(isoDia) { return feriadosDe(+isoDia.slice(0, 4))[isoDia] || ''; }
+  var MOTIVOS_AUS = ['Atestado m\u00e9dico', 'F\u00e9rias', 'Folga', 'Viagem', 'Outro'];
+  function isAusDoc(m) { return m.status === 'ausente' || m.status === 'ausencia_removida'; }
+  function ausenciaDe(dia) { var d = docs['aus-' + dia.replace(/-/g, '')]; return d && d.status === 'ausente' ? d : null; }
+  function ativos() { return list().filter(function (m) { return !isAusDoc(m) && !ausenciaDe(m.data); }); }
   function isCanc(m) { return m.status === 'cancelada' || m.status === 'cancelada_sem_pendencia'; }
   function counts(items) {
     var c = { total: items.length, realizada: 0, cancelada: 0, cancelada_sem_pendencia: 0, remarcada: 0, prevista: 0, semRegistro: 0 };
@@ -295,6 +310,7 @@
     var last = new Date(first.getFullYear(), first.getMonth() + 1, 0);
     var items = between(iso(first), iso(last));
     var c = counts(items);
+    var nAus = list().filter(function (m) { return m.status === 'ausente' && m.data.slice(0, 7) === iso(first).slice(0, 7); }).length;
     var html = '<div class="weekbar"><button class="nav" data-act="prev" aria-label="Mês anterior">&larr; Anterior</button>' +
       '<h2>' + esc(MESES[first.getMonth()]) + ' de ' + first.getFullYear() + '</h2>' +
       '<button class="nav" data-act="hoje">Hoje</button>' +
@@ -307,13 +323,13 @@
       '<div class="stat bad"><b>' + c.cancelada + '</b><span>Canceladas</span></div>' +
       '<div class="stat sp"><b>' + c.cancelada_sem_pendencia + '</b><span>Canceladas sem Pendência</span></div>' +
       '<div class="stat warn"><b>' + c.remarcada + '</b><span>Remarcadas</span></div>' +
-      '<div class="stat"><b>' + c.prevista + '</b><span>Previstas</span></div></div>' +
+      '<div class="stat"><b>' + c.prevista + '</b><span>Previstas</span></div>' + (nAus ? '<div class="stat aus"><b>' + nAus + '</b><span>' + (nAus === 1 ? 'Dia' : 'Dias') + ' de aus\u00eancia</span></div>' : '') + '</div>' +
       '<div class="bar" role="img" aria-label="Proporção por status"><i class="b-ok" style="width:' + pct(c.realizada) + '"></i><i class="b-bad" style="width:' + pct(c.cancelada) + '"></i><i class="b-sp" style="width:' + pct(c.cancelada_sem_pendencia) + '"></i><i class="b-warn" style="width:' + pct(c.remarcada) + '"></i></div>' +
       (c.semRegistro ? '<p class="alert">' + c.semRegistro + (c.semRegistro === 1 ? ' reunião já passou e ainda está como prevista.' : ' reuniões já passaram e ainda estão como previstas.') + ' Os dias com borda amarela têm reuniões sem registro.</p>' : '') +
       '</section>';
 
     var byDay = {};
-    list().forEach(function (m) { (byDay[m.data] = byDay[m.data] || []).push(m); });
+    list().forEach(function (m) { if (isAusDoc(m)) return; (byDay[m.data] = byDay[m.data] || []).push(m); });
     var todayIso = iso(new Date());
     var names = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
     html += '<div class="cal" role="group" aria-label="Calendário de ' + esc(MESES[first.getMonth()]) + '">';
@@ -321,11 +337,11 @@
     var gridEnd = addDays(mondayOf(last), 6);
     for (var d = mondayOf(first); d <= gridEnd; d = addDays(d, 1)) {
       var k = iso(d), arr = byDay[k] || [];
-      var fer = feriado(k);
-      var cls = 'cell' + (d.getMonth() !== first.getMonth() ? ' out' : '') + (k === todayIso ? ' today' : '') + (k === selDay ? ' sel' : '') + (arr.some(isPastUnregistered) ? ' pend' : '') + (fer ? ' hol' : '');
+      var fer = feriado(k), aus = ausenciaDe(k);
+      var cls = 'cell' + (d.getMonth() !== first.getMonth() ? ' out' : '') + (k === todayIso ? ' today' : '') + (k === selDay ? ' sel' : '') + (arr.some(isPastUnregistered) ? ' pend' : '') + (fer ? ' hol' : '') + (aus ? ' aus' : '');
       var label = d.getDate() + ' de ' + MESES[d.getMonth()] + ', ' + (arr.length ? arr.length + (arr.length === 1 ? ' reunião' : ' reuniões') : 'sem reuniões');
-      html += '<button class="' + cls + '" data-day="' + k + '" aria-label="' + esc(label + (fer ? ', feriado nacional: ' + fer : '')) + '"' + (k === selDay ? ' aria-pressed="true"' : '') + '><span class="num">' + d.getDate() + '</span>' + (fer ? '<span class="hol-nome">' + esc(fer) + '</span>' : '');
-      if (arr.length) {
+      html += '<button class="' + cls + '" data-day="' + k + '" aria-label="' + esc(label + (fer ? ', feriado nacional: ' + fer : '') + (aus ? ', ausente: ' + (aus.motivo || 'aus\u00eancia') : '')) + '"' + (k === selDay ? ' aria-pressed="true"' : '') + '><span class="num">' + d.getDate() + '</span>' + (fer ? '<span class="hol-nome">' + esc(fer) + '</span>' : '') + (aus ? '<span class="aus-nome">' + esc(aus.motivo || 'Aus\u00eancia') + '</span>' : '');
+      if (arr.length && !aus) {
         html += '<span class="cnt">' + arr.length + (arr.length === 1 ? ' reunião' : ' reuniões') + '</span><span class="dots">';
         arr.slice().sort(function (x, y) { return x.inicio.localeCompare(y.inicio); }).forEach(function (m) {
           var dc = m.status === 'realizada' ? 'd-ok' : m.status === 'cancelada' ? 'd-bad' : m.status === 'cancelada_sem_pendencia' ? 'd-sp' : m.status === 'remarcada' ? 'd-warn' : 'd-idle';
@@ -336,17 +352,19 @@
       html += '</button>';
     }
     html += '</div>';
-    html += '<div class="legend"><span><i class="dot d-ok"></i>Realizada</span><span><i class="dot d-bad"></i>Cancelada</span><span><i class="dot d-sp"></i>Sem Pendências</span><span><i class="dot d-warn"></i>Remarcada</span><span><i class="dot d-idle"></i>Prevista</span><span><i class="dot d-hol"></i>Feriado nacional</span></div>';
+    html += '<div class="legend"><span><i class="dot d-ok"></i>Realizada</span><span><i class="dot d-bad"></i>Cancelada</span><span><i class="dot d-sp"></i>Sem Pendências</span><span><i class="dot d-warn"></i>Remarcada</span><span><i class="dot d-idle"></i>Prevista</span><span><i class="dot d-hol"></i>Feriado nacional</span><span><i class="dot d-aus"></i>Aus\u00eancia</span></div>';
 
     var sd = parse(selDay);
     var dayItems = (byDay[selDay] || []).slice().sort(function (x, y) { return (x.inicio + x.fim).localeCompare(y.inicio + y.fim); });
     var modalHtml = '';
     if (dayOpen) {
-      var conf = conflictIds(dayItems);
+      var conf = conflictIds(dayItems), ausSel = ausenciaDe(selDay);
       modalHtml = '<div class="overlay" id="overlay"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="day-panel">' +
         '<div class="modal-head"><div><h3 class="day-title" id="day-panel">' + esc(DIAS[sd.getDay()]) + ', ' + esc(shortDate(sd)) + '</h3>' +
-        '<p class="sub" style="margin:2px 0 0">' + (dayItems.length ? dayItems.length + (dayItems.length === 1 ? ' reuni\u00e3o' : ' reuni\u00f5es') : 'Sem reuni\u00f5es') + (feriado(selDay) ? ' \u00b7 Feriado nacional: ' + feriado(selDay) : '') + '</p></div>' +
+        '<p class="sub" style="margin:2px 0 0">' + (dayItems.length ? dayItems.length + (dayItems.length === 1 ? ' reuni\u00e3o' : ' reuni\u00f5es') : 'Sem reuni\u00f5es') + (feriado(selDay) ? ' \u00b7 Feriado nacional: ' + feriado(selDay) : '') + (ausSel ? ' \u00b7 Ausente' : '') + '</p></div>' +
         '<button class="x" id="btn-fechar-dia" data-act="fechar-dia">Fechar</button></div><div class="modal-body">';
+      if (ausSel) modalHtml += '<div class="aus-box"><span><b>Ausente:</b> ' + esc(ausSel.motivo || 'Aus\u00eancia') + '. As reuni\u00f5es deste dia ficam fora da contagem.</span><button class="link" data-act="aus-remover">Remover aus\u00eancia</button></div>';
+      else modalHtml += '<div class="aus-box off"><select id="aus-motivo" aria-label="Motivo da aus\u00eancia">' + MOTIVOS_AUS.map(function (x) { return '<option>' + esc(x) + '</option>'; }).join('') + '</select><button class="go" data-act="aus-marcar">Marcar aus\u00eancia</button></div>';
       if (!dayItems.length) modalHtml += '<p class="sub" style="margin:0">Nenhuma reuni\u00e3o neste dia. Para incluir uma, feche esta janela e use "Adicionar reuni\u00e3o".</p>';
       dayItems.forEach(function (m) { modalHtml += meetingHtml(m, !!conf[m.id]); });
       modalHtml += '</div></div></div>';
@@ -383,7 +401,9 @@
     if (m.organizador) h += '<span>Você organiza</span>';
     if (conflict) h += '<span class="chip">Conflito de horário</span>';
     if (isPastUnregistered(m)) h += '<span class="chip">Falta registrar</span>';
+    if (ausenciaDe(m.data)) h += '<span class="chip aus-chip">Dia de aus\u00eancia</span>';
     h += '</div></div>';
+    if (ausenciaDe(m.data)) return h + '</article>';
     h += '<div class="status" role="group" aria-label="Status da reunião">';
     STATUS.forEach(function (s) {
       var pressed = (editing[m.id] ? s.id === editing[m.id] : m.status === s.id);
@@ -404,16 +424,18 @@
 
   function renderHistorico() {
     var weeks = {};
-    list().forEach(function (m) { var k = iso(mondayOf(parse(m.data))); (weeks[k] = weeks[k] || []).push(m); });
+    var ausW = {};
+    list().forEach(function (m) { var k = iso(mondayOf(parse(m.data))); if (m.status === 'ausente') { ausW[k] = (ausW[k] || 0) + 1; weeks[k] = weeks[k] || []; } });
+    ativos().forEach(function (m) { var k = iso(mondayOf(parse(m.data))); (weeks[k] = weeks[k] || []).push(m); });
     var keys = Object.keys(weeks).sort().reverse();
     if (!keys.length) return '<div class="empty"><b>O histórico ainda está vazio.</b>As semanas aparecem aqui depois que as primeiras reuniões forem carregadas.</div>';
-    var h = '<section class="panel"><h3>Semanas registradas</h3><div class="table-scroll"><table><thead><tr><th>Semana</th><th>Reuniões</th><th>Realizadas</th><th>Canceladas</th><th>Canc. sem pendência</th><th>Remarcadas</th><th>Previstas</th></tr></thead><tbody>';
+    var h = '<section class="panel"><h3>Semanas registradas</h3><div class="table-scroll"><table><thead><tr><th>Semana</th><th>Reuniões</th><th>Realizadas</th><th>Canceladas</th><th>Canc. sem pendência</th><th>Remarcadas</th><th>Previstas</th><th>Aus\u00eancias</th></tr></thead><tbody>';
     keys.forEach(function (k) {
       var ws = parse(k), c = counts(weeks[k]);
-      h += '<tr data-week="' + k + '" tabindex="0"><td>' + esc(shortDate(ws)) + ' a ' + esc(shortDate(addDays(ws, 6))) + '</td><td>' + c.total + '</td><td>' + c.realizada + '</td><td>' + c.cancelada + '</td><td>' + c.cancelada_sem_pendencia + '</td><td>' + c.remarcada + '</td><td>' + c.prevista + '</td></tr>';
+      h += '<tr data-week="' + k + '" tabindex="0"><td>' + esc(shortDate(ws)) + ' a ' + esc(shortDate(addDays(ws, 6))) + '</td><td>' + c.total + '</td><td>' + c.realizada + '</td><td>' + c.cancelada + '</td><td>' + c.cancelada_sem_pendencia + '</td><td>' + c.remarcada + '</td><td>' + c.prevista + '</td><td>' + (ausW[k] || 0) + '</td></tr>';
     });
     h += '</tbody></table></div></section>';
-    var canc = list().filter(isCanc).sort(function (a, b) { return (b.data + b.inicio).localeCompare(a.data + a.inicio); });
+    var canc = ativos().filter(isCanc).sort(function (a, b) { return (b.data + b.inicio).localeCompare(a.data + a.inicio); });
     h += '<section class="panel"><h3>Todos os cancelamentos</h3>';
     if (!canc.length) h += '<p class="sub" style="margin:0">Nenhuma reunião cancelada até agora.</p>';
     else {
@@ -503,9 +525,26 @@
     else if (act === 'confirmar') { confirmar(id); }
     else if (act === 'fechar') { delete editing[id]; delete errors[id]; delete drafts[id]; render(); }
     else if (act === 'editar') { editing[id] = docs[id].status; drafts[id] = docs[id].motivo || ''; render(); var j = document.getElementById('mot-' + id); if (j) j.focus(); }
+    else if (act === 'aus-marcar') { var sel = document.getElementById('aus-motivo'); marcarAusencia(selDay, sel ? sel.value : 'Aus\u00eancia'); }
+    else if (act === 'aus-remover') { var ida = 'aus-' + selDay.replace(/-/g, ''); if (docs[ida]) save(ida, { status: 'ausencia_removida', motivo: '' }); }
     else if (act === 'add') { adicionar(); }
     else if (act === 'fechar-dia') { dayOpen = false; render(); }
   });
+
+  function marcarAusencia(dia, motivo) {
+    if (!db) { banner('N\u00e3o consegui acessar o banco de dados desta p\u00e1gina.'); return; }
+    var id = 'aus-' + dia.replace(/-/g, '');
+    if (emVoo[id]) return;
+    emVoo[id] = true;
+    var antes = docs[id];
+    var obj = { data: dia, inicio: '00:00', fim: '23:59', assunto: 'Aus\u00eancia', local: '', organizador: false, status: 'ausente', motivo: motivo, atualizadoEm: new Date().toISOString() };
+    if (modoLocal) { docs[id] = obj; render(); }
+    db.doc('reunioes/' + id).set(obj).then(function () { delete emVoo[id]; okBanner(); }).catch(function (e) {
+      delete emVoo[id];
+      if (modoLocal) { if (antes) docs[id] = antes; else delete docs[id]; render(); }
+      falhaGravar(e, 'marcar a aus\u00eancia');
+    });
+  }
 
   function adicionar() {
     var data = document.getElementById('f-data').value, ini = document.getElementById('f-ini').value, fim = document.getElementById('f-fim').value;
@@ -741,7 +780,7 @@
       recarregar: recarregar,
       doc: function (path) {
         var id = path.split('/')[1];
-        return { update: function (patch) {
+        return { set: function (obj) { return gravar(function (o) { o[id] = obj; }, 'Registra ' + id + ': ' + (obj.status || 'ausencia')); }, update: function (patch) {
           return gravar(function (o) {
             if (!o[id]) { var e = new Error('nao existe'); e.code = 'invalid_argument'; throw e; }
             o[id] = Object.assign({}, o[id], patch);

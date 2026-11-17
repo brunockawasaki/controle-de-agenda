@@ -40,6 +40,7 @@ FUNDO = {
     'remarcada': PatternFill('solid', start_color='F8ECD2'),
     'prevista': None,
 }
+AUSENCIA = PatternFill('solid', start_color='E9E1F4')
 FIM_DE_SEMANA = PatternFill('solid', start_color='F0EEEA')
 FINO = Side(style='thin', color='DEDCD8')
 BORDA = Border(left=FINO, right=FINO, top=FINO, bottom=FINO)
@@ -47,6 +48,7 @@ BORDA = Border(left=FINO, right=FINO, top=FINO, bottom=FINO)
 
 def carregar(pasta):
     reunioes = []
+    ausencias = {}
     fontes = []
     if os.path.isfile(pasta):
         # um reunioes.json (id -> reuniao), ja com os registros do Artifact e do GitHub juntos
@@ -61,10 +63,16 @@ def carregar(pasta):
         if not d.get('data') or not d.get('inicio'):
             continue
         d = dict(d)
+        if d.get('status') == 'ausencia_removida':
+            continue
+        if d.get('status') == 'ausente':
+            # dia de ausencia: nao e reuniao; guarda o motivo do dia
+            ausencias[d['data']] = d.get('motivo') or 'Ausência'
+            continue
         d['status'] = d.get('status') if d.get('status') in STATUS else 'prevista'
         reunioes.append(d)
     reunioes.sort(key=lambda m: (m['data'], m['inicio'], m.get('fim', '')))
-    return reunioes
+    return reunioes, ausencias
 
 
 def cabecalho(ws, linha, titulos):
@@ -87,8 +95,11 @@ def conta(itens):
     return c
 
 
-def montar(ano, mes, itens, agora):
+def montar(ano, mes, todos, agora, ausencias):
     wb = Workbook()
+    # reunioes em dia de ausencia ficam fora da contagem (mas aparecem na aba Reunioes)
+    itens = [m for m in todos if m['data'] not in ausencias]
+    aus_mes = sorted(d for d in ausencias if d.startswith('%04d-%02d' % (ano, mes)))
     nome_mes = MESES[mes - 1]
 
     # --- Resumo por dia
@@ -99,8 +110,10 @@ def montar(ano, mes, itens, agora):
     tot = conta(itens)
     ws['A2'] = 'Reuniões no mês: %d  |  Realizadas: %d  |  Canceladas: %d  |  Canceladas sem Pendência: %d  |  Remarcadas: %d  |  Previstas: %d' % (
         len(itens), tot['realizada'], tot['cancelada'], tot['cancelada_sem_pendencia'], tot['remarcada'], tot['prevista'])
+    if aus_mes:
+        ws['A2'] = ws['A2'].value + '  |  Dias de ausência: %d' % len(aus_mes)
     ws['A2'].font = F
-    cabecalho(ws, 4, ['Data', 'Dia da semana', 'Reuniões', 'Realizadas', 'Canceladas', 'Canceladas sem Pendência', 'Remarcadas', 'Previstas'])
+    cabecalho(ws, 4, ['Data', 'Dia da semana', 'Reuniões', 'Realizadas', 'Canceladas', 'Canceladas sem Pendência', 'Remarcadas', 'Previstas', 'Ausência'])
     por_dia = {}
     for m in itens:
         por_dia.setdefault(m['data'], []).append(m)
@@ -109,7 +122,7 @@ def montar(ano, mes, itens, agora):
         d = date(ano, mes, dia)
         arr = por_dia.get(d.isoformat(), [])
         c = conta(arr)
-        vals = [d, DIAS[d.weekday()], len(arr), c['realizada'], c['cancelada'], c['cancelada_sem_pendencia'], c['remarcada'], c['prevista']]
+        vals = [d, DIAS[d.weekday()], len(arr), c['realizada'], c['cancelada'], c['cancelada_sem_pendencia'], c['remarcada'], c['prevista'], ausencias.get(d.isoformat(), '')]
         for col, v in enumerate(vals, 1):
             cel = ws.cell(row=linha, column=col, value=v)
             cel.font, cel.border = F, BORDA
@@ -117,6 +130,8 @@ def montar(ano, mes, itens, agora):
             if d.weekday() >= 5 and not arr:
                 cel.fill = FIM_DE_SEMANA
         ws.cell(row=linha, column=1).number_format = 'dd/mm/yyyy'
+        if d.isoformat() in ausencias:
+            ws.cell(row=linha, column=9).fill = AUSENCIA
         if c['cancelada']:
             ws.cell(row=linha, column=5).fill = FUNDO['cancelada']
         if c['cancelada_sem_pendencia']:
@@ -128,30 +143,31 @@ def montar(ano, mes, itens, agora):
     for col, v in enumerate([len(itens), tot['realizada'], tot['cancelada'], tot['cancelada_sem_pendencia'], tot['remarcada'], tot['prevista']], 3):
         cel = ws.cell(row=linha, column=col, value=v)
         cel.font, cel.alignment = FB, Alignment(horizontal='center')
-    for col in range(1, 9):
+    for col in range(1, 10):
         ws.cell(row=linha, column=col).border = Border(top=Side(style='medium', color='2B2F36'))
-    larguras(ws, [14, 16, 12, 12, 12, 16, 12, 12])
+    larguras(ws, [14, 16, 12, 12, 12, 16, 12, 12, 20])
     ws.freeze_panes = 'A5'
 
     # --- Reunioes
     wr = wb.create_sheet('Reuniões')
     cabecalho(wr, 1, ['Data', 'Dia da semana', 'Início', 'Fim', 'Assunto', 'Local', 'Você organiza', 'Status', 'Motivo do cancelamento'])
-    for i, m in enumerate(itens, 2):
+    for i, m in enumerate(todos, 2):
         d = datetime.strptime(m['data'], '%Y-%m-%d').date()
+        em_aus = m['data'] in ausencias
         vals = [d, DIAS[d.weekday()], m['inicio'], m.get('fim', ''), m.get('assunto', ''), m.get('local', ''),
-                'Sim' if m.get('organizador') else 'Não', ROTULO[m['status']], m.get('motivo', '')]
+                'Sim' if m.get('organizador') else 'Não', 'Dia de ausência' if em_aus else ROTULO[m['status']], '' if em_aus else m.get('motivo', '')]
         for col, v in enumerate(vals, 1):
             cel = wr.cell(row=i, column=col, value=v)
             cel.font, cel.border = F, BORDA
             cel.alignment = Alignment(vertical='top', wrap_text=col in (5, 6, 9), horizontal='center' if col in (1, 3, 4, 7, 8) else 'left')
         wr.cell(row=i, column=1).number_format = 'dd/mm/yyyy'
-        fundo = FUNDO[m['status']]
+        fundo = AUSENCIA if em_aus else FUNDO[m['status']]
         if fundo:
             wr.cell(row=i, column=8).fill = fundo
     larguras(wr, [12, 14, 8, 8, 58, 24, 14, 24, 40])
     wr.freeze_panes = 'A2'
-    if itens:
-        wr.auto_filter.ref = 'A1:I%d' % (len(itens) + 1)
+    if todos:
+        wr.auto_filter.ref = 'A1:I%d' % (len(todos) + 1)
 
     # --- Cancelamentos
     wc = wb.create_sheet('Cancelamentos')
@@ -181,6 +197,7 @@ def montar(ano, mes, itens, agora):
         ('Esta planilha é gerada automaticamente. Não edite à mão: a próxima atualização sobrescreve o que for alterado aqui.', F),
         ('Os status e os motivos são registrados na página Controle de Agenda, não nesta planilha.', F),
         ('Abas: Resumo por dia, Reuniões (todas as reuniões do mês) e Cancelamentos (com o motivo).', F),
+        ('Dias de ausência (coluna Ausência do Resumo por dia): as reuniões desses dias ficam fora da contagem e aparecem na aba Reuniões como Dia de ausência.', F),
     ]
     for i, (t, fnt) in enumerate(linhas, 1):
         c = wl.cell(row=i, column=1, value=t)
@@ -193,7 +210,7 @@ def montar(ano, mes, itens, agora):
 def main():
     if len(sys.argv) != 2:
         sys.exit('Uso: python gerar_planilha_mensal.py <pasta com os .json exportados>')
-    reunioes = carregar(sys.argv[1])
+    reunioes, ausencias = carregar(sys.argv[1])
     if not reunioes:
         sys.exit('Nenhuma reuniao encontrada em %s; nada foi alterado.' % sys.argv[1])
     os.makedirs(SAIDA, exist_ok=True)
@@ -204,7 +221,7 @@ def main():
     for ym in meses:
         ano, mes = int(ym[:4]), int(ym[5:7])
         itens = [m for m in reunioes if m['data'].startswith(ym)]
-        wb = montar(ano, mes, itens, agora)
+        wb = montar(ano, mes, itens, agora, ausencias)
         nome = 'Controle de Agenda %s - %s.xlsx' % (ym, MESES[mes - 1])
         destino = os.path.join(SAIDA, nome)
         tmp = destino + '.tmp'
