@@ -364,14 +364,14 @@
  },
  "20261110-1500-puxar-agenda-sobre-permutas": {
   "assunto": "PUXAR AGENDA PERMUTAS",
-  "atualizadoEm": "",
+  "atualizadoEm": "2026-11-17T13:49:52.221Z",
   "data": "2026-11-10",
   "fim": "16:00",
   "inicio": "15:00",
   "local": "6º andar, sala 5",
-  "motivo": "",
+  "motivo": "Não houve necessidade da marcar agenda",
   "organizador": true,
-  "status": "prevista"
+  "status": "cancelada_sem_pendencia"
  },
  "20261110-1600-alinhamento-spe-rh": {
   "assunto": "Alinhamento SPE - RH",
