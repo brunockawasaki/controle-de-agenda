@@ -681,6 +681,17 @@
   "organizador": false,
   "status": "cancelada_sem_pendencia"
  },
+ "20261117-1100-projeto-next-governanca-projetos-e-siste": {
+  "assunto": "Projeto Next - Governança - Projetos e Sistemas",
+  "atualizadoEm": "",
+  "data": "2026-11-17",
+  "fim": "12:00",
+  "inicio": "11:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261117-1330-alinhamento-credito-imobiliario": {
   "assunto": "Alinhamento Projeto Next - Crédito Imobiliário",
   "atualizadoEm": "",
@@ -747,6 +758,17 @@
   "organizador": false,
   "status": "prevista"
  },
+ "20261118-1000-projeto-next-governanca-financeiro": {
+  "assunto": "Projeto Next - Governança - Financeiro",
+  "atualizadoEm": "",
+  "data": "2026-11-18",
+  "fim": "10:30",
+  "inicio": "10:00",
+  "local": "Teams e 7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261118-1100-fup-gmo": {
   "assunto": "Projeto Next - FUP - GMO",
   "atualizadoEm": "",
@@ -811,6 +833,17 @@
   "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": false,
+  "status": "prevista"
+ },
+ "20261119-1030-projeto-next-governanca-orcamento-e-proj": {
+  "assunto": "Projeto Next - Governança - Orçamento e Projetos Complementares",
+  "atualizadoEm": "",
+  "data": "2026-11-19",
+  "fim": "11:00",
+  "inicio": "10:30",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
   "status": "prevista"
  },
  "20261119-1330-revisao-fluxos-incorp-gadens": {
@@ -2222,15 +2255,14 @@
   "status": "prevista"
  },
  "aus-20261116": {
-  "data": "2026-11-16",
-  "inicio": "00:00",
-  "fim": "23:59",
   "assunto": "Ausência",
-  "local": "",
-  "organizador": false,
-  "status": "ausente",
-  "motivo": "Atestado médico",
   "atualizadoEm": "2026-11-17T13:04:29.377Z",
-  "id": "aus-20261116"
+  "data": "2026-11-16",
+  "fim": "23:59",
+  "inicio": "00:00",
+  "local": "",
+  "motivo": "Atestado médico",
+  "organizador": false,
+  "status": "ausente"
  }
 }
