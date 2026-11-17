@@ -769,6 +769,17 @@
   "organizador": true,
   "status": "prevista"
  },
+ "20261118-1030-projeto-next-governanca-inc-gadens": {
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
+  "atualizadoEm": "",
+  "data": "2026-11-18",
+  "fim": "11:00",
+  "inicio": "10:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261118-1100-fup-gmo": {
   "assunto": "Projeto Next - FUP - GMO",
   "atualizadoEm": "",
@@ -803,7 +814,7 @@
   "status": "prevista"
  },
  "20261118-1500-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança -",
+  "assunto": "Projeto Next - Governança - Novos Negócios",
   "atualizadoEm": "",
   "data": "2026-11-18",
   "fim": "15:30",
@@ -846,7 +857,7 @@
   "organizador": true,
   "status": "prevista"
  },
- "20261119-1330-revisao-fluxos-incorp-gadens": {
+ "20261119-1330-projeto-next-revisao-de-fluxos-incorpora": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
   "atualizadoEm": "",
   "data": "2026-11-19",
@@ -979,7 +990,7 @@
   "status": "prevista"
  },
  "20261124-1700-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança",
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
   "data": "2026-11-24",
   "fim": "17:30",
@@ -1053,6 +1064,17 @@
   "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": false,
+  "status": "prevista"
+ },
+ "20261126-1330-projeto-next-revisao-de-fluxos-incorpora": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
+  "data": "2026-11-26",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
   "status": "prevista"
  },
  "20261127-0900-aldo-mattos-consultoria": {
@@ -1188,7 +1210,7 @@
   "status": "prevista"
  },
  "20261201-1700-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança",
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
   "data": "2026-12-01",
   "fim": "17:30",
@@ -1232,6 +1254,17 @@
   "status": "prevista"
  },
  "20261203-1330-projeto-next-revisao-de-fluxos-incorpora": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
+  "data": "2026-12-03",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261203-1330-projeto-next-revisao-de-fluxos-incorpora-2": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
   "atualizadoEm": "",
   "data": "2026-12-03",
@@ -1364,7 +1397,7 @@
   "status": "prevista"
  },
  "20261208-1700-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança",
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
   "data": "2026-12-08",
   "fim": "17:30",
@@ -1419,6 +1452,17 @@
   "status": "prevista"
  },
  "20261210-1330-projeto-next-revisao-de-fluxos-incorpora": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
+  "data": "2026-12-10",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261210-1330-projeto-next-revisao-de-fluxos-incorpora-2": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
   "atualizadoEm": "",
   "data": "2026-12-10",
@@ -1562,7 +1606,7 @@
   "status": "prevista"
  },
  "20261215-1700-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança",
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
   "data": "2026-12-15",
   "fim": "17:30",
@@ -1606,6 +1650,17 @@
   "status": "prevista"
  },
  "20261217-1330-projeto-next-revisao-de-fluxos-incorpora": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
+  "data": "2026-12-17",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261217-1330-projeto-next-revisao-de-fluxos-incorpora-2": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
   "atualizadoEm": "",
   "data": "2026-12-17",
@@ -1738,7 +1793,7 @@
   "status": "prevista"
  },
  "20261222-1700-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança",
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
   "data": "2026-12-22",
   "fim": "17:30",
@@ -1777,6 +1832,17 @@
   "fim": "16:30",
   "inicio": "16:00",
   "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261224-1330-projeto-next-revisao-de-fluxos-incorpora": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
+  "data": "2026-12-24",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1892,7 +1958,7 @@
   "status": "prevista"
  },
  "20261229-1700-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança",
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
   "data": "2026-12-29",
   "fim": "17:30",
@@ -1931,6 +1997,17 @@
   "fim": "16:30",
   "inicio": "16:00",
   "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261231-1330-projeto-next-revisao-de-fluxos-incorpora": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
+  "data": "2026-12-31",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -2046,7 +2123,7 @@
   "status": "prevista"
  },
  "20270105-1700-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança",
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
   "data": "2027-01-05",
   "fim": "17:30",
@@ -2085,6 +2162,17 @@
   "fim": "16:30",
   "inicio": "16:00",
   "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270107-1330-projeto-next-revisao-de-fluxos-incorpora": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
+  "data": "2027-01-07",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -2200,7 +2288,7 @@
   "status": "prevista"
  },
  "20270112-1700-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança",
+  "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
   "data": "2027-01-12",
   "fim": "17:30",
@@ -2250,6 +2338,17 @@
   "fim": "16:30",
   "inicio": "16:00",
   "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270114-1330-projeto-next-revisao-de-fluxos-incorpora": {
+  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+  "atualizadoEm": "",
+  "data": "2027-01-14",
+  "fim": "18:00",
+  "inicio": "13:30",
+  "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
