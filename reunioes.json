@@ -797,39 +797,6 @@
   "data": "2026-11-18",
   "fim": "14:00",
   "inicio": "13:30",
-  "local": "Teams",
-  "motivo": "",
-  "organizador": true,
-  "status": "prevista"
- },
- "20261118-1430-projeto-next-governanca-engenharia-de-ob": {
-  "assunto": "Projeto Next - Governança - Engenharia de Obras",
-  "atualizadoEm": "",
-  "data": "2026-11-18",
-  "fim": "15:00",
-  "inicio": "14:30",
-  "local": "6º andar, sala 5",
-  "motivo": "",
-  "organizador": true,
-  "status": "prevista"
- },
- "20261118-1500-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança - Novos Negócios",
-  "atualizadoEm": "",
-  "data": "2026-11-18",
-  "fim": "15:30",
-  "inicio": "15:00",
-  "local": "7º andar, sala 2",
-  "motivo": "",
-  "organizador": true,
-  "status": "prevista"
- },
- "20261118-1600-secretaria-de-vendas": {
-  "assunto": "Projeto Next - Governança - Secretaria de Vendas",
-  "atualizadoEm": "",
-  "data": "2026-11-18",
-  "fim": "17:00",
-  "inicio": "16:30",
   "local": "Teams e 7º andar, sala 1",
   "motivo": "",
   "organizador": true,
@@ -839,8 +806,8 @@
   "assunto": "Material do Treinamento de Accountability",
   "atualizadoEm": "",
   "data": "2026-11-18",
-  "fim": "18:00",
-  "inicio": "17:00",
+  "fim": "15:00",
+  "inicio": "14:30",
   "local": "6º andar, sala 5",
   "motivo": "",
   "organizador": true,
@@ -879,6 +846,28 @@
   "organizador": true,
   "status": "cancelada"
  },
+ "20261119-1400-alinhamento-processos": {
+  "assunto": "Alinhamento Processos",
+  "atualizadoEm": "",
+  "data": "2026-11-19",
+  "fim": "15:30",
+  "inicio": "14:00",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261119-1630-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2026-11-19",
+  "fim": "17:00",
+  "inicio": "16:30",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261123-1000-projeto-next-governanca-projetos-e-siste": {
   "assunto": "Projeto Next - Governança - Projetos e Sistemas",
   "atualizadoEm": "",
@@ -886,6 +875,17 @@
   "fim": "11:00",
   "inicio": "10:00",
   "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261123-1130-fluxo-e-regimento-de-novos-negocios": {
+  "assunto": "Fluxo e Regimento de Novos Negócios",
+  "atualizadoEm": "",
+  "data": "2026-11-23",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -904,10 +904,10 @@
  "20261123-1415-projeto-next-governanca-de-resultados-ad": {
   "assunto": "Projeto Next - Governança de Resultados - Administrativo",
   "atualizadoEm": "",
-  "data": "2026-11-23",
-  "fim": "14:45",
-  "inicio": "14:15",
-  "local": "Teams",
+  "data": "2026-11-25",
+  "fim": "18:00",
+  "inicio": "17:30",
+  "local": "Teams e 7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -926,10 +926,10 @@
  "20261123-1500-projeto-next-governanca-financeiro": {
   "assunto": "Projeto Next - Governança - Financeiro",
   "atualizadoEm": "",
-  "data": "2026-11-23",
-  "fim": "15:30",
-  "inicio": "15:00",
-  "local": "Teams",
+  "data": "2026-11-24",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "Teams e 7º andar, sala 2",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -937,10 +937,10 @@
  "20261123-1530-fup-juridico": {
   "assunto": "Projeto Next - FUP - Governança - Jurídico",
   "atualizadoEm": "",
-  "data": "2026-11-23",
-  "fim": "16:00",
-  "inicio": "15:30",
-  "local": "7º andar, sala 1",
+  "data": "2026-11-24",
+  "fim": "15:00",
+  "inicio": "14:30",
+  "local": "6º andar, sala 5",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -948,9 +948,9 @@
  "20261123-1600-comercial-makeit": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
   "atualizadoEm": "",
-  "data": "2026-11-23",
-  "fim": "16:30",
-  "inicio": "16:00",
+  "data": "2026-11-24",
+  "fim": "11:00",
+  "inicio": "10:30",
   "local": "6º andar, sala 3",
   "motivo": "",
   "organizador": true,
@@ -959,9 +959,9 @@
  "20261123-1630-comercial-gadens": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
   "atualizadoEm": "",
-  "data": "2026-11-23",
-  "fim": "17:00",
-  "inicio": "16:30",
+  "data": "2026-11-25",
+  "fim": "11:00",
+  "inicio": "10:30",
   "local": "6º andar, sala 4",
   "motivo": "",
   "organizador": true,
@@ -1022,6 +1022,17 @@
   "organizador": false,
   "status": "prevista"
  },
+ "20261125-1130-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2026-11-25",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261125-1330-fup-qualidade": {
   "assunto": "Follow Up - Qualidade",
   "atualizadoEm": "",
@@ -1031,6 +1042,17 @@
   "local": "Teams",
   "motivo": "",
   "organizador": true,
+  "status": "prevista"
+ },
+ "20261125-1400-tabela-de-preco": {
+  "assunto": "Tabela de Preço",
+  "atualizadoEm": "",
+  "data": "2026-11-25",
+  "fim": "15:00",
+  "inicio": "14:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
   "status": "prevista"
  },
  "20261125-1430-projeto-next-governanca-engenharia-de-ob": {
@@ -1108,6 +1130,28 @@
   "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": false,
+  "status": "prevista"
+ },
+ "20261127-0900-sem-assunto": {
+  "assunto": "(sem assunto)",
+  "atualizadoEm": "",
+  "data": "2026-11-27",
+  "fim": "11:00",
+  "inicio": "09:00",
+  "local": "9º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261130-0900-day-off": {
+  "assunto": "DAY OFF",
+  "atualizadoEm": "",
+  "data": "2026-11-30",
+  "fim": "19:00",
+  "inicio": "09:00",
+  "local": "",
+  "motivo": "",
+  "organizador": true,
   "status": "prevista"
  },
  "20261130-1000-projeto-next-governanca-projetos-e-siste": {
@@ -1231,6 +1275,17 @@
   "organizador": true,
   "status": "prevista"
  },
+ "20261202-1130-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2026-12-02",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261202-1430-projeto-next-governanca-engenharia-de-ob": {
   "assunto": "Projeto Next - Governança - Engenharia de Obras",
   "atualizadoEm": "",
@@ -1264,18 +1319,18 @@
   "organizador": true,
   "status": "prevista"
  },
- "20261203-1330-projeto-next-revisao-de-fluxos-incorpora": {
-  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
+ "20261203-0900-realinhamento-fluxogramas-engenharia-de": {
+  "assunto": "Realinhamento Fluxogramas - Engenharia de Obras",
   "atualizadoEm": "",
   "data": "2026-12-03",
-  "fim": "18:00",
-  "inicio": "13:30",
+  "fim": "12:00",
+  "inicio": "09:00",
   "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
  },
- "20261203-1330-projeto-next-revisao-de-fluxos-incorpora-2": {
+ "20261203-1330-projeto-next-revisao-de-fluxos-incorpora": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
   "atualizadoEm": "",
   "data": "2026-12-03",
@@ -1429,6 +1484,17 @@
   "organizador": false,
   "status": "prevista"
  },
+ "20261209-1130-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2026-12-09",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261209-1430-projeto-next-governanca-engenharia-de-ob": {
   "assunto": "Projeto Next - Governança - Engenharia de Obras",
   "atualizadoEm": "",
@@ -1463,17 +1529,6 @@
   "status": "prevista"
  },
  "20261210-1330-projeto-next-revisao-de-fluxos-incorpora": {
-  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
-  "atualizadoEm": "",
-  "data": "2026-12-10",
-  "fim": "18:00",
-  "inicio": "13:30",
-  "local": "9º andar, sala 1",
-  "motivo": "",
-  "organizador": true,
-  "status": "prevista"
- },
- "20261210-1330-projeto-next-revisao-de-fluxos-incorpora-2": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
   "atualizadoEm": "",
   "data": "2026-12-10",
@@ -1627,6 +1682,17 @@
   "organizador": true,
   "status": "prevista"
  },
+ "20261216-1130-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2026-12-16",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261216-1430-projeto-next-governanca-engenharia-de-ob": {
   "assunto": "Projeto Next - Governança - Engenharia de Obras",
   "atualizadoEm": "",
@@ -1661,17 +1727,6 @@
   "status": "prevista"
  },
  "20261217-1330-projeto-next-revisao-de-fluxos-incorpora": {
-  "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
-  "atualizadoEm": "",
-  "data": "2026-12-17",
-  "fim": "18:00",
-  "inicio": "13:30",
-  "local": "9º andar, sala 1",
-  "motivo": "",
-  "organizador": true,
-  "status": "prevista"
- },
- "20261217-1330-projeto-next-revisao-de-fluxos-incorpora-2": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
   "atualizadoEm": "",
   "data": "2026-12-17",
@@ -1810,6 +1865,17 @@
   "fim": "17:30",
   "inicio": "17:00",
   "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261223-1130-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2026-12-23",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "6º andar, sala 5",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1979,6 +2045,17 @@
   "organizador": true,
   "status": "prevista"
  },
+ "20261230-1130-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2026-12-30",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261230-1430-projeto-next-governanca-engenharia-de-ob": {
   "assunto": "Projeto Next - Governança - Engenharia de Obras",
   "atualizadoEm": "",
@@ -2140,6 +2217,17 @@
   "fim": "17:30",
   "inicio": "17:00",
   "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270106-1130-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2027-01-06",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "6º andar, sala 5",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -2318,6 +2406,17 @@
   "local": "8º andar, sala 2",
   "motivo": "",
   "organizador": false,
+  "status": "prevista"
+ },
+ "20270113-1130-projeto-next-fup-gmo": {
+  "assunto": "Projeto Next - FUP - GMO",
+  "atualizadoEm": "",
+  "data": "2027-01-13",
+  "fim": "12:00",
+  "inicio": "11:30",
+  "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
   "status": "prevista"
  },
  "20270113-1430-projeto-next-governanca-engenharia-de-ob": {
