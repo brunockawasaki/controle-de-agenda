@@ -753,7 +753,7 @@
   "data": "2026-11-18",
   "fim": "12:00",
   "inicio": "11:00",
-  "local": "6º andar, sala 4",
+  "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": false,
   "status": "prevista"
@@ -761,10 +761,10 @@
  "20261118-1000-projeto-next-governanca-financeiro": {
   "assunto": "Projeto Next - Governança - Financeiro",
   "atualizadoEm": "",
-  "data": "2026-11-18",
-  "fim": "10:30",
-  "inicio": "10:00",
-  "local": "Teams e 7º andar, sala 1",
+  "data": "2026-11-19",
+  "fim": "11:30",
+  "inicio": "11:00",
+  "local": "Teams e 5º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -784,8 +784,8 @@
   "assunto": "Projeto Next - FUP - GMO",
   "atualizadoEm": "",
   "data": "2026-11-18",
-  "fim": "11:30",
-  "inicio": "11:00",
+  "fim": "18:30",
+  "inicio": "18:00",
   "local": "Teams",
   "motivo": "",
   "organizador": false,
@@ -831,6 +831,17 @@
   "fim": "17:00",
   "inicio": "16:30",
   "local": "Teams e 7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261118-1700-material-do-treinamento-de-accountabilit": {
+  "assunto": "Material do Treinamento de Accountability",
+  "atualizadoEm": "",
+  "data": "2026-11-18",
+  "fim": "18:00",
+  "inicio": "17:00",
+  "local": "6º andar, sala 5",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
