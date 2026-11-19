@@ -762,8 +762,8 @@
   "assunto": "Projeto Next - Governança - Financeiro",
   "atualizadoEm": "2026-11-19T14:10:32.395Z",
   "data": "2026-11-19",
-  "fim": "11:30",
-  "inicio": "11:00",
+  "fim": "17:30",
+  "inicio": "17:00",
   "local": "Teams e 5º andar, sala 1",
   "motivo": "",
   "organizador": true,
@@ -945,17 +945,6 @@
   "organizador": true,
   "status": "prevista"
  },
- "20261123-1600-comercial-makeit": {
-  "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
-  "atualizadoEm": "",
-  "data": "2026-11-24",
-  "fim": "11:00",
-  "inicio": "10:30",
-  "local": "6º andar, sala 3",
-  "motivo": "",
-  "organizador": true,
-  "status": "prevista"
- },
  "20261123-1630-comercial-gadens": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
   "atualizadoEm": "",
@@ -985,6 +974,17 @@
   "fim": "10:30",
   "inicio": "10:00",
   "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261124-1030-projeto-next-governanca-de-resultados-co": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
+  "data": "2026-11-24",
+  "fim": "11:00",
+  "inicio": "10:30",
+  "local": "6º andar, sala 3",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
