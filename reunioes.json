@@ -2649,5 +2649,17 @@
   "motivo": "Atestado médico",
   "organizador": false,
   "status": "ausente"
+ },
+ "aus-20261130": {
+  "data": "2026-11-30",
+  "inicio": "00:00",
+  "fim": "23:59",
+  "assunto": "Ausência",
+  "local": "",
+  "organizador": false,
+  "status": "ausente",
+  "motivo": "Folga",
+  "atualizadoEm": "2026-11-23T22:43:35.243Z",
+  "id": "aus-20261130"
  }
 }
