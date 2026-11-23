@@ -1110,6 +1110,17 @@
   "organizador": false,
   "status": "prevista"
  },
+ "20261126-1000-validacao-indicadores-gmo": {
+  "assunto": "Validação indicadores GMO",
+  "atualizadoEm": "",
+  "data": "2026-11-26",
+  "fim": "11:00",
+  "inicio": "10:00",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261126-1330-projeto-next-revisao-de-fluxos-incorpora": {
   "assunto": "Projeto Next - Revisão de Fluxos - Incorporação Gadens",
   "atualizadoEm": "",
@@ -2651,15 +2662,14 @@
   "status": "ausente"
  },
  "aus-20261130": {
-  "data": "2026-11-30",
-  "inicio": "00:00",
-  "fim": "23:59",
   "assunto": "Ausência",
-  "local": "",
-  "organizador": false,
-  "status": "ausente",
-  "motivo": "Folga",
   "atualizadoEm": "2026-11-23T22:43:35.243Z",
-  "id": "aus-20261130"
+  "data": "2026-11-30",
+  "fim": "23:59",
+  "inicio": "00:00",
+  "local": "",
+  "motivo": "Folga",
+  "organizador": false,
+  "status": "ausente"
  }
 }
