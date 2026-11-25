@@ -1078,7 +1078,7 @@
   "status": "cancelada"
  },
  "20261125-1500-projeto-next-governanca": {
-  "assunto": "Projeto Next - Governança -",
+  "assunto": "Projeto Next - Governança - Novos Negócios",
   "atualizadoEm": "2026-11-25T20:50:53.901Z",
   "data": "2026-11-25",
   "fim": "15:30",
@@ -1253,6 +1253,17 @@
   "organizador": true,
   "status": "prevista"
  },
+ "20261201-1600-atualizacao-de-fluxo-nn-negociacao": {
+  "assunto": "Atualização de Fluxo NN - Negociação",
+  "atualizadoEm": "",
+  "data": "2026-12-01",
+  "fim": "17:30",
+  "inicio": "16:00",
+  "local": "7º andar, sala 2",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261201-1700-projeto-next-governanca": {
   "assunto": "Projeto Next - Governança - Inc. Gadens",
   "atualizadoEm": "",
@@ -1260,6 +1271,17 @@
   "fim": "17:30",
   "inicio": "17:00",
   "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261202-0930-alinhamento-de-processos-po-gg-pro-002-d": {
+  "assunto": "Alinhamento de Processos - PO.GG.PRO.002 - Diretrizes da Gestão dos Documentos Normativos",
+  "atualizadoEm": "",
+  "data": "2026-12-02",
+  "fim": "10:30",
+  "inicio": "09:30",
+  "local": "7º andar, sala 2",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1282,6 +1304,17 @@
   "fim": "12:00",
   "inicio": "11:30",
   "local": "6º andar, sala 5",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20261202-1300-avaliar-layout-e-automatizacao-para-indi": {
+  "assunto": "Avaliar layout e automatização para indicador de GMO",
+  "atualizadoEm": "",
+  "data": "2026-12-02",
+  "fim": "13:30",
+  "inicio": "13:00",
+  "local": "6º andar, sala 3",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1372,6 +1405,17 @@
   "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
+  "status": "prevista"
+ },
+ "20261203-1430-tabela-de-preco-reuniao-3": {
+  "assunto": "Tabela de Preço - Reunião 3",
+  "atualizadoEm": "",
+  "data": "2026-12-03",
+  "fim": "16:00",
+  "inicio": "14:30",
+  "local": "6º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
   "status": "prevista"
  },
  "20261204-0900-projeto-next-fase-2-desenho-de-fluxogram": {
@@ -1732,7 +1776,7 @@
   "data": "2026-12-16",
   "fim": "12:00",
   "inicio": "11:30",
-  "local": "6º andar, sala 5",
+  "local": "Teams",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
