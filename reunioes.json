@@ -1090,14 +1090,14 @@
  },
  "20261125-1600-secretaria-de-vendas": {
   "assunto": "Projeto Next - Governança - Secretaria de Vendas",
-  "atualizadoEm": "",
+  "atualizadoEm": "2026-11-25T17:13:05.674Z",
   "data": "2026-11-25",
   "fim": "16:30",
   "inicio": "16:00",
   "local": "7º andar, sala 1",
-  "motivo": "",
+  "motivo": "Cancelada sem pendências da área",
   "organizador": true,
-  "status": "prevista"
+  "status": "cancelada_sem_pendencia"
  },
  "20261125-1630-avaliar-layout-e-automatizacao-para-indi": {
   "assunto": "Avaliar layout e automatização para indicador de GMO",
