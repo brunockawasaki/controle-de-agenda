@@ -1039,7 +1039,7 @@
   "data": "2026-11-25",
   "fim": "12:00",
   "inicio": "11:30",
-  "local": "6º andar, sala 5",
+  "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1330,13 +1330,13 @@
   "organizador": true,
   "status": "prevista"
  },
- "20261202-1600-projeto-next-governanca-secretaria-de-ve": {
-  "assunto": "Projeto Next - Governança - Secretaria de Vendas",
+ "20261202-1600-alinhamento-unidades-de-estoque-gestao-d": {
+  "assunto": "Alinhamento Unidades de Estoque (Gestão das Unidades)",
   "atualizadoEm": "",
   "data": "2026-12-02",
-  "fim": "16:30",
+  "fim": "18:00",
   "inicio": "16:00",
-  "local": "7º andar, sala 1",
+  "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1344,9 +1344,9 @@
  "20261202-1630-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
   "atualizadoEm": "",
-  "data": "2026-12-02",
-  "fim": "17:00",
-  "inicio": "16:30",
+  "data": "2026-12-01",
+  "fim": "15:30",
+  "inicio": "15:00",
   "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
