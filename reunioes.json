@@ -1136,9 +1136,9 @@
   "assunto": "Validação indicadores GMO",
   "atualizadoEm": "",
   "data": "2026-11-26",
-  "fim": "11:00",
-  "inicio": "10:00",
-  "local": "7º andar, sala 1",
+  "fim": "11:30",
+  "inicio": "10:30",
+  "local": "6º andar, sala 5",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
@@ -1427,6 +1427,17 @@
   "local": "Teams",
   "motivo": "",
   "organizador": true,
+  "status": "prevista"
+ },
+ "20261204-1500-tabela-de-preco-reuniao-3": {
+  "assunto": "Tabela de Preço - Reunião 3",
+  "atualizadoEm": "",
+  "data": "2026-12-04",
+  "fim": "16:30",
+  "inicio": "15:00",
+  "local": "6º andar, sala 1",
+  "motivo": "",
+  "organizador": false,
   "status": "prevista"
  },
  "20261207-1000-projeto-next-governanca-projetos-e-siste": {
