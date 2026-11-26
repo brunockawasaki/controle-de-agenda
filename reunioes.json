@@ -1121,6 +1121,17 @@
   "organizador": false,
   "status": "prevista"
  },
+ "20261126-0930-alinhamento-de-documentos": {
+  "assunto": "Alinhamento de Documentos",
+  "atualizadoEm": "",
+  "data": "2026-11-26",
+  "fim": "10:00",
+  "inicio": "09:30",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
  "20261126-1000-validacao-indicadores-gmo": {
   "assunto": "Validação indicadores GMO",
   "atualizadoEm": "",
@@ -1224,8 +1235,8 @@
   "assunto": "Projeto Next - Governança - Projetos e Sistemas",
   "atualizadoEm": "",
   "data": "2026-12-01",
-  "fim": "14:30",
-  "inicio": "13:30",
+  "fim": "14:00",
+  "inicio": "13:00",
   "local": "6º andar, sala 4",
   "motivo": "",
   "organizador": true,
@@ -1366,9 +1377,9 @@
  "20261202-1600-alinhamento-unidades-de-estoque-gestao-d": {
   "assunto": "Alinhamento Unidades de Estoque (Gestão das Unidades)",
   "atualizadoEm": "",
-  "data": "2026-12-02",
-  "fim": "18:00",
-  "inicio": "16:00",
+  "data": "2026-12-01",
+  "fim": "16:00",
+  "inicio": "14:00",
   "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
@@ -1377,9 +1388,9 @@
  "20261202-1630-projeto-next-governanca-de-resultados-co": {
   "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
   "atualizadoEm": "",
-  "data": "2026-12-01",
-  "fim": "15:30",
-  "inicio": "15:00",
+  "data": "2026-12-02",
+  "fim": "17:00",
+  "inicio": "16:30",
   "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
@@ -1405,17 +1416,6 @@
   "local": "9º andar, sala 1",
   "motivo": "",
   "organizador": true,
-  "status": "prevista"
- },
- "20261203-1430-tabela-de-preco-reuniao-3": {
-  "assunto": "Tabela de Preço - Reunião 3",
-  "atualizadoEm": "",
-  "data": "2026-12-03",
-  "fim": "16:00",
-  "inicio": "14:30",
-  "local": "6º andar, sala 1",
-  "motivo": "",
-  "organizador": false,
   "status": "prevista"
  },
  "20261204-0900-projeto-next-fase-2-desenho-de-fluxogram": {
@@ -2723,6 +2723,94 @@
   "fim": "18:00",
   "inicio": "13:30",
   "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270125-1000-projeto-next-governanca-projetos-e-siste": {
+  "assunto": "Projeto Next - Governança - Projetos e Sistemas",
+  "atualizadoEm": "",
+  "data": "2027-01-25",
+  "fim": "11:00",
+  "inicio": "10:00",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270125-1330-projeto-next-governanca-orcamento-e-proj": {
+  "assunto": "Projeto Next - Governança - Orçamento e Projetos Complementares",
+  "atualizadoEm": "",
+  "data": "2027-01-25",
+  "fim": "14:00",
+  "inicio": "13:30",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270125-1415-projeto-next-governanca-de-resultados-ad": {
+  "assunto": "Projeto Next - Governança de Resultados - Administrativo",
+  "atualizadoEm": "",
+  "data": "2027-01-25",
+  "fim": "14:45",
+  "inicio": "14:15",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270125-1500-projeto-next-governanca-financeiro": {
+  "assunto": "Projeto Next - Governança - Financeiro",
+  "atualizadoEm": "",
+  "data": "2027-01-25",
+  "fim": "15:30",
+  "inicio": "15:00",
+  "local": "Teams",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270125-1530-projeto-next-fup-governanca-juridico": {
+  "assunto": "Projeto Next - FUP - Governança - Jurídico",
+  "atualizadoEm": "",
+  "data": "2027-01-25",
+  "fim": "16:00",
+  "inicio": "15:30",
+  "local": "7º andar, sala 1",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270125-1600-projeto-next-governanca-de-resultados-co": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Make It",
+  "atualizadoEm": "",
+  "data": "2027-01-25",
+  "fim": "16:30",
+  "inicio": "16:00",
+  "local": "6º andar, sala 3",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270125-1630-projeto-next-governanca-de-resultados-co": {
+  "assunto": "Projeto Next - Governança de Resultados - Comercial Gadens",
+  "atualizadoEm": "",
+  "data": "2027-01-25",
+  "fim": "17:00",
+  "inicio": "16:30",
+  "local": "6º andar, sala 4",
+  "motivo": "",
+  "organizador": true,
+  "status": "prevista"
+ },
+ "20270125-1700-reuniao-de-fup-suprimentos-projeto-next": {
+  "assunto": "Reunião de FUP - Suprimentos - Projeto Next",
+  "atualizadoEm": "",
+  "data": "2027-01-25",
+  "fim": "17:30",
+  "inicio": "17:00",
+  "local": "7º andar, sala 1",
   "motivo": "",
   "organizador": true,
   "status": "prevista"
